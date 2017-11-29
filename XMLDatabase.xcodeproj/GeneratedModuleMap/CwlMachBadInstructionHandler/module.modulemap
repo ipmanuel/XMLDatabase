@@ -1,0 +1,4 @@
+module CwlMachBadInstructionHandler {
+    umbrella header "/Users/Manu/Desktop/Tagebuch-Applikation/Sourcecode/XMLDatabase/.build/checkouts/CwlPreconditionTesting.git--1012998619326918860/Sources/CwlMachBadInstructionHandler/include/CwlMachBadInstructionHandler.h"
+    export *
+}

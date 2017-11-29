@@ -1,0 +1,4 @@
+module CwlFrameAddress {
+    umbrella header "/Users/Manu/Desktop/Tagebuch-Applikation/Sourcecode/XMLDatabase/.build/checkouts/CwlUtils.git-7480919999473900909/Sources/CwlFrameAddress/include/CwlFrameAddress.h"
+    export *
+}

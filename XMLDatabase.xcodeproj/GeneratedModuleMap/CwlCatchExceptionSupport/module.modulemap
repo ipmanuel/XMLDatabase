@@ -1,0 +1,4 @@
+module CwlCatchExceptionSupport {
+    umbrella "/Users/Manu/Desktop/Tagebuch-Applikation/Sourcecode/XMLDatabase/.build/checkouts/CwlCatchException.git-1209057650828305143/Sources/CwlCatchExceptionSupport/include"
+    export *
+}

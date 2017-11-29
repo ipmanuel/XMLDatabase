@@ -1,0 +1,257 @@
+//
+//  XMLObjects.swift
+//  XMLDatabase
+//
+//  Created by Manuel Pauls on 23.11.17.
+//
+
+import Foundation
+import SWXMLHash
+
+
+// MARK: XMLObjects
+
+/// XMLObjects manage all objects with a specific type of a XML file
+class XMLObjects<MapperType: XMLObjectMapper> {
+    
+    
+    // MARK: Properties
+    
+    /// The URL, where the corresponding XML file is located
+    /// -note: The file url changes, because after initializing file is locked by adding `_` at the beginning of the filename
+    private var xmlFileURL: URL
+    
+    /// The URL, where the unlocked XML file should be located
+    private let xmlUnlockedFileURL: URL
+    
+    /// The URL, where the locked XML file should be located
+    private let xmlLockedFileURL: URL
+    
+    /// The XML document, which represents the XML file as an object
+    private var xmlDocument: XMLDocument
+    
+    /// The name of the object which XMLObjects deal with
+    private let objectName: String
+    
+    /// The name of the object in plural
+    private let objectNamePlural: String
+    
+    /// The array with saved objects
+    private var savedObjects: [MapperType.ObjectType]
+    
+    /// The array with unsaved objects
+    /// -note: all added objectes will be put in there
+    private var unsavedObjects: [MapperType.ObjectType]
+    
+    /// Return the amount of saved objects counted
+    public var count: Int {
+        return savedObjects.count
+    }
+    
+    /// The ids of all saved objects
+    private var savedObjectsIds: [Int]
+    
+    /// The ids of all unsaved objects
+    private var unsavedObjectsIds: [Int]
+    
+    /// Return an id, which is not served by an saved or unsaved object
+    /// -note: It generates an id, so that it fills hole after deleting one object
+    public var nextId: Int {
+        get {
+            var counter = 1
+            for id in (savedObjectsIds+unsavedObjectsIds).sorted() {
+                if counter != id {
+                    break
+                }
+                counter += 1
+            }
+            return counter
+        }
+    }
+    
+    
+    // MARK: Init
+    
+    /// Set all properties and check wether the XML file is locked or does not exist
+    init(xmlFileURL: URL) throws {
+        savedObjectsIds = []
+        savedObjects = []
+        unsavedObjects = []
+        unsavedObjectsIds = []
+        objectName = String(describing: MapperType.ObjectType.self)
+        objectNamePlural = xmlFileURL.deletingPathExtension().lastPathComponent.capitalized
+        xmlUnlockedFileURL = xmlFileURL.deletingLastPathComponent().appendingPathComponent("\(objectNamePlural).xml")
+        xmlLockedFileURL = xmlFileURL.deletingLastPathComponent().appendingPathComponent("_\(objectNamePlural).xml")
+        self.xmlFileURL = xmlFileURL
+        
+        // check
+        let fileManager = FileManager.default
+        guard !fileManager.fileExists(atPath: xmlLockedFileURL.path) else {
+            throw XMLObjectsError.xmlFileIsLocked(path: xmlLockedFileURL.path)
+        }
+        
+        // lock file
+        let lockedFileName = "_\(objectNamePlural).xml"
+        try self.xmlFileURL.rename(newName: lockedFileName)
+        
+        
+        // init XMLDocument
+        if fileManager.fileExists(atPath: xmlUnlockedFileURL.path) {
+            let rootElement = Foundation.XMLElement(name: objectNamePlural.lowercased())
+            xmlDocument = Foundation.XMLDocument(rootElement: rootElement)
+        } else {
+            xmlDocument = try Foundation.XMLDocument(contentsOf: self.xmlFileURL, options: XMLNode.Options.documentTidyXML)
+            try importObjects()
+        }
+    }
+    
+    /// Unlock the XML file
+    deinit {
+        do {
+            try self.xmlFileURL.rename(newName: xmlUnlockedFileURL.lastPathComponent)
+        } catch {
+            print("\(error)")
+        }
+    }
+    
+    
+    // MARK: Public Methods
+    
+    /// Insert object with right index in array unsavedObjects and save its id in unsavedObjectsIds
+    func addObject(object: MapperType.ObjectType) throws {
+        guard !unsavedObjectsIds.contains(object.id), !savedObjectsIds.contains(object.id) else {
+            throw XMLObjectsError.idExistsAlready(value: object.id)
+        }
+        if unsavedObjects.count > object.id-1 {
+            unsavedObjects.insert(object, at: object.id-1)
+        } else {
+            unsavedObjects.append(object)
+        }
+        unsavedObjectsIds.append(object.id)
+    }
+    
+    
+    // MARK: Actions on XML file
+    
+    /// Copy all unsaved objects to saved objects and insert the into XMLDocument ordered by id
+    public func save() throws {
+        if (unsavedObjects.count > 0) {
+            for unsavedObject in unsavedObjects {
+                let XMLElement = MapperType.toXML(object: unsavedObject)
+                
+                if unsavedObject.id-1 < savedObjects.count {
+                    xmlDocument.rootElement()?.insertChild(XMLElement, at: unsavedObject.id-1)
+                    savedObjects.insert(unsavedObject, at: unsavedObject.id-1)
+                } else {
+                    xmlDocument.rootElement()?.addChild(XMLElement)
+                    savedObjects.append(unsavedObject)
+                }
+                savedObjectsIds.append(unsavedObject.id)
+            }
+            unsavedObjects.removeAll()
+            
+            try xmlDocument.xmlData(options: XMLNode.Options.nodePrettyPrint).write(to: xmlFileURL)
+        }
+    }
+    
+    
+    /// Delete a saved/unsaved object by removing from arrays and additionally remove from XMLDocument for a saved object
+    func delete(id: Int) {
+        if unsavedObjectsIds.contains(id) {
+            if let index = getIndexOfSavedObjectsBy(id: id), let indexId = getIndexOfSavedObjectsIdsBy(id: id) {
+                savedObjects.remove(at: index)
+                savedObjectsIds.remove(at: indexId)
+                xmlDocument.rootElement()?.removeChild(at: index)
+            } else if let index = getIndexOfUnsavedObjectsBy(id: id), let indexId = getIndexOfUnsavedObjectsIdsBy(id: id) {
+                unsavedObjects.remove(at: index)
+                unsavedObjectsIds.remove(at: indexId)
+            }
+        }
+    }
+    
+    /// Return a saved object selected by index
+    func get(at index: Int) -> MapperType.ObjectType? {
+        guard index >= 0 && index < count else {
+            return nil
+        }
+        return savedObjects[index]
+    }
+    
+    /// Return a saved object selected by id
+    func getBy(id: Int) -> MapperType.ObjectType? {
+        guard savedObjectsIds.contains(id) else {
+            return nil
+        }
+        
+        return savedObjects.filter{$0.id == id}[0]
+    }
+    
+    
+    // MARK: Private Methods
+    
+    private func importObjects() throws {
+        let xmlParsed = SWXMLHash.parse(xmlDocument.xmlString)
+        let rootXMLElement = objectNamePlural.lowercased()
+        guard xmlParsed[rootXMLElement].element != nil else {
+            throw XMLObjectsError.rootXMLElementWasNotFound(element: rootXMLElement, in: xmlUnlockedFileURL.lastPathComponent)
+        }
+        let objects = xmlParsed[rootXMLElement][objectName.lowercased()].all
+        
+        for object in objects {
+            try addObject(object: try MapperType.toObject(element: object))
+        }
+        
+        // imported objects should not be saved a second time
+        self.savedObjects = unsavedObjects
+        self.savedObjectsIds = unsavedObjectsIds
+        unsavedObjects.removeAll()
+        unsavedObjectsIds.removeAll()
+    }
+    
+    private func getIndexOfSavedObjectsBy(id: Int) -> Int? {
+        for (index, object) in savedObjects.enumerated() {
+            if object.id == id {
+                return index
+            }
+        }
+        return nil
+    }
+    
+    private func getIndexOfUnsavedObjectsBy(id: Int) -> Int? {
+        for (index, object) in unsavedObjects.enumerated() {
+            if object.id == id {
+                return index
+            }
+        }
+        return nil
+    }
+    
+    private func getIndexOfSavedObjectsIdsBy(id: Int) -> Int? {
+        for (index, objectId) in savedObjectsIds.enumerated() {
+            if objectId == id {
+                return index
+            }
+        }
+        return nil
+    }
+    
+    private func getIndexOfUnsavedObjectsIdsBy(id: Int) -> Int? {
+        for (index, objectId) in unsavedObjectsIds.enumerated() {
+            if objectId == id {
+                return index
+            }
+        }
+        return nil
+    }
+}
+
+/// An enumeration for the various errors of XMLObjects.
+enum XMLObjectsError: Error {
+    case xmlFileDoesNotExists(path: String)
+    case xmlFileIsLocked(path: String)
+    case requiredAttributeIsMissing(element: String, attribute: String, in: String)
+    case requiredElementIsMissing(element: String, in: String)
+    case requiredElementIsInvalid(element: String, value: String)
+    case idExistsAlready(value: Int)
+    case rootXMLElementWasNotFound(element: String, in: String)
+}
