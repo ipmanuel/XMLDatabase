@@ -54,18 +54,22 @@ class XMLObjects<MapperType: XMLObjectMapper> {
     /// The ids of all unsaved objects
     private var unsavedObjectsIds: [Int]
     
+    
+    /// includes all free ids between 1 and maxId
+    private var nextIds: [Int]
+    
+    /// heighest id of all (unsavedObjectsIds and savedObjectsIds)
+    private var maxId: Int
+    
     /// Return an id, which is not served by an saved or unsaved object
     /// -note: It generates an id, so that it fills hole after deleting one object
     public var nextId: Int {
         get {
-            var counter = 1
-            for id in (savedObjectsIds+unsavedObjectsIds).sorted() {
-                if counter != id {
-                    break
-                }
-                counter += 1
+            if nextIds.count > 0 {
+                let first = nextIds.first!
+                return first
             }
-            return counter
+            return maxId + 1
         }
     }
     
@@ -78,6 +82,8 @@ class XMLObjects<MapperType: XMLObjectMapper> {
         savedObjects = []
         unsavedObjects = []
         unsavedObjectsIds = []
+        nextIds = []
+        maxId = 0
         objectName = String(describing: MapperType.ObjectType.self)
         objectNamePlural = xmlFileURL.deletingPathExtension().lastPathComponent.capitalized
         xmlUnlockedFileURL = xmlFileURL.deletingLastPathComponent().appendingPathComponent("\(objectNamePlural).xml")
@@ -86,8 +92,16 @@ class XMLObjects<MapperType: XMLObjectMapper> {
         
         // check
         let fileManager = FileManager.default
+        let firstCharacter = objectNamePlural[objectNamePlural.startIndex]
+        
+        guard firstCharacter != "_" else {
+            throw XMLObjectsError.invalidXMLFilename(name: objectNamePlural)
+        }
         guard !fileManager.fileExists(atPath: xmlLockedFileURL.path) else {
             throw XMLObjectsError.xmlFileIsLocked(path: xmlLockedFileURL.path)
+        }
+        guard fileManager.fileExists(atPath: xmlUnlockedFileURL.path) else {
+            throw XMLObjectsError.xmlFileDoesNotExists(path: xmlUnlockedFileURL.path)
         }
         
         // lock file
@@ -118,6 +132,12 @@ class XMLObjects<MapperType: XMLObjectMapper> {
     // MARK: Public Methods
     
     /// Insert object with right index in array unsavedObjects and save its id in unsavedObjectsIds
+    /**
+     Executes the closure on a background queue after a set amount of seconds.
+     
+     - parameter delay:   Delay in seconds
+     - parameter closure: Code to execute after delay
+     */
     func addObject(object: MapperType.ObjectType) throws {
         guard !unsavedObjectsIds.contains(object.id), !savedObjectsIds.contains(object.id) else {
             throw XMLObjectsError.idExistsAlready(value: object.id)
@@ -128,6 +148,7 @@ class XMLObjects<MapperType: XMLObjectMapper> {
             unsavedObjects.append(object)
         }
         unsavedObjectsIds.append(object.id)
+        addId(value: object.id)
     }
     
     
@@ -156,24 +177,23 @@ class XMLObjects<MapperType: XMLObjectMapper> {
     
     
     /// Delete a saved/unsaved object by removing from arrays and additionally remove from XMLDocument for a saved object
-    func delete(id: Int) {
-        if unsavedObjectsIds.contains(id) {
+    func deleteObject(id: Int) {
+        if (savedObjectsIds+unsavedObjectsIds).contains(id) {
             if let index = getIndexOfSavedObjectsBy(id: id), let indexId = getIndexOfSavedObjectsIdsBy(id: id) {
                 savedObjects.remove(at: index)
                 savedObjectsIds.remove(at: indexId)
-                xmlDocument.rootElement()?.removeChild(at: index)
+                xmlDocument.rootElement()!.removeChild(at: index)
+                deleteId(value: id)
             } else if let index = getIndexOfUnsavedObjectsBy(id: id), let indexId = getIndexOfUnsavedObjectsIdsBy(id: id) {
                 unsavedObjects.remove(at: index)
                 unsavedObjectsIds.remove(at: indexId)
+                deleteId(value: id)
             }
         }
     }
     
     /// Return a saved object selected by index
-    func get(at index: Int) -> MapperType.ObjectType? {
-        guard index >= 0 && index < count else {
-            return nil
-        }
+    func get(at index: Int) -> MapperType.ObjectType {
         return savedObjects[index]
     }
     
@@ -206,6 +226,44 @@ class XMLObjects<MapperType: XMLObjectMapper> {
         self.savedObjectsIds = unsavedObjectsIds
         unsavedObjects.removeAll()
         unsavedObjectsIds.removeAll()
+    }
+    
+    /// Methode to set nextId for getting calculated nextId
+    private func addId(value id: Int) {
+        // id is in nextIds
+        if (nextIds.contains(id)) {
+            nextIds.remove(at: nextIds.index(of: id)!)
+        }
+        
+        // there are empty ids between
+        if id > maxId {
+            for i in maxId+1..<id {
+                nextIds.append(i)
+            }
+        }
+        maxId = max(maxId, id)
+    }
+    
+    private func deleteId(value id: Int) {
+        nextIds.append(id)
+        nextIds.sort()
+        
+        if id == maxId {
+            if nextIds.count > 0 {
+                var previousId: Int = nextIds.last!
+                var currentId: Int = 0
+                for i in 0..<nextIds.count {
+                    currentId = nextIds[nextIds.count-1-i]
+                    if previousId - currentId > 1 {
+                        break
+                    }
+                    previousId = currentId
+                }
+                maxId = currentId - 1
+            } else {
+                maxId -= 1
+            }
+        }
     }
     
     private func getIndexOfSavedObjectsBy(id: Int) -> Int? {
@@ -247,6 +305,7 @@ class XMLObjects<MapperType: XMLObjectMapper> {
 
 /// An enumeration for the various errors of XMLObjects.
 enum XMLObjectsError: Error {
+    case invalidXMLFilename(name: String)
     case xmlFileDoesNotExists(path: String)
     case xmlFileIsLocked(path: String)
     case requiredAttributeIsMissing(element: String, attribute: String, in: String)

@@ -9,11 +9,11 @@
 /* Begin PBXAggregateTarget section */
 		"XMLDatabase::XMLDatabasePackageTests::ProductTarget" /* XMLDatabasePackageTests */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = OBJ_318 /* Build configuration list for PBXAggregateTarget "XMLDatabasePackageTests" */;
+			buildConfigurationList = OBJ_104 /* Build configuration list for PBXAggregateTarget "XMLDatabasePackageTests" */;
 			buildPhases = (
 			);
 			dependencies = (
-				OBJ_321 /* PBXTargetDependency */,
+				OBJ_107 /* PBXTargetDependency */,
 			);
 			name = XMLDatabasePackageTests;
 			productName = XMLDatabasePackageTests;
@@ -21,352 +21,59 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		OBJ_110 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
-		OBJ_116 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_67 /* Package.swift */; };
-		OBJ_122 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_80 /* Package.swift */; };
-		OBJ_128 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_89 /* Package.swift */; };
-		OBJ_134 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_91 /* Package.swift */; };
-		OBJ_140 /* AddressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* AddressTests.swift */; };
-		OBJ_141 /* PersonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_19 /* PersonTests.swift */; };
-		OBJ_142 /* PersonsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_20 /* PersonsTests.swift */; };
-		OBJ_143 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_23 /* Address.swift */; };
-		OBJ_144 /* Addresses.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_24 /* Addresses.swift */; };
-		OBJ_145 /* XMLAddressMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_25 /* XMLAddressMapper.swift */; };
-		OBJ_146 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_27 /* Person.swift */; };
-		OBJ_147 /* Persons.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_28 /* Persons.swift */; };
-		OBJ_148 /* XMLPersonMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_29 /* XMLPersonMapper.swift */; };
-		OBJ_149 /* PersonsXMLDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_30 /* PersonsXMLDatabase.swift */; };
-		OBJ_150 /* URLExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_31 /* URLExtensionTests.swift */; };
-		OBJ_151 /* XMLAddressMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_32 /* XMLAddressMapperTests.swift */; };
-		OBJ_152 /* PersonsXMLDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* PersonsXMLDatabaseTests.swift */; };
-		OBJ_153 /* XMLObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_34 /* XMLObjectTests.swift */; };
-		OBJ_154 /* XMLPersonMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_35 /* XMLPersonMapperTests.swift */; };
-		OBJ_156 /* XMLDatabase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "XMLDatabase::XMLDatabase::Product" /* XMLDatabase.framework */; };
-		OBJ_157 /* CwlUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlUtils::CwlUtils::Product" /* CwlUtils.framework */; };
-		OBJ_158 /* CwlFrameAddress.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlUtils::CwlFrameAddress::Product" /* CwlFrameAddress.framework */; };
-		OBJ_159 /* ReferenceRandomGenerators.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlUtils::ReferenceRandomGenerators::Product" /* ReferenceRandomGenerators.framework */; };
-		OBJ_160 /* CwlPreconditionTesting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlPreconditionTesting::CwlPreconditionTesting::Product" /* CwlPreconditionTesting.framework */; };
-		OBJ_161 /* CwlMachBadInstructionHandler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlPreconditionTesting::CwlMachBadInstructionHandler::Product" /* CwlMachBadInstructionHandler.framework */; };
-		OBJ_162 /* CwlCatchException.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlCatchException::CwlCatchException::Product" /* CwlCatchException.framework */; };
-		OBJ_163 /* CwlCatchExceptionSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlCatchException::CwlCatchExceptionSupport::Product" /* CwlCatchExceptionSupport.framework */; };
-		OBJ_164 /* SWXMLHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "SWXMLHash::SWXMLHash::Product" /* SWXMLHash.framework */; };
-		OBJ_188 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* URL.swift */; };
-		OBJ_189 /* XMLDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* XMLDatabase.swift */; };
-		OBJ_190 /* XMLObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* XMLObject.swift */; };
-		OBJ_191 /* XMLObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* XMLObjectMapper.swift */; };
-		OBJ_192 /* XMLObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* XMLObjects.swift */; };
-		OBJ_194 /* CwlUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlUtils::CwlUtils::Product" /* CwlUtils.framework */; };
-		OBJ_195 /* CwlFrameAddress.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlUtils::CwlFrameAddress::Product" /* CwlFrameAddress.framework */; };
-		OBJ_196 /* ReferenceRandomGenerators.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlUtils::ReferenceRandomGenerators::Product" /* ReferenceRandomGenerators.framework */; };
-		OBJ_197 /* CwlPreconditionTesting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlPreconditionTesting::CwlPreconditionTesting::Product" /* CwlPreconditionTesting.framework */; };
-		OBJ_198 /* CwlMachBadInstructionHandler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlPreconditionTesting::CwlMachBadInstructionHandler::Product" /* CwlMachBadInstructionHandler.framework */; };
-		OBJ_199 /* CwlCatchException.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlCatchException::CwlCatchException::Product" /* CwlCatchException.framework */; };
-		OBJ_200 /* CwlCatchExceptionSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlCatchException::CwlCatchExceptionSupport::Product" /* CwlCatchExceptionSupport.framework */; };
-		OBJ_201 /* SWXMLHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "SWXMLHash::SWXMLHash::Product" /* SWXMLHash.framework */; };
-		OBJ_214 /* CwlAddressInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_50 /* CwlAddressInfo.swift */; };
-		OBJ_215 /* CwlCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_51 /* CwlCollection.swift */; };
-		OBJ_216 /* CwlDebugContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_52 /* CwlDebugContext.swift */; };
-		OBJ_217 /* CwlDeferredWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_53 /* CwlDeferredWork.swift */; };
-		OBJ_218 /* CwlDeque.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_54 /* CwlDeque.swift */; };
-		OBJ_219 /* CwlDispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_55 /* CwlDispatch.swift */; };
-		OBJ_220 /* CwlExec.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_56 /* CwlExec.swift */; };
-		OBJ_221 /* CwlKeyValueObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_57 /* CwlKeyValueObserver.swift */; };
-		OBJ_222 /* CwlMutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_58 /* CwlMutex.swift */; };
-		OBJ_223 /* CwlOnDelete.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_59 /* CwlOnDelete.swift */; };
-		OBJ_224 /* CwlRandom.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_60 /* CwlRandom.swift */; };
-		OBJ_225 /* CwlResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_61 /* CwlResult.swift */; };
-		OBJ_226 /* CwlScalarScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_62 /* CwlScalarScanner.swift */; };
-		OBJ_227 /* CwlStackFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_63 /* CwlStackFrame.swift */; };
-		OBJ_228 /* CwlSysctl.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_64 /* CwlSysctl.swift */; };
-		OBJ_229 /* CwlUnanticipatedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_65 /* CwlUnanticipatedError.swift */; };
-		OBJ_230 /* CwlWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_66 /* CwlWrappers.swift */; };
-		OBJ_232 /* CwlFrameAddress.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlUtils::CwlFrameAddress::Product" /* CwlFrameAddress.framework */; };
-		OBJ_233 /* CwlPreconditionTesting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlPreconditionTesting::CwlPreconditionTesting::Product" /* CwlPreconditionTesting.framework */; };
-		OBJ_234 /* CwlMachBadInstructionHandler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlPreconditionTesting::CwlMachBadInstructionHandler::Product" /* CwlMachBadInstructionHandler.framework */; };
-		OBJ_235 /* CwlCatchException.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlCatchException::CwlCatchException::Product" /* CwlCatchException.framework */; };
-		OBJ_236 /* CwlCatchExceptionSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlCatchException::CwlCatchExceptionSupport::Product" /* CwlCatchExceptionSupport.framework */; };
-		OBJ_246 /* CwlFrameAddress.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_45 /* CwlFrameAddress.c */; };
-		OBJ_248 /* CwlPreconditionTesting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlPreconditionTesting::CwlPreconditionTesting::Product" /* CwlPreconditionTesting.framework */; };
-		OBJ_249 /* CwlMachBadInstructionHandler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlPreconditionTesting::CwlMachBadInstructionHandler::Product" /* CwlMachBadInstructionHandler.framework */; };
-		OBJ_250 /* CwlCatchException.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlCatchException::CwlCatchException::Product" /* CwlCatchException.framework */; };
-		OBJ_251 /* CwlCatchExceptionSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlCatchException::CwlCatchExceptionSupport::Product" /* CwlCatchExceptionSupport.framework */; };
-		OBJ_260 /* mt19937-64.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_39 /* mt19937-64.c */; };
-		OBJ_261 /* xoroshiro128plus.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_40 /* xoroshiro128plus.c */; };
-		OBJ_263 /* CwlPreconditionTesting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlPreconditionTesting::CwlPreconditionTesting::Product" /* CwlPreconditionTesting.framework */; };
-		OBJ_264 /* CwlMachBadInstructionHandler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlPreconditionTesting::CwlMachBadInstructionHandler::Product" /* CwlMachBadInstructionHandler.framework */; };
-		OBJ_265 /* CwlCatchException.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlCatchException::CwlCatchException::Product" /* CwlCatchException.framework */; };
-		OBJ_266 /* CwlCatchExceptionSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlCatchException::CwlCatchExceptionSupport::Product" /* CwlCatchExceptionSupport.framework */; };
-		OBJ_275 /* CwlBadInstructionException.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_77 /* CwlBadInstructionException.swift */; };
-		OBJ_276 /* CwlCatchBadInstruction.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_78 /* CwlCatchBadInstruction.swift */; };
-		OBJ_277 /* CwlDarwinDefinitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_79 /* CwlDarwinDefinitions.swift */; };
-		OBJ_279 /* CwlMachBadInstructionHandler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlPreconditionTesting::CwlMachBadInstructionHandler::Product" /* CwlMachBadInstructionHandler.framework */; };
-		OBJ_280 /* CwlCatchException.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlCatchException::CwlCatchException::Product" /* CwlCatchException.framework */; };
-		OBJ_281 /* CwlCatchExceptionSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlCatchException::CwlCatchExceptionSupport::Product" /* CwlCatchExceptionSupport.framework */; };
-		OBJ_289 /* CwlMachBadInstructionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_70 /* CwlMachBadInstructionHandler.m */; };
-		OBJ_290 /* mach_excServer.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_71 /* mach_excServer.c */; };
-		OBJ_292 /* CwlCatchException.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlCatchException::CwlCatchException::Product" /* CwlCatchException.framework */; };
-		OBJ_293 /* CwlCatchExceptionSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlCatchException::CwlCatchExceptionSupport::Product" /* CwlCatchExceptionSupport.framework */; };
-		OBJ_300 /* CwlCatchException.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_88 /* CwlCatchException.swift */; };
-		OBJ_302 /* CwlCatchExceptionSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CwlCatchException::CwlCatchExceptionSupport::Product" /* CwlCatchExceptionSupport.framework */; };
-		OBJ_308 /* CwlCatchException.m in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_83 /* CwlCatchException.m */; };
-		OBJ_314 /* SWXMLHash+TypeConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_92 /* SWXMLHash+TypeConversion.swift */; };
-		OBJ_315 /* SWXMLHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_93 /* SWXMLHash.swift */; };
+		OBJ_100 /* SWXMLHash+TypeConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_38 /* SWXMLHash+TypeConversion.swift */; };
+		OBJ_101 /* SWXMLHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_39 /* SWXMLHash.swift */; };
+		OBJ_49 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
+		OBJ_55 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_37 /* Package.swift */; };
+		OBJ_61 /* AddressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_16 /* AddressTests.swift */; };
+		OBJ_62 /* PersonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_17 /* PersonTests.swift */; };
+		OBJ_63 /* PersonsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* PersonsTests.swift */; };
+		OBJ_64 /* PersonsXMLDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_19 /* PersonsXMLDatabaseTests.swift */; };
+		OBJ_65 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_22 /* Address.swift */; };
+		OBJ_66 /* Addresses.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_23 /* Addresses.swift */; };
+		OBJ_67 /* XMLAddressMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_24 /* XMLAddressMapper.swift */; };
+		OBJ_68 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_26 /* Person.swift */; };
+		OBJ_69 /* Persons.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_27 /* Persons.swift */; };
+		OBJ_70 /* XMLPersonMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_28 /* XMLPersonMapper.swift */; };
+		OBJ_71 /* PersonsXMLDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_29 /* PersonsXMLDatabase.swift */; };
+		OBJ_72 /* URLExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_30 /* URLExtensionTests.swift */; };
+		OBJ_73 /* XMLAddressMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_31 /* XMLAddressMapperTests.swift */; };
+		OBJ_74 /* XMLObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_32 /* XMLObjectTests.swift */; };
+		OBJ_75 /* XMLObjectsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* XMLObjectsTests.swift */; };
+		OBJ_76 /* XMLPersonMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_34 /* XMLPersonMapperTests.swift */; };
+		OBJ_78 /* XMLDatabase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "XMLDatabase::XMLDatabase::Product" /* XMLDatabase.framework */; };
+		OBJ_79 /* SWXMLHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "SWXMLHash::SWXMLHash::Product" /* SWXMLHash.framework */; };
+		OBJ_88 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* Extensions.swift */; };
+		OBJ_89 /* XMLDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* XMLDatabase.swift */; };
+		OBJ_90 /* XMLObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* XMLObject.swift */; };
+		OBJ_91 /* XMLObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* XMLObjectMapper.swift */; };
+		OBJ_92 /* XMLObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* XMLObjects.swift */; };
+		OBJ_94 /* SWXMLHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "SWXMLHash::SWXMLHash::Product" /* SWXMLHash.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		32E1C3A91FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlUtils::CwlUtils";
-			remoteInfo = CwlUtils;
-		};
-		32E1C3AA1FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlUtils::CwlFrameAddress";
-			remoteInfo = CwlFrameAddress;
-		};
-		32E1C3AB1FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlPreconditionTesting::CwlPreconditionTesting";
-			remoteInfo = CwlPreconditionTesting;
-		};
-		32E1C3AC1FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlPreconditionTesting::CwlMachBadInstructionHandler";
-			remoteInfo = CwlMachBadInstructionHandler;
-		};
-		32E1C3AD1FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlCatchException::CwlCatchException";
-			remoteInfo = CwlCatchException;
-		};
-		32E1C3AE1FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlCatchException::CwlCatchExceptionSupport";
-			remoteInfo = CwlCatchExceptionSupport;
-		};
-		32E1C3AF1FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlCatchException::CwlCatchExceptionSupport";
-			remoteInfo = CwlCatchExceptionSupport;
-		};
-		32E1C3B01FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlCatchException::CwlCatchException";
-			remoteInfo = CwlCatchException;
-		};
-		32E1C3B11FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlCatchException::CwlCatchExceptionSupport";
-			remoteInfo = CwlCatchExceptionSupport;
-		};
-		32E1C3B21FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlPreconditionTesting::CwlMachBadInstructionHandler";
-			remoteInfo = CwlMachBadInstructionHandler;
-		};
-		32E1C3B31FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlCatchException::CwlCatchException";
-			remoteInfo = CwlCatchException;
-		};
-		32E1C3B41FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlCatchException::CwlCatchExceptionSupport";
-			remoteInfo = CwlCatchExceptionSupport;
-		};
-		32E1C3B51FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlPreconditionTesting::CwlPreconditionTesting";
-			remoteInfo = CwlPreconditionTesting;
-		};
-		32E1C3B61FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlPreconditionTesting::CwlMachBadInstructionHandler";
-			remoteInfo = CwlMachBadInstructionHandler;
-		};
-		32E1C3B71FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlCatchException::CwlCatchException";
-			remoteInfo = CwlCatchException;
-		};
-		32E1C3B81FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlCatchException::CwlCatchExceptionSupport";
-			remoteInfo = CwlCatchExceptionSupport;
-		};
-		32E1C3B91FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlUtils::CwlFrameAddress";
-			remoteInfo = CwlFrameAddress;
-		};
-		32E1C3BA1FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlUtils::ReferenceRandomGenerators";
-			remoteInfo = ReferenceRandomGenerators;
-		};
-		32E1C3BB1FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlPreconditionTesting::CwlPreconditionTesting";
-			remoteInfo = CwlPreconditionTesting;
-		};
-		32E1C3BC1FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlPreconditionTesting::CwlMachBadInstructionHandler";
-			remoteInfo = CwlMachBadInstructionHandler;
-		};
-		32E1C3BD1FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlCatchException::CwlCatchException";
-			remoteInfo = CwlCatchException;
-		};
-		32E1C3BE1FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlCatchException::CwlCatchExceptionSupport";
-			remoteInfo = CwlCatchExceptionSupport;
-		};
-		32E1C3BF1FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlPreconditionTesting::CwlPreconditionTesting";
-			remoteInfo = CwlPreconditionTesting;
-		};
-		32E1C3C01FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlPreconditionTesting::CwlMachBadInstructionHandler";
-			remoteInfo = CwlMachBadInstructionHandler;
-		};
-		32E1C3C11FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlCatchException::CwlCatchException";
-			remoteInfo = CwlCatchException;
-		};
-		32E1C3C21FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlCatchException::CwlCatchExceptionSupport";
-			remoteInfo = CwlCatchExceptionSupport;
-		};
-		32E1C3C31FCEBE32000D692F /* PBXContainerItemProxy */ = {
+		32F659881FCFE93700BD3B9B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "SWXMLHash::SWXMLHash";
 			remoteInfo = SWXMLHash;
 		};
-		32E1C3C41FCEBE32000D692F /* PBXContainerItemProxy */ = {
+		32F659891FCFE93700BD3B9B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "XMLDatabase::XMLDatabase";
 			remoteInfo = XMLDatabase;
 		};
-		32E1C3C51FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlUtils::CwlUtils";
-			remoteInfo = CwlUtils;
-		};
-		32E1C3C61FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlUtils::CwlFrameAddress";
-			remoteInfo = CwlFrameAddress;
-		};
-		32E1C3C71FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlUtils::ReferenceRandomGenerators";
-			remoteInfo = ReferenceRandomGenerators;
-		};
-		32E1C3C81FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlPreconditionTesting::CwlPreconditionTesting";
-			remoteInfo = CwlPreconditionTesting;
-		};
-		32E1C3C91FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlPreconditionTesting::CwlMachBadInstructionHandler";
-			remoteInfo = CwlMachBadInstructionHandler;
-		};
-		32E1C3CA1FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlCatchException::CwlCatchException";
-			remoteInfo = CwlCatchException;
-		};
-		32E1C3CB1FCEBE32000D692F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = OBJ_1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = "CwlCatchException::CwlCatchExceptionSupport";
-			remoteInfo = CwlCatchExceptionSupport;
-		};
-		32E1C3CC1FCEBE32000D692F /* PBXContainerItemProxy */ = {
+		32F6598A1FCFE93700BD3B9B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "SWXMLHash::SWXMLHash";
 			remoteInfo = SWXMLHash;
 		};
-		32E1C3CD1FCEBE34000D692F /* PBXContainerItemProxy */ = {
+		32F6598B1FCFE93700BD3B9B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
@@ -376,363 +83,160 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		"CwlCatchException::CwlCatchException::Product" /* CwlCatchException.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CwlCatchException.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		"CwlCatchException::CwlCatchExceptionSupport::Product" /* CwlCatchExceptionSupport.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CwlCatchExceptionSupport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		"CwlPreconditionTesting::CwlMachBadInstructionHandler::Product" /* CwlMachBadInstructionHandler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CwlMachBadInstructionHandler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		"CwlPreconditionTesting::CwlPreconditionTesting::Product" /* CwlPreconditionTesting.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CwlPreconditionTesting.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		"CwlUtils::CwlFrameAddress::Product" /* CwlFrameAddress.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CwlFrameAddress.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		"CwlUtils::CwlUtils::Product" /* CwlUtils.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CwlUtils.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		"CwlUtils::ReferenceRandomGenerators::Product" /* ReferenceRandomGenerators.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ReferenceRandomGenerators.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		OBJ_11 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
-		OBJ_12 /* XMLDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLDatabase.swift; sourceTree = "<group>"; };
-		OBJ_13 /* XMLObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLObject.swift; sourceTree = "<group>"; };
-		OBJ_14 /* XMLObjectMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLObjectMapper.swift; sourceTree = "<group>"; };
-		OBJ_15 /* XMLObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLObjects.swift; sourceTree = "<group>"; };
-		OBJ_18 /* AddressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressTests.swift; sourceTree = "<group>"; };
-		OBJ_19 /* PersonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonTests.swift; sourceTree = "<group>"; };
-		OBJ_20 /* PersonsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonsTests.swift; sourceTree = "<group>"; };
-		OBJ_23 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
-		OBJ_24 /* Addresses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Addresses.swift; sourceTree = "<group>"; };
-		OBJ_25 /* XMLAddressMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLAddressMapper.swift; sourceTree = "<group>"; };
-		OBJ_27 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
-		OBJ_28 /* Persons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persons.swift; sourceTree = "<group>"; };
-		OBJ_29 /* XMLPersonMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLPersonMapper.swift; sourceTree = "<group>"; };
-		OBJ_30 /* PersonsXMLDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonsXMLDatabase.swift; sourceTree = "<group>"; };
-		OBJ_31 /* URLExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtensionTests.swift; sourceTree = "<group>"; };
-		OBJ_32 /* XMLAddressMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLAddressMapperTests.swift; sourceTree = "<group>"; };
-		OBJ_33 /* PersonsXMLDatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonsXMLDatabaseTests.swift; sourceTree = "<group>"; };
-		OBJ_34 /* XMLObjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLObjectTests.swift; sourceTree = "<group>"; };
-		OBJ_35 /* XMLPersonMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLPersonMapperTests.swift; sourceTree = "<group>"; };
-		OBJ_39 /* mt19937-64.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "mt19937-64.c"; sourceTree = "<group>"; };
-		OBJ_40 /* xoroshiro128plus.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = xoroshiro128plus.c; sourceTree = "<group>"; };
-		OBJ_42 /* ReferenceRandomGenerators.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReferenceRandomGenerators.h; sourceTree = "<group>"; };
-		OBJ_43 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = "/Users/Manu/Desktop/Tagebuch-Applikation/Sourcecode/XMLDatabase/XMLDatabase.xcodeproj/GeneratedModuleMap/ReferenceRandomGenerators/module.modulemap"; sourceTree = "<group>"; };
-		OBJ_45 /* CwlFrameAddress.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = CwlFrameAddress.c; sourceTree = "<group>"; };
-		OBJ_47 /* CwlFrameAddress.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CwlFrameAddress.h; sourceTree = "<group>"; };
-		OBJ_48 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = "/Users/Manu/Desktop/Tagebuch-Applikation/Sourcecode/XMLDatabase/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlFrameAddress/module.modulemap"; sourceTree = "<group>"; };
-		OBJ_50 /* CwlAddressInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CwlAddressInfo.swift; sourceTree = "<group>"; };
-		OBJ_51 /* CwlCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CwlCollection.swift; sourceTree = "<group>"; };
-		OBJ_52 /* CwlDebugContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CwlDebugContext.swift; sourceTree = "<group>"; };
-		OBJ_53 /* CwlDeferredWork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CwlDeferredWork.swift; sourceTree = "<group>"; };
-		OBJ_54 /* CwlDeque.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CwlDeque.swift; sourceTree = "<group>"; };
-		OBJ_55 /* CwlDispatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CwlDispatch.swift; sourceTree = "<group>"; };
-		OBJ_56 /* CwlExec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CwlExec.swift; sourceTree = "<group>"; };
-		OBJ_57 /* CwlKeyValueObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CwlKeyValueObserver.swift; sourceTree = "<group>"; };
-		OBJ_58 /* CwlMutex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CwlMutex.swift; sourceTree = "<group>"; };
-		OBJ_59 /* CwlOnDelete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CwlOnDelete.swift; sourceTree = "<group>"; };
+		OBJ_10 /* XMLDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLDatabase.swift; sourceTree = "<group>"; };
+		OBJ_11 /* XMLObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLObject.swift; sourceTree = "<group>"; };
+		OBJ_12 /* XMLObjectMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLObjectMapper.swift; sourceTree = "<group>"; };
+		OBJ_13 /* XMLObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLObjects.swift; sourceTree = "<group>"; };
+		OBJ_16 /* AddressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressTests.swift; sourceTree = "<group>"; };
+		OBJ_17 /* PersonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonTests.swift; sourceTree = "<group>"; };
+		OBJ_18 /* PersonsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonsTests.swift; sourceTree = "<group>"; };
+		OBJ_19 /* PersonsXMLDatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonsXMLDatabaseTests.swift; sourceTree = "<group>"; };
+		OBJ_22 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		OBJ_23 /* Addresses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Addresses.swift; sourceTree = "<group>"; };
+		OBJ_24 /* XMLAddressMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLAddressMapper.swift; sourceTree = "<group>"; };
+		OBJ_26 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		OBJ_27 /* Persons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persons.swift; sourceTree = "<group>"; };
+		OBJ_28 /* XMLPersonMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLPersonMapper.swift; sourceTree = "<group>"; };
+		OBJ_29 /* PersonsXMLDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonsXMLDatabase.swift; sourceTree = "<group>"; };
+		OBJ_30 /* URLExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtensionTests.swift; sourceTree = "<group>"; };
+		OBJ_31 /* XMLAddressMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLAddressMapperTests.swift; sourceTree = "<group>"; };
+		OBJ_32 /* XMLObjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLObjectTests.swift; sourceTree = "<group>"; };
+		OBJ_33 /* XMLObjectsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLObjectsTests.swift; sourceTree = "<group>"; };
+		OBJ_34 /* XMLPersonMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLPersonMapperTests.swift; sourceTree = "<group>"; };
+		OBJ_37 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = Package.swift; path = "/Users/Manu/Desktop/Tagebuch-Applikation/Sourcecode/XMLDatabase/.build/checkouts/SWXMLHash.git-5776748636326364470/Package.swift"; sourceTree = "<group>"; };
+		OBJ_38 /* SWXMLHash+TypeConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SWXMLHash+TypeConversion.swift"; sourceTree = "<group>"; };
+		OBJ_39 /* SWXMLHash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SWXMLHash.swift; sourceTree = "<group>"; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
-		OBJ_60 /* CwlRandom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CwlRandom.swift; sourceTree = "<group>"; };
-		OBJ_61 /* CwlResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CwlResult.swift; sourceTree = "<group>"; };
-		OBJ_62 /* CwlScalarScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CwlScalarScanner.swift; sourceTree = "<group>"; };
-		OBJ_63 /* CwlStackFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CwlStackFrame.swift; sourceTree = "<group>"; };
-		OBJ_64 /* CwlSysctl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CwlSysctl.swift; sourceTree = "<group>"; };
-		OBJ_65 /* CwlUnanticipatedError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CwlUnanticipatedError.swift; sourceTree = "<group>"; };
-		OBJ_66 /* CwlWrappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CwlWrappers.swift; sourceTree = "<group>"; };
-		OBJ_67 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = Package.swift; path = "/Users/Manu/Desktop/Tagebuch-Applikation/Sourcecode/XMLDatabase/.build/checkouts/CwlUtils.git-7480919999473900909/Package.swift"; sourceTree = "<group>"; };
-		OBJ_70 /* CwlMachBadInstructionHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CwlMachBadInstructionHandler.m; sourceTree = "<group>"; };
-		OBJ_71 /* mach_excServer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mach_excServer.c; sourceTree = "<group>"; };
-		OBJ_73 /* CwlMachBadInstructionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CwlMachBadInstructionHandler.h; sourceTree = "<group>"; };
-		OBJ_74 /* mach_excServer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mach_excServer.h; sourceTree = "<group>"; };
-		OBJ_75 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = "/Users/Manu/Desktop/Tagebuch-Applikation/Sourcecode/XMLDatabase/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlMachBadInstructionHandler/module.modulemap"; sourceTree = "<group>"; };
-		OBJ_77 /* CwlBadInstructionException.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CwlBadInstructionException.swift; sourceTree = "<group>"; };
-		OBJ_78 /* CwlCatchBadInstruction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CwlCatchBadInstruction.swift; sourceTree = "<group>"; };
-		OBJ_79 /* CwlDarwinDefinitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CwlDarwinDefinitions.swift; sourceTree = "<group>"; };
-		OBJ_80 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = Package.swift; path = "/Users/Manu/Desktop/Tagebuch-Applikation/Sourcecode/XMLDatabase/.build/checkouts/CwlPreconditionTesting.git--1012998619326918860/Package.swift"; sourceTree = "<group>"; };
-		OBJ_83 /* CwlCatchException.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CwlCatchException.m; sourceTree = "<group>"; };
-		OBJ_85 /* CwlCatchException.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CwlCatchException.h; sourceTree = "<group>"; };
-		OBJ_86 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = "/Users/Manu/Desktop/Tagebuch-Applikation/Sourcecode/XMLDatabase/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlCatchExceptionSupport/module.modulemap"; sourceTree = "<group>"; };
-		OBJ_88 /* CwlCatchException.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CwlCatchException.swift; sourceTree = "<group>"; };
-		OBJ_89 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = Package.swift; path = "/Users/Manu/Desktop/Tagebuch-Applikation/Sourcecode/XMLDatabase/.build/checkouts/CwlCatchException.git-1209057650828305143/Package.swift"; sourceTree = "<group>"; };
-		OBJ_91 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = Package.swift; path = "/Users/Manu/Desktop/Tagebuch-Applikation/Sourcecode/XMLDatabase/.build/checkouts/SWXMLHash.git-5776748636326364470/Package.swift"; sourceTree = "<group>"; };
-		OBJ_92 /* SWXMLHash+TypeConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SWXMLHash+TypeConversion.swift"; sourceTree = "<group>"; };
-		OBJ_93 /* SWXMLHash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SWXMLHash.swift; sourceTree = "<group>"; };
+		OBJ_9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		"SWXMLHash::SWXMLHash::Product" /* SWXMLHash.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SWXMLHash.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"XMLDatabase::XMLDatabase::Product" /* XMLDatabase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = XMLDatabase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"XMLDatabase::XMLDatabaseTests::Product" /* XMLDatabaseTests.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = XMLDatabaseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		OBJ_155 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 0;
-			files = (
-				OBJ_156 /* XMLDatabase.framework in Frameworks */,
-				OBJ_157 /* CwlUtils.framework in Frameworks */,
-				OBJ_158 /* CwlFrameAddress.framework in Frameworks */,
-				OBJ_159 /* ReferenceRandomGenerators.framework in Frameworks */,
-				OBJ_160 /* CwlPreconditionTesting.framework in Frameworks */,
-				OBJ_161 /* CwlMachBadInstructionHandler.framework in Frameworks */,
-				OBJ_162 /* CwlCatchException.framework in Frameworks */,
-				OBJ_163 /* CwlCatchExceptionSupport.framework in Frameworks */,
-				OBJ_164 /* SWXMLHash.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		OBJ_193 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 0;
-			files = (
-				OBJ_194 /* CwlUtils.framework in Frameworks */,
-				OBJ_195 /* CwlFrameAddress.framework in Frameworks */,
-				OBJ_196 /* ReferenceRandomGenerators.framework in Frameworks */,
-				OBJ_197 /* CwlPreconditionTesting.framework in Frameworks */,
-				OBJ_198 /* CwlMachBadInstructionHandler.framework in Frameworks */,
-				OBJ_199 /* CwlCatchException.framework in Frameworks */,
-				OBJ_200 /* CwlCatchExceptionSupport.framework in Frameworks */,
-				OBJ_201 /* SWXMLHash.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		OBJ_231 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 0;
-			files = (
-				OBJ_232 /* CwlFrameAddress.framework in Frameworks */,
-				OBJ_233 /* CwlPreconditionTesting.framework in Frameworks */,
-				OBJ_234 /* CwlMachBadInstructionHandler.framework in Frameworks */,
-				OBJ_235 /* CwlCatchException.framework in Frameworks */,
-				OBJ_236 /* CwlCatchExceptionSupport.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		OBJ_247 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 0;
-			files = (
-				OBJ_248 /* CwlPreconditionTesting.framework in Frameworks */,
-				OBJ_249 /* CwlMachBadInstructionHandler.framework in Frameworks */,
-				OBJ_250 /* CwlCatchException.framework in Frameworks */,
-				OBJ_251 /* CwlCatchExceptionSupport.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		OBJ_262 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 0;
-			files = (
-				OBJ_263 /* CwlPreconditionTesting.framework in Frameworks */,
-				OBJ_264 /* CwlMachBadInstructionHandler.framework in Frameworks */,
-				OBJ_265 /* CwlCatchException.framework in Frameworks */,
-				OBJ_266 /* CwlCatchExceptionSupport.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		OBJ_278 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 0;
-			files = (
-				OBJ_279 /* CwlMachBadInstructionHandler.framework in Frameworks */,
-				OBJ_280 /* CwlCatchException.framework in Frameworks */,
-				OBJ_281 /* CwlCatchExceptionSupport.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		OBJ_291 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 0;
-			files = (
-				OBJ_292 /* CwlCatchException.framework in Frameworks */,
-				OBJ_293 /* CwlCatchExceptionSupport.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		OBJ_301 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 0;
-			files = (
-				OBJ_302 /* CwlCatchExceptionSupport.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		OBJ_309 /* Frameworks */ = {
+		OBJ_102 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_316 /* Frameworks */ = {
+		OBJ_77 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
+				OBJ_78 /* XMLDatabase.framework in Frameworks */,
+				OBJ_79 /* SWXMLHash.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_93 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_94 /* SWXMLHash.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		OBJ_16 /* Tests */ = {
+		OBJ_14 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_17 /* XMLDatabaseTests */,
+				OBJ_15 /* XMLDatabaseTests */,
 			);
 			name = Tests;
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_17 /* XMLDatabaseTests */ = {
+		OBJ_15 /* XMLDatabaseTests */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_21 /* TestObjects */,
-				OBJ_31 /* URLExtensionTests.swift */,
-				OBJ_34 /* XMLObjectTests.swift */,
-				OBJ_18 /* AddressTests.swift */,
-				OBJ_19 /* PersonTests.swift */,
-				OBJ_20 /* PersonsTests.swift */,
-				OBJ_32 /* XMLAddressMapperTests.swift */,
-				OBJ_35 /* XMLPersonMapperTests.swift */,
-				OBJ_33 /* PersonsXMLDatabaseTests.swift */,
+				OBJ_16 /* AddressTests.swift */,
+				OBJ_17 /* PersonTests.swift */,
+				OBJ_18 /* PersonsTests.swift */,
+				OBJ_19 /* PersonsXMLDatabaseTests.swift */,
+				OBJ_20 /* TestObjects */,
+				OBJ_30 /* URLExtensionTests.swift */,
+				OBJ_31 /* XMLAddressMapperTests.swift */,
+				OBJ_32 /* XMLObjectTests.swift */,
+				OBJ_33 /* XMLObjectsTests.swift */,
+				OBJ_34 /* XMLPersonMapperTests.swift */,
 			);
 			name = XMLDatabaseTests;
 			path = Tests/XMLDatabaseTests;
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_21 /* TestObjects */ = {
+		OBJ_20 /* TestObjects */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_22 /* Address */,
-				OBJ_26 /* Person */,
-				OBJ_30 /* PersonsXMLDatabase.swift */,
+				OBJ_21 /* Address */,
+				OBJ_25 /* Person */,
+				OBJ_29 /* PersonsXMLDatabase.swift */,
 			);
 			path = TestObjects;
 			sourceTree = "<group>";
 		};
-		OBJ_22 /* Address */ = {
+		OBJ_21 /* Address */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_23 /* Address.swift */,
-				OBJ_24 /* Addresses.swift */,
-				OBJ_25 /* XMLAddressMapper.swift */,
+				OBJ_22 /* Address.swift */,
+				OBJ_23 /* Addresses.swift */,
+				OBJ_24 /* XMLAddressMapper.swift */,
 			);
 			path = Address;
 			sourceTree = "<group>";
 		};
-		OBJ_26 /* Person */ = {
+		OBJ_25 /* Person */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_27 /* Person.swift */,
-				OBJ_28 /* Persons.swift */,
-				OBJ_29 /* XMLPersonMapper.swift */,
+				OBJ_26 /* Person.swift */,
+				OBJ_27 /* Persons.swift */,
+				OBJ_28 /* XMLPersonMapper.swift */,
 			);
 			path = Person;
 			sourceTree = "<group>";
 		};
-		OBJ_36 /* Dependencies */ = {
+		OBJ_35 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_37 /* CwlUtils 1.0.2 */,
-				OBJ_68 /* CwlPreconditionTesting 1.0.2 */,
-				OBJ_81 /* CwlCatchException 1.0.1 */,
-				OBJ_90 /* SWXMLHash 4.2.5 */,
+				OBJ_36 /* SWXMLHash 4.2.5 */,
 			);
 			name = Dependencies;
 			sourceTree = "<group>";
 		};
-		OBJ_37 /* CwlUtils 1.0.2 */ = {
+		OBJ_36 /* SWXMLHash 4.2.5 */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_38 /* ReferenceRandomGenerators */,
-				OBJ_44 /* CwlFrameAddress */,
-				OBJ_49 /* CwlUtils */,
-				OBJ_67 /* Package.swift */,
+				OBJ_37 /* Package.swift */,
+				OBJ_38 /* SWXMLHash+TypeConversion.swift */,
+				OBJ_39 /* SWXMLHash.swift */,
 			);
-			name = "CwlUtils 1.0.2";
+			name = "SWXMLHash 4.2.5";
+			path = ".build/checkouts/SWXMLHash.git-5776748636326364470/Source";
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_38 /* ReferenceRandomGenerators */ = {
+		OBJ_40 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_39 /* mt19937-64.c */,
-				OBJ_40 /* xoroshiro128plus.c */,
-				OBJ_41 /* include */,
+				"XMLDatabase::XMLDatabaseTests::Product" /* XMLDatabaseTests.xctest */,
+				"XMLDatabase::XMLDatabase::Product" /* XMLDatabase.framework */,
+				"SWXMLHash::SWXMLHash::Product" /* SWXMLHash.framework */,
 			);
-			name = ReferenceRandomGenerators;
-			path = ".build/checkouts/CwlUtils.git-7480919999473900909/Sources/ReferenceRandomGenerators";
-			sourceTree = SOURCE_ROOT;
+			name = Products;
+			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		OBJ_41 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_42 /* ReferenceRandomGenerators.h */,
-				OBJ_43 /* module.modulemap */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		OBJ_44 /* CwlFrameAddress */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_45 /* CwlFrameAddress.c */,
-				OBJ_46 /* include */,
-			);
-			name = CwlFrameAddress;
-			path = ".build/checkouts/CwlUtils.git-7480919999473900909/Sources/CwlFrameAddress";
-			sourceTree = SOURCE_ROOT;
-		};
-		OBJ_46 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_47 /* CwlFrameAddress.h */,
-				OBJ_48 /* module.modulemap */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		OBJ_49 /* CwlUtils */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_50 /* CwlAddressInfo.swift */,
-				OBJ_51 /* CwlCollection.swift */,
-				OBJ_52 /* CwlDebugContext.swift */,
-				OBJ_53 /* CwlDeferredWork.swift */,
-				OBJ_54 /* CwlDeque.swift */,
-				OBJ_55 /* CwlDispatch.swift */,
-				OBJ_56 /* CwlExec.swift */,
-				OBJ_57 /* CwlKeyValueObserver.swift */,
-				OBJ_58 /* CwlMutex.swift */,
-				OBJ_59 /* CwlOnDelete.swift */,
-				OBJ_60 /* CwlRandom.swift */,
-				OBJ_61 /* CwlResult.swift */,
-				OBJ_62 /* CwlScalarScanner.swift */,
-				OBJ_63 /* CwlStackFrame.swift */,
-				OBJ_64 /* CwlSysctl.swift */,
-				OBJ_65 /* CwlUnanticipatedError.swift */,
-				OBJ_66 /* CwlWrappers.swift */,
-			);
-			name = CwlUtils;
-			path = ".build/checkouts/CwlUtils.git-7480919999473900909/Sources/CwlUtils";
-			sourceTree = SOURCE_ROOT;
-		};
-		OBJ_5 = {
+		OBJ_5 /*  */ = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
 				OBJ_7 /* Sources */,
-				OBJ_16 /* Tests */,
-				OBJ_36 /* Dependencies */,
-				OBJ_94 /* Products */,
+				OBJ_14 /* Tests */,
+				OBJ_35 /* Dependencies */,
+				OBJ_40 /* Products */,
 			);
+			name = "";
 			sourceTree = "<group>";
-		};
-		OBJ_68 /* CwlPreconditionTesting 1.0.2 */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_69 /* CwlMachBadInstructionHandler */,
-				OBJ_76 /* CwlPreconditionTesting */,
-				OBJ_80 /* Package.swift */,
-			);
-			name = "CwlPreconditionTesting 1.0.2";
-			sourceTree = SOURCE_ROOT;
-		};
-		OBJ_69 /* CwlMachBadInstructionHandler */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_70 /* CwlMachBadInstructionHandler.m */,
-				OBJ_71 /* mach_excServer.c */,
-				OBJ_72 /* include */,
-			);
-			name = CwlMachBadInstructionHandler;
-			path = ".build/checkouts/CwlPreconditionTesting.git--1012998619326918860/Sources/CwlMachBadInstructionHandler";
-			sourceTree = SOURCE_ROOT;
 		};
 		OBJ_7 /* Sources */ = {
 			isa = PBXGroup;
@@ -742,296 +246,28 @@
 			name = Sources;
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_72 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_73 /* CwlMachBadInstructionHandler.h */,
-				OBJ_74 /* mach_excServer.h */,
-				OBJ_75 /* module.modulemap */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		OBJ_76 /* CwlPreconditionTesting */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_77 /* CwlBadInstructionException.swift */,
-				OBJ_78 /* CwlCatchBadInstruction.swift */,
-				OBJ_79 /* CwlDarwinDefinitions.swift */,
-			);
-			name = CwlPreconditionTesting;
-			path = ".build/checkouts/CwlPreconditionTesting.git--1012998619326918860/Sources/CwlPreconditionTesting";
-			sourceTree = SOURCE_ROOT;
-		};
 		OBJ_8 /* XMLDatabase */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_9 /* Extensions */,
-				OBJ_12 /* XMLDatabase.swift */,
-				OBJ_13 /* XMLObject.swift */,
-				OBJ_14 /* XMLObjectMapper.swift */,
-				OBJ_15 /* XMLObjects.swift */,
+				OBJ_9 /* Extensions.swift */,
+				OBJ_10 /* XMLDatabase.swift */,
+				OBJ_11 /* XMLObject.swift */,
+				OBJ_12 /* XMLObjectMapper.swift */,
+				OBJ_13 /* XMLObjects.swift */,
 			);
 			name = XMLDatabase;
 			path = Sources/XMLDatabase;
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_81 /* CwlCatchException 1.0.1 */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_82 /* CwlCatchExceptionSupport */,
-				OBJ_87 /* CwlCatchException */,
-				OBJ_89 /* Package.swift */,
-			);
-			name = "CwlCatchException 1.0.1";
-			sourceTree = SOURCE_ROOT;
-		};
-		OBJ_82 /* CwlCatchExceptionSupport */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_83 /* CwlCatchException.m */,
-				OBJ_84 /* include */,
-			);
-			name = CwlCatchExceptionSupport;
-			path = ".build/checkouts/CwlCatchException.git-1209057650828305143/Sources/CwlCatchExceptionSupport";
-			sourceTree = SOURCE_ROOT;
-		};
-		OBJ_84 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_85 /* CwlCatchException.h */,
-				OBJ_86 /* module.modulemap */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		OBJ_87 /* CwlCatchException */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_88 /* CwlCatchException.swift */,
-			);
-			name = CwlCatchException;
-			path = ".build/checkouts/CwlCatchException.git-1209057650828305143/Sources/CwlCatchException";
-			sourceTree = SOURCE_ROOT;
-		};
-		OBJ_9 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_11 /* URL.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		OBJ_90 /* SWXMLHash 4.2.5 */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_91 /* Package.swift */,
-				OBJ_92 /* SWXMLHash+TypeConversion.swift */,
-				OBJ_93 /* SWXMLHash.swift */,
-			);
-			name = "SWXMLHash 4.2.5";
-			path = ".build/checkouts/SWXMLHash.git-5776748636326364470/Source";
-			sourceTree = SOURCE_ROOT;
-		};
-		OBJ_94 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				"XMLDatabase::XMLDatabaseTests::Product" /* XMLDatabaseTests.xctest */,
-				"XMLDatabase::XMLDatabase::Product" /* XMLDatabase.framework */,
-				"CwlUtils::CwlUtils::Product" /* CwlUtils.framework */,
-				"CwlUtils::CwlFrameAddress::Product" /* CwlFrameAddress.framework */,
-				"CwlUtils::ReferenceRandomGenerators::Product" /* ReferenceRandomGenerators.framework */,
-				"CwlPreconditionTesting::CwlPreconditionTesting::Product" /* CwlPreconditionTesting.framework */,
-				"CwlPreconditionTesting::CwlMachBadInstructionHandler::Product" /* CwlMachBadInstructionHandler.framework */,
-				"CwlCatchException::CwlCatchException::Product" /* CwlCatchException.framework */,
-				"CwlCatchException::CwlCatchExceptionSupport::Product" /* CwlCatchExceptionSupport.framework */,
-				"SWXMLHash::SWXMLHash::Product" /* SWXMLHash.framework */,
-			);
-			name = Products;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		"CwlCatchException::CwlCatchException" /* CwlCatchException */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_296 /* Build configuration list for PBXNativeTarget "CwlCatchException" */;
-			buildPhases = (
-				OBJ_299 /* Sources */,
-				OBJ_301 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				OBJ_303 /* PBXTargetDependency */,
-			);
-			name = CwlCatchException;
-			productName = CwlCatchException;
-			productReference = "CwlCatchException::CwlCatchException::Product" /* CwlCatchException.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		"CwlCatchException::CwlCatchExceptionSupport" /* CwlCatchExceptionSupport */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_304 /* Build configuration list for PBXNativeTarget "CwlCatchExceptionSupport" */;
-			buildPhases = (
-				OBJ_307 /* Sources */,
-				OBJ_309 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = CwlCatchExceptionSupport;
-			productName = CwlCatchExceptionSupport;
-			productReference = "CwlCatchException::CwlCatchExceptionSupport::Product" /* CwlCatchExceptionSupport.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		"CwlCatchException::SwiftPMPackageDescription" /* CwlCatchExceptionPackageDescription */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_124 /* Build configuration list for PBXNativeTarget "CwlCatchExceptionPackageDescription" */;
-			buildPhases = (
-				OBJ_127 /* Sources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = CwlCatchExceptionPackageDescription;
-			productName = CwlCatchExceptionPackageDescription;
-			productType = "com.apple.product-type.framework";
-		};
-		"CwlPreconditionTesting::CwlMachBadInstructionHandler" /* CwlMachBadInstructionHandler */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_285 /* Build configuration list for PBXNativeTarget "CwlMachBadInstructionHandler" */;
-			buildPhases = (
-				OBJ_288 /* Sources */,
-				OBJ_291 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				OBJ_294 /* PBXTargetDependency */,
-				OBJ_295 /* PBXTargetDependency */,
-			);
-			name = CwlMachBadInstructionHandler;
-			productName = CwlMachBadInstructionHandler;
-			productReference = "CwlPreconditionTesting::CwlMachBadInstructionHandler::Product" /* CwlMachBadInstructionHandler.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		"CwlPreconditionTesting::CwlPreconditionTesting" /* CwlPreconditionTesting */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_271 /* Build configuration list for PBXNativeTarget "CwlPreconditionTesting" */;
-			buildPhases = (
-				OBJ_274 /* Sources */,
-				OBJ_278 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				OBJ_282 /* PBXTargetDependency */,
-				OBJ_283 /* PBXTargetDependency */,
-				OBJ_284 /* PBXTargetDependency */,
-			);
-			name = CwlPreconditionTesting;
-			productName = CwlPreconditionTesting;
-			productReference = "CwlPreconditionTesting::CwlPreconditionTesting::Product" /* CwlPreconditionTesting.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		"CwlPreconditionTesting::SwiftPMPackageDescription" /* CwlPreconditionTestingPackageDescription */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_118 /* Build configuration list for PBXNativeTarget "CwlPreconditionTestingPackageDescription" */;
-			buildPhases = (
-				OBJ_121 /* Sources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = CwlPreconditionTestingPackageDescription;
-			productName = CwlPreconditionTestingPackageDescription;
-			productType = "com.apple.product-type.framework";
-		};
-		"CwlUtils::CwlFrameAddress" /* CwlFrameAddress */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_242 /* Build configuration list for PBXNativeTarget "CwlFrameAddress" */;
-			buildPhases = (
-				OBJ_245 /* Sources */,
-				OBJ_247 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				OBJ_252 /* PBXTargetDependency */,
-				OBJ_253 /* PBXTargetDependency */,
-				OBJ_254 /* PBXTargetDependency */,
-				OBJ_255 /* PBXTargetDependency */,
-			);
-			name = CwlFrameAddress;
-			productName = CwlFrameAddress;
-			productReference = "CwlUtils::CwlFrameAddress::Product" /* CwlFrameAddress.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		"CwlUtils::CwlUtils" /* CwlUtils */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_210 /* Build configuration list for PBXNativeTarget "CwlUtils" */;
-			buildPhases = (
-				OBJ_213 /* Sources */,
-				OBJ_231 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				OBJ_237 /* PBXTargetDependency */,
-				OBJ_238 /* PBXTargetDependency */,
-				OBJ_239 /* PBXTargetDependency */,
-				OBJ_240 /* PBXTargetDependency */,
-				OBJ_241 /* PBXTargetDependency */,
-			);
-			name = CwlUtils;
-			productName = CwlUtils;
-			productReference = "CwlUtils::CwlUtils::Product" /* CwlUtils.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		"CwlUtils::ReferenceRandomGenerators" /* ReferenceRandomGenerators */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_256 /* Build configuration list for PBXNativeTarget "ReferenceRandomGenerators" */;
-			buildPhases = (
-				OBJ_259 /* Sources */,
-				OBJ_262 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				OBJ_267 /* PBXTargetDependency */,
-				OBJ_268 /* PBXTargetDependency */,
-				OBJ_269 /* PBXTargetDependency */,
-				OBJ_270 /* PBXTargetDependency */,
-			);
-			name = ReferenceRandomGenerators;
-			productName = ReferenceRandomGenerators;
-			productReference = "CwlUtils::ReferenceRandomGenerators::Product" /* ReferenceRandomGenerators.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		"CwlUtils::SwiftPMPackageDescription" /* CwlUtilsPackageDescription */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_112 /* Build configuration list for PBXNativeTarget "CwlUtilsPackageDescription" */;
-			buildPhases = (
-				OBJ_115 /* Sources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = CwlUtilsPackageDescription;
-			productName = CwlUtilsPackageDescription;
-			productType = "com.apple.product-type.framework";
-		};
 		"SWXMLHash::SWXMLHash" /* SWXMLHash */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_310 /* Build configuration list for PBXNativeTarget "SWXMLHash" */;
+			buildConfigurationList = OBJ_96 /* Build configuration list for PBXNativeTarget "SWXMLHash" */;
 			buildPhases = (
-				OBJ_313 /* Sources */,
-				OBJ_316 /* Frameworks */,
+				OBJ_99 /* Sources */,
+				OBJ_102 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1044,9 +280,9 @@
 		};
 		"SWXMLHash::SwiftPMPackageDescription" /* SWXMLHashPackageDescription */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_130 /* Build configuration list for PBXNativeTarget "SWXMLHashPackageDescription" */;
+			buildConfigurationList = OBJ_51 /* Build configuration list for PBXNativeTarget "SWXMLHashPackageDescription" */;
 			buildPhases = (
-				OBJ_133 /* Sources */,
+				OBJ_54 /* Sources */,
 			);
 			buildRules = (
 			);
@@ -1058,9 +294,9 @@
 		};
 		"XMLDatabase::SwiftPMPackageDescription" /* XMLDatabasePackageDescription */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_106 /* Build configuration list for PBXNativeTarget "XMLDatabasePackageDescription" */;
+			buildConfigurationList = OBJ_45 /* Build configuration list for PBXNativeTarget "XMLDatabasePackageDescription" */;
 			buildPhases = (
-				OBJ_109 /* Sources */,
+				OBJ_48 /* Sources */,
 			);
 			buildRules = (
 			);
@@ -1072,22 +308,15 @@
 		};
 		"XMLDatabase::XMLDatabase" /* XMLDatabase */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_183 /* Build configuration list for PBXNativeTarget "XMLDatabase" */;
+			buildConfigurationList = OBJ_84 /* Build configuration list for PBXNativeTarget "XMLDatabase" */;
 			buildPhases = (
-				OBJ_186 /* Sources */,
-				OBJ_193 /* Frameworks */,
+				OBJ_87 /* Sources */,
+				OBJ_93 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				OBJ_202 /* PBXTargetDependency */,
-				OBJ_203 /* PBXTargetDependency */,
-				OBJ_204 /* PBXTargetDependency */,
-				OBJ_205 /* PBXTargetDependency */,
-				OBJ_206 /* PBXTargetDependency */,
-				OBJ_207 /* PBXTargetDependency */,
-				OBJ_208 /* PBXTargetDependency */,
-				OBJ_209 /* PBXTargetDependency */,
+				OBJ_95 /* PBXTargetDependency */,
 			);
 			name = XMLDatabase;
 			productName = XMLDatabase;
@@ -1096,23 +325,16 @@
 		};
 		"XMLDatabase::XMLDatabaseTests" /* XMLDatabaseTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_136 /* Build configuration list for PBXNativeTarget "XMLDatabaseTests" */;
+			buildConfigurationList = OBJ_57 /* Build configuration list for PBXNativeTarget "XMLDatabaseTests" */;
 			buildPhases = (
-				OBJ_139 /* Sources */,
-				OBJ_155 /* Frameworks */,
+				OBJ_60 /* Sources */,
+				OBJ_77 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				OBJ_165 /* PBXTargetDependency */,
-				OBJ_167 /* PBXTargetDependency */,
-				OBJ_169 /* PBXTargetDependency */,
-				OBJ_171 /* PBXTargetDependency */,
-				OBJ_173 /* PBXTargetDependency */,
-				OBJ_175 /* PBXTargetDependency */,
-				OBJ_177 /* PBXTargetDependency */,
-				OBJ_179 /* PBXTargetDependency */,
-				OBJ_181 /* PBXTargetDependency */,
+				OBJ_80 /* PBXTargetDependency */,
+				OBJ_82 /* PBXTargetDependency */,
 			);
 			name = XMLDatabaseTests;
 			productName = XMLDatabaseTests;
@@ -1134,25 +356,15 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5;
-			productRefGroup = OBJ_94 /* Products */;
+			mainGroup = OBJ_5 /*  */;
+			productRefGroup = OBJ_40 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				"XMLDatabase::SwiftPMPackageDescription" /* XMLDatabasePackageDescription */,
-				"CwlUtils::SwiftPMPackageDescription" /* CwlUtilsPackageDescription */,
-				"CwlPreconditionTesting::SwiftPMPackageDescription" /* CwlPreconditionTestingPackageDescription */,
-				"CwlCatchException::SwiftPMPackageDescription" /* CwlCatchExceptionPackageDescription */,
 				"SWXMLHash::SwiftPMPackageDescription" /* SWXMLHashPackageDescription */,
 				"XMLDatabase::XMLDatabaseTests" /* XMLDatabaseTests */,
 				"XMLDatabase::XMLDatabase" /* XMLDatabase */,
-				"CwlUtils::CwlUtils" /* CwlUtils */,
-				"CwlUtils::CwlFrameAddress" /* CwlFrameAddress */,
-				"CwlUtils::ReferenceRandomGenerators" /* ReferenceRandomGenerators */,
-				"CwlPreconditionTesting::CwlPreconditionTesting" /* CwlPreconditionTesting */,
-				"CwlPreconditionTesting::CwlMachBadInstructionHandler" /* CwlMachBadInstructionHandler */,
-				"CwlCatchException::CwlCatchException" /* CwlCatchException */,
-				"CwlCatchException::CwlCatchExceptionSupport" /* CwlCatchExceptionSupport */,
 				"SWXMLHash::SWXMLHash" /* SWXMLHash */,
 				"XMLDatabase::XMLDatabasePackageTests::ProductTarget" /* XMLDatabasePackageTests */,
 			);
@@ -1160,891 +372,101 @@
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		OBJ_109 /* Sources */ = {
+		OBJ_48 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_110 /* Package.swift in Sources */,
+				OBJ_49 /* Package.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_115 /* Sources */ = {
+		OBJ_54 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_116 /* Package.swift in Sources */,
+				OBJ_55 /* Package.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_121 /* Sources */ = {
+		OBJ_60 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_122 /* Package.swift in Sources */,
+				OBJ_61 /* AddressTests.swift in Sources */,
+				OBJ_62 /* PersonTests.swift in Sources */,
+				OBJ_63 /* PersonsTests.swift in Sources */,
+				OBJ_64 /* PersonsXMLDatabaseTests.swift in Sources */,
+				OBJ_65 /* Address.swift in Sources */,
+				OBJ_66 /* Addresses.swift in Sources */,
+				OBJ_67 /* XMLAddressMapper.swift in Sources */,
+				OBJ_68 /* Person.swift in Sources */,
+				OBJ_69 /* Persons.swift in Sources */,
+				OBJ_70 /* XMLPersonMapper.swift in Sources */,
+				OBJ_71 /* PersonsXMLDatabase.swift in Sources */,
+				OBJ_72 /* URLExtensionTests.swift in Sources */,
+				OBJ_73 /* XMLAddressMapperTests.swift in Sources */,
+				OBJ_74 /* XMLObjectTests.swift in Sources */,
+				OBJ_75 /* XMLObjectsTests.swift in Sources */,
+				OBJ_76 /* XMLPersonMapperTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_127 /* Sources */ = {
+		OBJ_87 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_128 /* Package.swift in Sources */,
+				OBJ_88 /* Extensions.swift in Sources */,
+				OBJ_89 /* XMLDatabase.swift in Sources */,
+				OBJ_90 /* XMLObject.swift in Sources */,
+				OBJ_91 /* XMLObjectMapper.swift in Sources */,
+				OBJ_92 /* XMLObjects.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_133 /* Sources */ = {
+		OBJ_99 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_134 /* Package.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		OBJ_139 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 0;
-			files = (
-				OBJ_140 /* AddressTests.swift in Sources */,
-				OBJ_141 /* PersonTests.swift in Sources */,
-				OBJ_142 /* PersonsTests.swift in Sources */,
-				OBJ_143 /* Address.swift in Sources */,
-				OBJ_144 /* Addresses.swift in Sources */,
-				OBJ_145 /* XMLAddressMapper.swift in Sources */,
-				OBJ_146 /* Person.swift in Sources */,
-				OBJ_147 /* Persons.swift in Sources */,
-				OBJ_148 /* XMLPersonMapper.swift in Sources */,
-				OBJ_149 /* PersonsXMLDatabase.swift in Sources */,
-				OBJ_150 /* URLExtensionTests.swift in Sources */,
-				OBJ_151 /* XMLAddressMapperTests.swift in Sources */,
-				OBJ_152 /* PersonsXMLDatabaseTests.swift in Sources */,
-				OBJ_153 /* XMLObjectTests.swift in Sources */,
-				OBJ_154 /* XMLPersonMapperTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		OBJ_186 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 0;
-			files = (
-				OBJ_188 /* URL.swift in Sources */,
-				OBJ_189 /* XMLDatabase.swift in Sources */,
-				OBJ_190 /* XMLObject.swift in Sources */,
-				OBJ_191 /* XMLObjectMapper.swift in Sources */,
-				OBJ_192 /* XMLObjects.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		OBJ_213 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 0;
-			files = (
-				OBJ_214 /* CwlAddressInfo.swift in Sources */,
-				OBJ_215 /* CwlCollection.swift in Sources */,
-				OBJ_216 /* CwlDebugContext.swift in Sources */,
-				OBJ_217 /* CwlDeferredWork.swift in Sources */,
-				OBJ_218 /* CwlDeque.swift in Sources */,
-				OBJ_219 /* CwlDispatch.swift in Sources */,
-				OBJ_220 /* CwlExec.swift in Sources */,
-				OBJ_221 /* CwlKeyValueObserver.swift in Sources */,
-				OBJ_222 /* CwlMutex.swift in Sources */,
-				OBJ_223 /* CwlOnDelete.swift in Sources */,
-				OBJ_224 /* CwlRandom.swift in Sources */,
-				OBJ_225 /* CwlResult.swift in Sources */,
-				OBJ_226 /* CwlScalarScanner.swift in Sources */,
-				OBJ_227 /* CwlStackFrame.swift in Sources */,
-				OBJ_228 /* CwlSysctl.swift in Sources */,
-				OBJ_229 /* CwlUnanticipatedError.swift in Sources */,
-				OBJ_230 /* CwlWrappers.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		OBJ_245 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 0;
-			files = (
-				OBJ_246 /* CwlFrameAddress.c in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		OBJ_259 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 0;
-			files = (
-				OBJ_260 /* mt19937-64.c in Sources */,
-				OBJ_261 /* xoroshiro128plus.c in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		OBJ_274 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 0;
-			files = (
-				OBJ_275 /* CwlBadInstructionException.swift in Sources */,
-				OBJ_276 /* CwlCatchBadInstruction.swift in Sources */,
-				OBJ_277 /* CwlDarwinDefinitions.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		OBJ_288 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 0;
-			files = (
-				OBJ_289 /* CwlMachBadInstructionHandler.m in Sources */,
-				OBJ_290 /* mach_excServer.c in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		OBJ_299 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 0;
-			files = (
-				OBJ_300 /* CwlCatchException.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		OBJ_307 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 0;
-			files = (
-				OBJ_308 /* CwlCatchException.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		OBJ_313 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 0;
-			files = (
-				OBJ_314 /* SWXMLHash+TypeConversion.swift in Sources */,
-				OBJ_315 /* SWXMLHash.swift in Sources */,
+				OBJ_100 /* SWXMLHash+TypeConversion.swift in Sources */,
+				OBJ_101 /* SWXMLHash.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		OBJ_165 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "XMLDatabase::XMLDatabase" /* XMLDatabase */;
-			targetProxy = 32E1C3C41FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_167 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlUtils::CwlUtils" /* CwlUtils */;
-			targetProxy = 32E1C3C51FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_169 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlUtils::CwlFrameAddress" /* CwlFrameAddress */;
-			targetProxy = 32E1C3C61FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_171 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlUtils::ReferenceRandomGenerators" /* ReferenceRandomGenerators */;
-			targetProxy = 32E1C3C71FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_173 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlPreconditionTesting::CwlPreconditionTesting" /* CwlPreconditionTesting */;
-			targetProxy = 32E1C3C81FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_175 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlPreconditionTesting::CwlMachBadInstructionHandler" /* CwlMachBadInstructionHandler */;
-			targetProxy = 32E1C3C91FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_177 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlCatchException::CwlCatchException" /* CwlCatchException */;
-			targetProxy = 32E1C3CA1FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_179 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlCatchException::CwlCatchExceptionSupport" /* CwlCatchExceptionSupport */;
-			targetProxy = 32E1C3CB1FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_181 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "SWXMLHash::SWXMLHash" /* SWXMLHash */;
-			targetProxy = 32E1C3CC1FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_202 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlUtils::CwlUtils" /* CwlUtils */;
-			targetProxy = 32E1C3A91FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_203 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlUtils::CwlFrameAddress" /* CwlFrameAddress */;
-			targetProxy = 32E1C3B91FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_204 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlUtils::ReferenceRandomGenerators" /* ReferenceRandomGenerators */;
-			targetProxy = 32E1C3BA1FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_205 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlPreconditionTesting::CwlPreconditionTesting" /* CwlPreconditionTesting */;
-			targetProxy = 32E1C3BF1FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_206 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlPreconditionTesting::CwlMachBadInstructionHandler" /* CwlMachBadInstructionHandler */;
-			targetProxy = 32E1C3C01FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_207 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlCatchException::CwlCatchException" /* CwlCatchException */;
-			targetProxy = 32E1C3C11FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_208 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlCatchException::CwlCatchExceptionSupport" /* CwlCatchExceptionSupport */;
-			targetProxy = 32E1C3C21FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_209 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "SWXMLHash::SWXMLHash" /* SWXMLHash */;
-			targetProxy = 32E1C3C31FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_237 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlUtils::CwlFrameAddress" /* CwlFrameAddress */;
-			targetProxy = 32E1C3AA1FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_238 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlPreconditionTesting::CwlPreconditionTesting" /* CwlPreconditionTesting */;
-			targetProxy = 32E1C3B51FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_239 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlPreconditionTesting::CwlMachBadInstructionHandler" /* CwlMachBadInstructionHandler */;
-			targetProxy = 32E1C3B61FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_240 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlCatchException::CwlCatchException" /* CwlCatchException */;
-			targetProxy = 32E1C3B71FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_241 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlCatchException::CwlCatchExceptionSupport" /* CwlCatchExceptionSupport */;
-			targetProxy = 32E1C3B81FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_252 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlPreconditionTesting::CwlPreconditionTesting" /* CwlPreconditionTesting */;
-			targetProxy = 32E1C3AB1FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_253 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlPreconditionTesting::CwlMachBadInstructionHandler" /* CwlMachBadInstructionHandler */;
-			targetProxy = 32E1C3B21FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_254 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlCatchException::CwlCatchException" /* CwlCatchException */;
-			targetProxy = 32E1C3B31FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_255 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlCatchException::CwlCatchExceptionSupport" /* CwlCatchExceptionSupport */;
-			targetProxy = 32E1C3B41FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_267 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlPreconditionTesting::CwlPreconditionTesting" /* CwlPreconditionTesting */;
-			targetProxy = 32E1C3BB1FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_268 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlPreconditionTesting::CwlMachBadInstructionHandler" /* CwlMachBadInstructionHandler */;
-			targetProxy = 32E1C3BC1FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_269 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlCatchException::CwlCatchException" /* CwlCatchException */;
-			targetProxy = 32E1C3BD1FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_270 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlCatchException::CwlCatchExceptionSupport" /* CwlCatchExceptionSupport */;
-			targetProxy = 32E1C3BE1FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_282 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlPreconditionTesting::CwlMachBadInstructionHandler" /* CwlMachBadInstructionHandler */;
-			targetProxy = 32E1C3AC1FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_283 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlCatchException::CwlCatchException" /* CwlCatchException */;
-			targetProxy = 32E1C3B01FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_284 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlCatchException::CwlCatchExceptionSupport" /* CwlCatchExceptionSupport */;
-			targetProxy = 32E1C3B11FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_294 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlCatchException::CwlCatchException" /* CwlCatchException */;
-			targetProxy = 32E1C3AD1FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_295 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlCatchException::CwlCatchExceptionSupport" /* CwlCatchExceptionSupport */;
-			targetProxy = 32E1C3AF1FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_303 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = "CwlCatchException::CwlCatchExceptionSupport" /* CwlCatchExceptionSupport */;
-			targetProxy = 32E1C3AE1FCEBE32000D692F /* PBXContainerItemProxy */;
-		};
-		OBJ_321 /* PBXTargetDependency */ = {
+		OBJ_107 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "XMLDatabase::XMLDatabaseTests" /* XMLDatabaseTests */;
-			targetProxy = 32E1C3CD1FCEBE34000D692F /* PBXContainerItemProxy */;
+			targetProxy = 32F6598B1FCFE93700BD3B9B /* PBXContainerItemProxy */;
+		};
+		OBJ_80 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "XMLDatabase::XMLDatabase" /* XMLDatabase */;
+			targetProxy = 32F659891FCFE93700BD3B9B /* PBXContainerItemProxy */;
+		};
+		OBJ_82 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "SWXMLHash::SWXMLHash" /* SWXMLHash */;
+			targetProxy = 32F6598A1FCFE93700BD3B9B /* PBXContainerItemProxy */;
+		};
+		OBJ_95 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "SWXMLHash::SWXMLHash" /* SWXMLHash */;
+			targetProxy = 32F659881FCFE93700BD3B9B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		OBJ_107 /* Debug */ = {
+		OBJ_105 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				LD = /usr/bin/true;
-				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
-				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
-		OBJ_108 /* Release */ = {
+		OBJ_106 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				LD = /usr/bin/true;
-				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
-				SWIFT_VERSION = 4.0;
-			};
-			name = Release;
-		};
-		OBJ_113 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				LD = /usr/bin/true;
-				OTHER_SWIFT_FLAGS = "-swift-version 3 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/3 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Debug;
-		};
-		OBJ_114 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				LD = /usr/bin/true;
-				OTHER_SWIFT_FLAGS = "-swift-version 3 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/3 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
-		};
-		OBJ_119 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				LD = /usr/bin/true;
-				OTHER_SWIFT_FLAGS = "-swift-version 3 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/3 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Debug;
-		};
-		OBJ_120 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				LD = /usr/bin/true;
-				OTHER_SWIFT_FLAGS = "-swift-version 3 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/3 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
-		};
-		OBJ_125 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				LD = /usr/bin/true;
-				OTHER_SWIFT_FLAGS = "-swift-version 3 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/3 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Debug;
-		};
-		OBJ_126 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				LD = /usr/bin/true;
-				OTHER_SWIFT_FLAGS = "-swift-version 3 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/3 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
-		};
-		OBJ_131 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				LD = /usr/bin/true;
-				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
-				SWIFT_VERSION = 4.0;
-			};
-			name = Debug;
-		};
-		OBJ_132 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				LD = /usr/bin/true;
-				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
-				SWIFT_VERSION = 4.0;
-			};
-			name = Release;
-		};
-		OBJ_137 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/.build/checkouts/CwlUtils.git-7480919999473900909/Sources/CwlFrameAddress/include",
-					"$(SRCROOT)/.build/checkouts/CwlUtils.git-7480919999473900909/Sources/ReferenceRandomGenerators/include",
-					"$(SRCROOT)/.build/checkouts/CwlPreconditionTesting.git--1012998619326918860/Sources/CwlMachBadInstructionHandler/include",
-					"$(SRCROOT)/.build/checkouts/CwlCatchException.git-1209057650828305143/Sources/CwlCatchExceptionSupport/include",
-					"$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlFrameAddress",
-					"$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/ReferenceRandomGenerators",
-					"$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlMachBadInstructionHandler",
-					"$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlCatchExceptionSupport",
-				);
-				INFOPLIST_FILE = XMLDatabase.xcodeproj/XMLDatabaseTests_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @loader_path/Frameworks";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited) -Xcc -fmodule-map-file=$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlFrameAddress/module.modulemap -Xcc -fmodule-map-file=$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/ReferenceRandomGenerators/module.modulemap -Xcc -fmodule-map-file=$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlMachBadInstructionHandler/module.modulemap -Xcc -fmodule-map-file=$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlCatchExceptionSupport/module.modulemap";
-				SWIFT_VERSION = 4.0;
-				TARGET_NAME = XMLDatabaseTests;
-			};
-			name = Debug;
-		};
-		OBJ_138 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/.build/checkouts/CwlUtils.git-7480919999473900909/Sources/CwlFrameAddress/include",
-					"$(SRCROOT)/.build/checkouts/CwlUtils.git-7480919999473900909/Sources/ReferenceRandomGenerators/include",
-					"$(SRCROOT)/.build/checkouts/CwlPreconditionTesting.git--1012998619326918860/Sources/CwlMachBadInstructionHandler/include",
-					"$(SRCROOT)/.build/checkouts/CwlCatchException.git-1209057650828305143/Sources/CwlCatchExceptionSupport/include",
-					"$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlFrameAddress",
-					"$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/ReferenceRandomGenerators",
-					"$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlMachBadInstructionHandler",
-					"$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlCatchExceptionSupport",
-				);
-				INFOPLIST_FILE = XMLDatabase.xcodeproj/XMLDatabaseTests_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @loader_path/Frameworks";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited) -Xcc -fmodule-map-file=$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlFrameAddress/module.modulemap -Xcc -fmodule-map-file=$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/ReferenceRandomGenerators/module.modulemap -Xcc -fmodule-map-file=$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlMachBadInstructionHandler/module.modulemap -Xcc -fmodule-map-file=$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlCatchExceptionSupport/module.modulemap";
-				SWIFT_VERSION = 4.0;
-				TARGET_NAME = XMLDatabaseTests;
-			};
-			name = Release;
-		};
-		OBJ_184 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/.build/checkouts/CwlUtils.git-7480919999473900909/Sources/CwlFrameAddress/include",
-					"$(SRCROOT)/.build/checkouts/CwlUtils.git-7480919999473900909/Sources/ReferenceRandomGenerators/include",
-					"$(SRCROOT)/.build/checkouts/CwlPreconditionTesting.git--1012998619326918860/Sources/CwlMachBadInstructionHandler/include",
-					"$(SRCROOT)/.build/checkouts/CwlCatchException.git-1209057650828305143/Sources/CwlCatchExceptionSupport/include",
-					"$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlFrameAddress",
-					"$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/ReferenceRandomGenerators",
-					"$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlMachBadInstructionHandler",
-					"$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlCatchExceptionSupport",
-				);
-				INFOPLIST_FILE = XMLDatabase.xcodeproj/XMLDatabase_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited) -Xcc -fmodule-map-file=$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlFrameAddress/module.modulemap -Xcc -fmodule-map-file=$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/ReferenceRandomGenerators/module.modulemap -Xcc -fmodule-map-file=$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlMachBadInstructionHandler/module.modulemap -Xcc -fmodule-map-file=$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlCatchExceptionSupport/module.modulemap";
-				PRODUCT_BUNDLE_IDENTIFIER = XMLDatabase;
-				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
-				TARGET_NAME = XMLDatabase;
-			};
-			name = Debug;
-		};
-		OBJ_185 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/.build/checkouts/CwlUtils.git-7480919999473900909/Sources/CwlFrameAddress/include",
-					"$(SRCROOT)/.build/checkouts/CwlUtils.git-7480919999473900909/Sources/ReferenceRandomGenerators/include",
-					"$(SRCROOT)/.build/checkouts/CwlPreconditionTesting.git--1012998619326918860/Sources/CwlMachBadInstructionHandler/include",
-					"$(SRCROOT)/.build/checkouts/CwlCatchException.git-1209057650828305143/Sources/CwlCatchExceptionSupport/include",
-					"$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlFrameAddress",
-					"$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/ReferenceRandomGenerators",
-					"$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlMachBadInstructionHandler",
-					"$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlCatchExceptionSupport",
-				);
-				INFOPLIST_FILE = XMLDatabase.xcodeproj/XMLDatabase_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited) -Xcc -fmodule-map-file=$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlFrameAddress/module.modulemap -Xcc -fmodule-map-file=$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/ReferenceRandomGenerators/module.modulemap -Xcc -fmodule-map-file=$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlMachBadInstructionHandler/module.modulemap -Xcc -fmodule-map-file=$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlCatchExceptionSupport/module.modulemap";
-				PRODUCT_BUNDLE_IDENTIFIER = XMLDatabase;
-				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
-				TARGET_NAME = XMLDatabase;
-			};
-			name = Release;
-		};
-		OBJ_211 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/.build/checkouts/CwlUtils.git-7480919999473900909/Sources/CwlFrameAddress/include",
-					"$(SRCROOT)/.build/checkouts/CwlPreconditionTesting.git--1012998619326918860/Sources/CwlMachBadInstructionHandler/include",
-					"$(SRCROOT)/.build/checkouts/CwlCatchException.git-1209057650828305143/Sources/CwlCatchExceptionSupport/include",
-					"$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlFrameAddress",
-					"$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlMachBadInstructionHandler",
-					"$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlCatchExceptionSupport",
-				);
-				INFOPLIST_FILE = XMLDatabase.xcodeproj/CwlUtils_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited) -Xcc -fmodule-map-file=$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlFrameAddress/module.modulemap -Xcc -fmodule-map-file=$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlMachBadInstructionHandler/module.modulemap -Xcc -fmodule-map-file=$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlCatchExceptionSupport/module.modulemap";
-				PRODUCT_BUNDLE_IDENTIFIER = CwlUtils;
-				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-				TARGET_NAME = CwlUtils;
-			};
-			name = Debug;
-		};
-		OBJ_212 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/.build/checkouts/CwlUtils.git-7480919999473900909/Sources/CwlFrameAddress/include",
-					"$(SRCROOT)/.build/checkouts/CwlPreconditionTesting.git--1012998619326918860/Sources/CwlMachBadInstructionHandler/include",
-					"$(SRCROOT)/.build/checkouts/CwlCatchException.git-1209057650828305143/Sources/CwlCatchExceptionSupport/include",
-					"$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlFrameAddress",
-					"$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlMachBadInstructionHandler",
-					"$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlCatchExceptionSupport",
-				);
-				INFOPLIST_FILE = XMLDatabase.xcodeproj/CwlUtils_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited) -Xcc -fmodule-map-file=$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlFrameAddress/module.modulemap -Xcc -fmodule-map-file=$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlMachBadInstructionHandler/module.modulemap -Xcc -fmodule-map-file=$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlCatchExceptionSupport/module.modulemap";
-				PRODUCT_BUNDLE_IDENTIFIER = CwlUtils;
-				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-				TARGET_NAME = CwlUtils;
-			};
-			name = Release;
-		};
-		OBJ_243 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEFINES_MODULE = NO;
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/.build/checkouts/CwlUtils.git-7480919999473900909/Sources/CwlFrameAddress/include",
-					"$(SRCROOT)/.build/checkouts/CwlPreconditionTesting.git--1012998619326918860/Sources/CwlMachBadInstructionHandler/include",
-					"$(SRCROOT)/.build/checkouts/CwlCatchException.git-1209057650828305143/Sources/CwlCatchExceptionSupport/include",
-				);
-				INFOPLIST_FILE = XMLDatabase.xcodeproj/CwlFrameAddress_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = CwlFrameAddress;
-				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				TARGET_NAME = CwlFrameAddress;
-			};
-			name = Debug;
-		};
-		OBJ_244 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEFINES_MODULE = NO;
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/.build/checkouts/CwlUtils.git-7480919999473900909/Sources/CwlFrameAddress/include",
-					"$(SRCROOT)/.build/checkouts/CwlPreconditionTesting.git--1012998619326918860/Sources/CwlMachBadInstructionHandler/include",
-					"$(SRCROOT)/.build/checkouts/CwlCatchException.git-1209057650828305143/Sources/CwlCatchExceptionSupport/include",
-				);
-				INFOPLIST_FILE = XMLDatabase.xcodeproj/CwlFrameAddress_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = CwlFrameAddress;
-				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				TARGET_NAME = CwlFrameAddress;
-			};
-			name = Release;
-		};
-		OBJ_257 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEFINES_MODULE = NO;
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/.build/checkouts/CwlUtils.git-7480919999473900909/Sources/ReferenceRandomGenerators/include",
-					"$(SRCROOT)/.build/checkouts/CwlPreconditionTesting.git--1012998619326918860/Sources/CwlMachBadInstructionHandler/include",
-					"$(SRCROOT)/.build/checkouts/CwlCatchException.git-1209057650828305143/Sources/CwlCatchExceptionSupport/include",
-				);
-				INFOPLIST_FILE = XMLDatabase.xcodeproj/ReferenceRandomGenerators_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = ReferenceRandomGenerators;
-				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				TARGET_NAME = ReferenceRandomGenerators;
-			};
-			name = Debug;
-		};
-		OBJ_258 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEFINES_MODULE = NO;
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/.build/checkouts/CwlUtils.git-7480919999473900909/Sources/ReferenceRandomGenerators/include",
-					"$(SRCROOT)/.build/checkouts/CwlPreconditionTesting.git--1012998619326918860/Sources/CwlMachBadInstructionHandler/include",
-					"$(SRCROOT)/.build/checkouts/CwlCatchException.git-1209057650828305143/Sources/CwlCatchExceptionSupport/include",
-				);
-				INFOPLIST_FILE = XMLDatabase.xcodeproj/ReferenceRandomGenerators_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = ReferenceRandomGenerators;
-				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				TARGET_NAME = ReferenceRandomGenerators;
-			};
-			name = Release;
-		};
-		OBJ_272 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/.build/checkouts/CwlPreconditionTesting.git--1012998619326918860/Sources/CwlMachBadInstructionHandler/include",
-					"$(SRCROOT)/.build/checkouts/CwlCatchException.git-1209057650828305143/Sources/CwlCatchExceptionSupport/include",
-					"$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlMachBadInstructionHandler",
-					"$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlCatchExceptionSupport",
-				);
-				INFOPLIST_FILE = XMLDatabase.xcodeproj/CwlPreconditionTesting_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited) -Xcc -fmodule-map-file=$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlMachBadInstructionHandler/module.modulemap -Xcc -fmodule-map-file=$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlCatchExceptionSupport/module.modulemap";
-				PRODUCT_BUNDLE_IDENTIFIER = CwlPreconditionTesting;
-				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-				TARGET_NAME = CwlPreconditionTesting;
-			};
-			name = Debug;
-		};
-		OBJ_273 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/.build/checkouts/CwlPreconditionTesting.git--1012998619326918860/Sources/CwlMachBadInstructionHandler/include",
-					"$(SRCROOT)/.build/checkouts/CwlCatchException.git-1209057650828305143/Sources/CwlCatchExceptionSupport/include",
-					"$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlMachBadInstructionHandler",
-					"$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlCatchExceptionSupport",
-				);
-				INFOPLIST_FILE = XMLDatabase.xcodeproj/CwlPreconditionTesting_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited) -Xcc -fmodule-map-file=$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlMachBadInstructionHandler/module.modulemap -Xcc -fmodule-map-file=$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlCatchExceptionSupport/module.modulemap";
-				PRODUCT_BUNDLE_IDENTIFIER = CwlPreconditionTesting;
-				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-				TARGET_NAME = CwlPreconditionTesting;
-			};
-			name = Release;
-		};
-		OBJ_286 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEFINES_MODULE = NO;
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/.build/checkouts/CwlPreconditionTesting.git--1012998619326918860/Sources/CwlMachBadInstructionHandler/include",
-					"$(SRCROOT)/.build/checkouts/CwlCatchException.git-1209057650828305143/Sources/CwlCatchExceptionSupport/include",
-				);
-				INFOPLIST_FILE = XMLDatabase.xcodeproj/CwlMachBadInstructionHandler_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = CwlMachBadInstructionHandler;
-				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				TARGET_NAME = CwlMachBadInstructionHandler;
-			};
-			name = Debug;
-		};
-		OBJ_287 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEFINES_MODULE = NO;
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/.build/checkouts/CwlPreconditionTesting.git--1012998619326918860/Sources/CwlMachBadInstructionHandler/include",
-					"$(SRCROOT)/.build/checkouts/CwlCatchException.git-1209057650828305143/Sources/CwlCatchExceptionSupport/include",
-				);
-				INFOPLIST_FILE = XMLDatabase.xcodeproj/CwlMachBadInstructionHandler_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = CwlMachBadInstructionHandler;
-				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				TARGET_NAME = CwlMachBadInstructionHandler;
-			};
-			name = Release;
-		};
-		OBJ_297 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/.build/checkouts/CwlCatchException.git-1209057650828305143/Sources/CwlCatchExceptionSupport/include",
-					"$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlCatchExceptionSupport",
-				);
-				INFOPLIST_FILE = XMLDatabase.xcodeproj/CwlCatchException_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited) -Xcc -fmodule-map-file=$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlCatchExceptionSupport/module.modulemap";
-				PRODUCT_BUNDLE_IDENTIFIER = CwlCatchException;
-				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-				TARGET_NAME = CwlCatchException;
-			};
-			name = Debug;
-		};
-		OBJ_298 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/.build/checkouts/CwlCatchException.git-1209057650828305143/Sources/CwlCatchExceptionSupport/include",
-					"$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlCatchExceptionSupport",
-				);
-				INFOPLIST_FILE = XMLDatabase.xcodeproj/CwlCatchException_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited) -Xcc -fmodule-map-file=$(SRCROOT)/XMLDatabase.xcodeproj/GeneratedModuleMap/CwlCatchExceptionSupport/module.modulemap";
-				PRODUCT_BUNDLE_IDENTIFIER = CwlCatchException;
-				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-				TARGET_NAME = CwlCatchException;
 			};
 			name = Release;
 		};
@@ -2070,112 +492,6 @@
 			};
 			name = Debug;
 		};
-		OBJ_305 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEFINES_MODULE = NO;
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/.build/checkouts/CwlCatchException.git-1209057650828305143/Sources/CwlCatchExceptionSupport/include",
-				);
-				INFOPLIST_FILE = XMLDatabase.xcodeproj/CwlCatchExceptionSupport_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = CwlCatchExceptionSupport;
-				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				TARGET_NAME = CwlCatchExceptionSupport;
-			};
-			name = Debug;
-		};
-		OBJ_306 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEFINES_MODULE = NO;
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/.build/checkouts/CwlCatchException.git-1209057650828305143/Sources/CwlCatchExceptionSupport/include",
-				);
-				INFOPLIST_FILE = XMLDatabase.xcodeproj/CwlCatchExceptionSupport_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = CwlCatchExceptionSupport;
-				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				TARGET_NAME = CwlCatchExceptionSupport;
-			};
-			name = Release;
-		};
-		OBJ_311 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = XMLDatabase.xcodeproj/SWXMLHash_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = SWXMLHash;
-				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
-				TARGET_NAME = SWXMLHash;
-			};
-			name = Debug;
-		};
-		OBJ_312 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = XMLDatabase.xcodeproj/SWXMLHash_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = SWXMLHash;
-				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
-				TARGET_NAME = SWXMLHash;
-			};
-			name = Release;
-		};
-		OBJ_319 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-			};
-			name = Debug;
-		};
-		OBJ_320 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-			};
-			name = Release;
-		};
 		OBJ_4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2196,68 +512,174 @@
 			};
 			name = Release;
 		};
+		OBJ_46 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		OBJ_47 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
+		OBJ_52 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		OBJ_53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 4 -I /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
+		OBJ_58 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = XMLDatabase.xcodeproj/XMLDatabaseTests_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = XMLDatabaseTests;
+			};
+			name = Debug;
+		};
+		OBJ_59 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = XMLDatabase.xcodeproj/XMLDatabaseTests_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = XMLDatabaseTests;
+			};
+			name = Release;
+		};
+		OBJ_85 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = XMLDatabase.xcodeproj/XMLDatabase_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = XMLDatabase;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = XMLDatabase;
+			};
+			name = Debug;
+		};
+		OBJ_86 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = XMLDatabase.xcodeproj/XMLDatabase_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = XMLDatabase;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = XMLDatabase;
+			};
+			name = Release;
+		};
+		OBJ_97 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = XMLDatabase.xcodeproj/SWXMLHash_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = SWXMLHash;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = SWXMLHash;
+			};
+			name = Debug;
+		};
+		OBJ_98 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = XMLDatabase.xcodeproj/SWXMLHash_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = SWXMLHash;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = SWXMLHash;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		OBJ_106 /* Build configuration list for PBXNativeTarget "XMLDatabasePackageDescription" */ = {
+		OBJ_104 /* Build configuration list for PBXAggregateTarget "XMLDatabasePackageTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_107 /* Debug */,
-				OBJ_108 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		OBJ_112 /* Build configuration list for PBXNativeTarget "CwlUtilsPackageDescription" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				OBJ_113 /* Debug */,
-				OBJ_114 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		OBJ_118 /* Build configuration list for PBXNativeTarget "CwlPreconditionTestingPackageDescription" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				OBJ_119 /* Debug */,
-				OBJ_120 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		OBJ_124 /* Build configuration list for PBXNativeTarget "CwlCatchExceptionPackageDescription" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				OBJ_125 /* Debug */,
-				OBJ_126 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		OBJ_130 /* Build configuration list for PBXNativeTarget "SWXMLHashPackageDescription" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				OBJ_131 /* Debug */,
-				OBJ_132 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		OBJ_136 /* Build configuration list for PBXNativeTarget "XMLDatabaseTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				OBJ_137 /* Debug */,
-				OBJ_138 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		OBJ_183 /* Build configuration list for PBXNativeTarget "XMLDatabase" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				OBJ_184 /* Debug */,
-				OBJ_185 /* Release */,
+				OBJ_105 /* Debug */,
+				OBJ_106 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -2271,83 +693,47 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		OBJ_210 /* Build configuration list for PBXNativeTarget "CwlUtils" */ = {
+		OBJ_45 /* Build configuration list for PBXNativeTarget "XMLDatabasePackageDescription" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_211 /* Debug */,
-				OBJ_212 /* Release */,
+				OBJ_46 /* Debug */,
+				OBJ_47 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		OBJ_242 /* Build configuration list for PBXNativeTarget "CwlFrameAddress" */ = {
+		OBJ_51 /* Build configuration list for PBXNativeTarget "SWXMLHashPackageDescription" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_243 /* Debug */,
-				OBJ_244 /* Release */,
+				OBJ_52 /* Debug */,
+				OBJ_53 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		OBJ_256 /* Build configuration list for PBXNativeTarget "ReferenceRandomGenerators" */ = {
+		OBJ_57 /* Build configuration list for PBXNativeTarget "XMLDatabaseTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_257 /* Debug */,
-				OBJ_258 /* Release */,
+				OBJ_58 /* Debug */,
+				OBJ_59 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		OBJ_271 /* Build configuration list for PBXNativeTarget "CwlPreconditionTesting" */ = {
+		OBJ_84 /* Build configuration list for PBXNativeTarget "XMLDatabase" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_272 /* Debug */,
-				OBJ_273 /* Release */,
+				OBJ_85 /* Debug */,
+				OBJ_86 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		OBJ_285 /* Build configuration list for PBXNativeTarget "CwlMachBadInstructionHandler" */ = {
+		OBJ_96 /* Build configuration list for PBXNativeTarget "SWXMLHash" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_286 /* Debug */,
-				OBJ_287 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		OBJ_296 /* Build configuration list for PBXNativeTarget "CwlCatchException" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				OBJ_297 /* Debug */,
-				OBJ_298 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		OBJ_304 /* Build configuration list for PBXNativeTarget "CwlCatchExceptionSupport" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				OBJ_305 /* Debug */,
-				OBJ_306 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		OBJ_310 /* Build configuration list for PBXNativeTarget "SWXMLHash" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				OBJ_311 /* Debug */,
-				OBJ_312 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		OBJ_318 /* Build configuration list for PBXAggregateTarget "XMLDatabasePackageTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				OBJ_319 /* Debug */,
-				OBJ_320 /* Release */,
+				OBJ_97 /* Debug */,
+				OBJ_98 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

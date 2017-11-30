@@ -23,7 +23,7 @@ class PersonsXMLDatabaseTests: XCTestCase {
         super.setUp()
         
         // basePath
-        basePath = Bundle.init(for: DiaryXMLDatabaseTests.self).resourceURL!
+        basePath = Bundle.init(for: PersonsXMLDatabaseTests.self).resourceURL!
         
         // addresses locked and unlocked xml files
         addressesXMLFileContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><addresses><address id=\"1\"><city>Title</city><street>Name</street></address></addresses>"
@@ -37,10 +37,10 @@ class PersonsXMLDatabaseTests: XCTestCase {
     }
     
     override func tearDown() {
-        URL.removeFileIfExists(file: addressesLockedXMLFilePath!)
-        URL.removeFileIfExists(file: addressesUnlockedXMLFilePath!)
-        URL.removeFileIfExists(file: personsLockedXMLFilePath!)
-        URL.removeFileIfExists(file: personsUnlockedXMLFilePath!)
+        removeFileIfExists(file: addressesLockedXMLFilePath!)
+        removeFileIfExists(file: addressesUnlockedXMLFilePath!)
+        removeFileIfExists(file: personsLockedXMLFilePath!)
+        removeFileIfExists(file: personsUnlockedXMLFilePath!)
         
         super.tearDown()
     }
@@ -91,10 +91,31 @@ class PersonsXMLDatabaseTests: XCTestCase {
             XCTFail("\(error)")
         }
     }
-
+    
+    func testAddManyPersons() {
+        
+        do {
+            try addressesXMLFileContent!.write(to: addressesUnlockedXMLFilePath!, atomically: true, encoding: String.Encoding.utf8)
+            XCTAssert(FileManager.default.fileExists(atPath: addressesUnlockedXMLFilePath!.path))
+            
+            try personsXMLContent!.write(to: personsLockedXMLFilePath!, atomically: true, encoding: String.Encoding.utf8)
+            XCTAssert(FileManager.default.fileExists(atPath: personsLockedXMLFilePath!.path))
+            let db = try PersonsXMLDatabase(url: basePath!)
+            do {
+                for _ in 0...1000 {
+                    try db.persons.addObject(object: Person(id: db.persons.nextId, gender: Person.Gender.male, firstName: "Peter"))
+                }
+            } catch {
+                XCTFail("\(error)")
+            }
+            XCTAssertNoThrow(try db.persons.save())
+        } catch {
+            XCTFail("\(error)")
+        }
+    }
 }
 
-extension DiaryXMLDatabaseTests {
+extension PersonsXMLDatabaseTests {
     static var allTests = [
         ("testDiaryXMLDatabaseWithLockedFiles", testDiaryXMLDatabaseWithLockedFiles),
         ("testDiaryXMLDatabaseWithAddressesLockedFile", testDiaryXMLDatabaseWithAddressesLockedFile),

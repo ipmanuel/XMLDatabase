@@ -1,4 +1,0 @@
-module ReferenceRandomGenerators {
-    umbrella header "/Users/Manu/Desktop/Tagebuch-Applikation/Sourcecode/XMLDatabase/.build/checkouts/CwlUtils.git-7480919999473900909/Sources/ReferenceRandomGenerators/include/ReferenceRandomGenerators.h"
-    export *
-}

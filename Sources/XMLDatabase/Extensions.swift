@@ -7,11 +7,12 @@
 
 import Foundation
 
+// MARK: URL
+
 enum URLError: Error {
     case fileDoesNotExist(name: String, path: String)
     case fileWithNewFilenameExistsAlready(oldName: String, newName: String, in: String)
 }
-
 
 extension URL {
     /// rename the file specified in the url
@@ -36,15 +37,5 @@ extension URL {
         try self.setResourceValues(resourceValues)
         self.deleteLastPathComponent()
         self.appendPathComponent(newName)
-    }
-    
-    static func removeFileIfExists(file url: URL) {
-        do {
-            if FileManager.default.fileExists(atPath: url.path) {
-                try FileManager.default.removeItem(at: url)
-            }
-        } catch {
-            print("File could not removed \(url.path): \(error)")
-        }
     }
 }

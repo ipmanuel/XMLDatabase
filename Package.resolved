@@ -2,33 +2,6 @@
   "object": {
     "pins": [
       {
-        "package": "CwlCatchException",
-        "repositoryURL": "https://github.com/mattgallagher/CwlCatchException.git",
-        "state": {
-          "branch": null,
-          "revision": "2ae1cdfc32c9f9839d6e09598565da58ab0212ff",
-          "version": "1.0.1"
-        }
-      },
-      {
-        "package": "CwlPreconditionTesting",
-        "repositoryURL": "https://github.com/mattgallagher/CwlPreconditionTesting.git",
-        "state": {
-          "branch": null,
-          "revision": "d02e379378cd6e0e299f907a8d010556c83b9e1b",
-          "version": "1.0.2"
-        }
-      },
-      {
-        "package": "CwlUtils",
-        "repositoryURL": "https://github.com/mattgallagher/CwlUtils.git",
-        "state": {
-          "branch": null,
-          "revision": "059400f5fb1b1f4f8a25e26ee7156aa4b6574bdb",
-          "version": "1.0.2"
-        }
-      },
-      {
         "package": "SWXMLHash",
         "repositoryURL": "https://github.com/drmohundro/SWXMLHash.git",
         "state": {
