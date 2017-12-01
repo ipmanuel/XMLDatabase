@@ -4,7 +4,7 @@ import XCTest
 class PersonTests: XCTestCase {
     
     
-    // MARK: valid properties
+    // MARK: Properties tests
     
     func testValidProperties() {
         // different relations
@@ -38,7 +38,7 @@ class PersonTests: XCTestCase {
     }
     
     
-    // MARK: property id tests
+    // MARK: Property id tests
     
     func testInvalidId() {
         XCTAssertThrowsError(try Person(id: 0, gender: Person.Gender.male, firstName: "Manuel")) { error in
@@ -50,7 +50,7 @@ class PersonTests: XCTestCase {
     }
     
     
-    // MARK: property gender tests
+    // MARK: Property gender tests
     
     func testValidGenders() {
         XCTAssertNoThrow(try Person(id: 1, gender: "male", firstName: "Manuel"))
@@ -98,7 +98,7 @@ class PersonTests: XCTestCase {
     }
     
     
-    // MARK: property firstName tests
+    // MARK: Property firstName tests
     
     func testValidFirstNames() {
         // via init

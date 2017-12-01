@@ -43,7 +43,6 @@ class XMLPersonMapperTests: XCTestCase {
         // id does not exist
         xmlContent = "<person><gender>male</gender><relation>me</relation><firstName>Manuel</firstName></person>"
         xmlElementParsed = SWXMLHash.parse(xmlContent)["person"].all[0]
-        print(xmlElementParsed.element!.name)
         XCTAssertThrowsError(try XMLPersonMapper.toObject(element: xmlElementParsed, at: randomURL)) { error in
             guard case XMLObjectsError.requiredAttributeIsMissing(let element, let attribute, let url) = error else {
                 return XCTFail("\(error)")

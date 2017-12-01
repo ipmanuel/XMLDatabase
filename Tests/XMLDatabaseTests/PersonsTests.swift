@@ -51,3 +51,8 @@ class PersonsTests: XCTestCase {
     }
 }
 
+extension PersonsTests {
+    static var allTests = [
+        ("testConstraintOnePersonExists", testConstraintOnePersonExists)
+    ]
+}

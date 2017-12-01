@@ -7,13 +7,6 @@
 
 import Foundation
 
-// MARK: URL
-
-enum URLError: Error {
-    case fileDoesNotExist(name: String, path: String)
-    case fileWithNewFilenameExistsAlready(oldName: String, newName: String, in: String)
-}
-
 extension URL {
     /// rename the file specified in the url
     mutating func rename(newName: String) throws {
@@ -22,13 +15,13 @@ extension URL {
         
         // file should exists
         guard FileManager.default.fileExists(atPath: self.path) else {
-            throw URLError.fileDoesNotExist(name: oldName, path: self.deletingPathExtension().path)
+            throw URLError.fileDoesNotExist(at: self)
         }
         
         // there should not exists a file with the new name
         let newUrl = self.deletingLastPathComponent().appendingPathComponent(newName)
         guard !FileManager.default.fileExists(atPath: newUrl.path) else {
-            throw URLError.fileWithNewFilenameExistsAlready(oldName: oldName, newName: newName, in: self.deletingLastPathComponent().path)
+            throw URLError.fileWithNewFilenameExistsAlready(oldName: oldName, at: self.deletingLastPathComponent())
         }
         
         // change name

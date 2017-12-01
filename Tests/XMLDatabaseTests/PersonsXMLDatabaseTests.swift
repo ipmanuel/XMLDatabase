@@ -48,7 +48,7 @@ class PersonsXMLDatabaseTests: XCTestCase {
     
     // MARK: unlock xml files
     
-    func testDiaryXMLDatabaseWithLockedFiles() {
+    func testXMLDatabaseWithLockedFiles() {
         do {
             try addressesXMLFileContent!.write(to: addressesLockedXMLFilePath!, atomically: true, encoding: String.Encoding.utf8)
             XCTAssert(FileManager.default.fileExists(atPath: addressesLockedXMLFilePath!.path))
@@ -62,7 +62,7 @@ class PersonsXMLDatabaseTests: XCTestCase {
         }
     }
     
-    func testDiaryXMLDatabaseWithAddressesLockedFile() {
+    func testXMLDatabaseWithAddressesLockedFile() {
         do {
             try addressesXMLFileContent!.write(to: addressesLockedXMLFilePath!, atomically: true, encoding: String.Encoding.utf8)
             XCTAssert(FileManager.default.fileExists(atPath: addressesLockedXMLFilePath!.path))
@@ -77,7 +77,7 @@ class PersonsXMLDatabaseTests: XCTestCase {
         }
     }
     
-    func testDiaryXMLDatabaseWithPersonsLockedFile() {
+    func testXMLDatabaseWithPersonsLockedFile() {
         do {
             try addressesXMLFileContent!.write(to: addressesUnlockedXMLFilePath!, atomically: true, encoding: String.Encoding.utf8)
             XCTAssert(FileManager.default.fileExists(atPath: addressesUnlockedXMLFilePath!.path))
@@ -93,7 +93,6 @@ class PersonsXMLDatabaseTests: XCTestCase {
     }
     
     func testAddManyPersons() {
-        
         do {
             try addressesXMLFileContent!.write(to: addressesUnlockedXMLFilePath!, atomically: true, encoding: String.Encoding.utf8)
             XCTAssert(FileManager.default.fileExists(atPath: addressesUnlockedXMLFilePath!.path))
@@ -117,8 +116,9 @@ class PersonsXMLDatabaseTests: XCTestCase {
 
 extension PersonsXMLDatabaseTests {
     static var allTests = [
-        ("testDiaryXMLDatabaseWithLockedFiles", testDiaryXMLDatabaseWithLockedFiles),
-        ("testDiaryXMLDatabaseWithAddressesLockedFile", testDiaryXMLDatabaseWithAddressesLockedFile),
-        ("testDiaryXMLDatabaseWithPersonsLockedFile", testDiaryXMLDatabaseWithPersonsLockedFile)
+        ("testXMLDatabaseWithLockedFiles", testXMLDatabaseWithLockedFiles),
+        ("testXMLDatabaseWithAddressesLockedFile", testXMLDatabaseWithAddressesLockedFile),
+        ("testXMLDatabaseWithPersonsLockedFile", testXMLDatabaseWithPersonsLockedFile),
+        ("testAddManyPersons", testAddManyPersons)
         ]
 }

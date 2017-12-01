@@ -12,32 +12,32 @@ class XMLObjectsTests: XCTestCase {
 
     // addresses XML file
     private var baseURL: URL?
-    private var addressesXMLContent: String?
-    private var addressesLockedXMLFileURL: URL?
-    private var addressesUnlockedXMLFileURL: URL?
+    private var xmlContent: String?
+    private var lockedXMLFileURL: URL?
+    private var unlockedXMLFileURL: URL?
     private var xmlObjects: XMLObjects<XMLAddressMapper>?
+    
     
     // MARK: Init
     
     override func setUp() {
         super.setUp()
         
-        
         baseURL = Bundle.init(for: XMLObjectsTests.self).resourceURL!
-        addressesXMLContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><addresses><address id=\"1\"><city>Berlin</city><street>Spandauer Straße</street></address><address id=\"32\"><city>Amsterdam</city><street>Rozengracht</street><address></addresses>"
-        addressesLockedXMLFileURL = baseURL!.appendingPathComponent("_Addresses.xml")
-        addressesUnlockedXMLFileURL = baseURL!.appendingPathComponent("Addresses.xml")
+        xmlContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><addresses><address id=\"1\"><city>Berlin</city><street>Spandauer Straße</street></address><address id=\"32\"><city>Amsterdam</city><street>Rozengracht</street></address></addresses>"
+        lockedXMLFileURL = baseURL!.appendingPathComponent("_Addresses.xml")
+        unlockedXMLFileURL = baseURL!.appendingPathComponent("Addresses.xml")
         do {
-            try addressesXMLContent!.write(to: addressesUnlockedXMLFileURL!, atomically: true, encoding: String.Encoding.utf8)
-            xmlObjects = try XMLObjects<XMLAddressMapper>(xmlFileURL: addressesUnlockedXMLFileURL!)
+            try xmlContent!.write(to: unlockedXMLFileURL!, atomically: true, encoding: String.Encoding.utf8)
+            xmlObjects = try XMLObjects<XMLAddressMapper>(xmlFileURL: unlockedXMLFileURL!)
         } catch {
             XCTFail("\(error)")
         }
     }
     
     override func tearDown() {
-        removeFileIfExists(file: addressesLockedXMLFileURL!)
-        removeFileIfExists(file: addressesUnlockedXMLFileURL!)
+        removeFileIfExists(file: lockedXMLFileURL!)
+        removeFileIfExists(file: unlockedXMLFileURL!)
         
         super.tearDown()
     }
@@ -46,20 +46,23 @@ class XMLObjectsTests: XCTestCase {
     // MARK: XMLObjectsTests
     
     func testLock() {
-        XCTAssertTrue(FileManager.default.fileExists(atPath: addressesLockedXMLFileURL!.path))
+        XCTAssertTrue(FileManager.default.fileExists(atPath: lockedXMLFileURL!.path))
         
         // test to init a second instance
-        XCTAssertThrowsError(try Addresses(xmlFileURL: addressesUnlockedXMLFileURL!)) { error in
+        XCTAssertThrowsError(try Addresses(xmlFileURL: unlockedXMLFileURL!)) { error in
             guard case XMLObjectsError.xmlFileIsLocked( _) = error else {
                 return XCTFail("\(error)")
             }
         }
-        XCTAssertThrowsError(try Addresses(xmlFileURL: addressesLockedXMLFileURL!)) { error in
+        XCTAssertThrowsError(try Addresses(xmlFileURL: lockedXMLFileURL!)) { error in
             guard case XMLObjectsError.invalidXMLFilename(let url) = error else {
                 return XCTFail("\(error)")
             }
             XCTAssertEqual(url.deletingPathExtension().lastPathComponent, "_Addresses")
         }
+        xmlObjects = nil
+        XCTAssertTrue(FileManager.default.fileExists(atPath: unlockedXMLFileURL!.path))
+        XCTAssertFalse(FileManager.default.fileExists(atPath: lockedXMLFileURL!.path))
     }
     
     func testImportObjects() {
@@ -86,7 +89,7 @@ class XMLObjectsTests: XCTestCase {
     
     func testAddAndSaveObjects() {
         var address: Address?
-        XCTAssertNoThrow(address = try Address(id: xmlObjects!.nextId, city: "Cologne", street: "Ehrenstraße"))
+        XCTAssertNoThrow(address = try Address(id: 5, city: "Cologne", street: "Ehrenstraße"))
         XCTAssertNoThrow(try xmlObjects!.addObject(object: address!))
         XCTAssertEqual(xmlObjects!.count, 2)
         XCTAssertNoThrow(try xmlObjects!.save())
@@ -94,8 +97,14 @@ class XMLObjectsTests: XCTestCase {
         
         // init again
         xmlObjects = nil
-        XCTAssertNoThrow(xmlObjects = try XMLObjects<XMLAddressMapper>(xmlFileURL: addressesUnlockedXMLFileURL!))
+        XCTAssertNoThrow(xmlObjects = try XMLObjects<XMLAddressMapper>(xmlFileURL: unlockedXMLFileURL!))
         XCTAssertEqual(xmlObjects!.count, 3)
+        xmlObjects = nil
+        
+        // test file content
+        var xmlDocument: XMLDocument?
+        XCTAssertNoThrow(xmlDocument = try XMLDocument(contentsOf: unlockedXMLFileURL!, options: XMLNode.Options.documentTidyXML))
+        XCTAssertEqual(xmlDocument!.xmlString, "<?xml version=\"1.0\" encoding=\"UTF-8\"?><addresses><address id=\"1\"><city>Berlin</city><street>Spandauer Straße</street></address><address id=\"5\"><city>Cologne</city><street>Ehrenstraße</street></address><address id=\"32\"><city>Amsterdam</city><street>Rozengracht</street></address></addresses>")
     }
     
     func testNextId() {
@@ -190,6 +199,20 @@ class XMLObjectsTests: XCTestCase {
             XCTAssertNoThrow(object = try Address(id: xmlObjects!.nextId, city: "Cologne", street: "Ehrenstraße"))
             XCTAssertNoThrow(try xmlObjects!.addObject(object: object!))
         }
+        
+        XCTAssertNoThrow(try xmlObjects!.save())
+        XCTAssertEqual(xmlObjects!.count, 59)
+        
+        // delete all objects
+        for i in 0...59 {
+            xmlObjects!.deleteObject(id: i)
+        }
+        XCTAssertNoThrow(try xmlObjects!.save())
+        XCTAssertEqual(xmlObjects!.count, 0)
+        
+        XCTAssertEqual(xmlObjects!.nextId, 1)
+        XCTAssertNoThrow(object = try Address(id: xmlObjects!.nextId, city: "Cologne", street: "Ehrenstraße"))
+        XCTAssertNoThrow(try xmlObjects!.addObject(object: object!))
     }
     
     func testSimmulateTotallyRandomNextId() {
@@ -219,7 +242,6 @@ class XMLObjectsTests: XCTestCase {
         
         // insert objects with nextId
         for _ in 1...400 {
-            print("Want to add id: \(xmlObjects!.nextId)")
             insertedIds.append(xmlObjects!.nextId)
             XCTAssertNoThrow(address = try Address(id: xmlObjects!.nextId, city: "Cologne", street: "Ehrenstraße"))
             do {
@@ -233,8 +255,6 @@ class XMLObjectsTests: XCTestCase {
         
         var previousId: Int = -1
         for id in insertedIds.sorted() {
-            print(id)
-            
             if previousId != -1 {
                 XCTAssertTrue(id - previousId == 1)
             }
@@ -249,10 +269,16 @@ class XMLObjectsTests: XCTestCase {
         
         // delete unsaved object
         var object: Address?
-        XCTAssertNoThrow(object = try Address(id: xmlObjects!.nextId, city: "Cologne", street: "Ehrenstraße"))
-        XCTAssertNoThrow(try xmlObjects!.addObject(object: object!))
+        for _ in 1...60 {
+            XCTAssertNoThrow(object = try Address(id: xmlObjects!.nextId, city: "Cologne", street: "Ehrenstraße"))
+            XCTAssertNoThrow(try xmlObjects!.addObject(object: object!))
+        }
+        XCTAssertNoThrow(try xmlObjects?.save())
+        XCTAssertEqual(xmlObjects!.count, 61)
         xmlObjects!.deleteObject(id: 1)
-        XCTAssertEqual(xmlObjects!.count, 1)
+        XCTAssertNoThrow(try xmlObjects?.save())
+        XCTAssertEqual(xmlObjects!.count, 60)
+        
     }
     
     func testConstraintIdShouldBeUnique() {
@@ -263,20 +289,20 @@ class XMLObjectsTests: XCTestCase {
                 return XCTFail("\(error)")
             }
             XCTAssertEqual(value, 1)
-            XCTAssertEqual(url.path, addressesUnlockedXMLFileURL!.path)
+            XCTAssertEqual(url.path, unlockedXMLFileURL!.path)
         }
     }
     
     func testXMLFileWithoutRootElement() {
         xmlObjects = nil
         let XMLContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-        XCTAssertNoThrow(try XMLContent.write(to: addressesUnlockedXMLFileURL!, atomically: true, encoding: String.Encoding.utf8))
-        XCTAssertThrowsError(try XMLObjects<XMLAddressMapper>(xmlFileURL: addressesUnlockedXMLFileURL!)) { error in
+        XCTAssertNoThrow(try XMLContent.write(to: unlockedXMLFileURL!, atomically: true, encoding: String.Encoding.utf8))
+        XCTAssertThrowsError(try XMLObjects<XMLAddressMapper>(xmlFileURL: unlockedXMLFileURL!)) { error in
             guard case XMLObjectsError.rootXMLElementWasNotFound(let rootElement, let url) = error else {
                 return XCTFail("\(error)")
             }
             XCTAssertEqual(rootElement, "addresses")
-            XCTAssertEqual(url.path, addressesUnlockedXMLFileURL!.path)
+            XCTAssertEqual(url.path, unlockedXMLFileURL!.path)
         }
     }
     

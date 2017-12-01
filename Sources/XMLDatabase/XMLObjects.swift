@@ -8,6 +8,7 @@
 import Foundation
 import SWXMLHash
 
+// Convention: All XML should be sorted, even if not they will be after saving first time
 
 // MARK: XMLObjects
 
@@ -142,11 +143,7 @@ class XMLObjects<MapperType: XMLObjectMapper> {
         guard !unsavedObjectsIds.contains(object.id), !savedObjectsIds.contains(object.id) else {
             throw XMLObjectsError.idExistsAlready(id: object.id, at: xmlUnlockedFileURL)
         }
-        if unsavedObjects.count > object.id-1 {
-            unsavedObjects.insert(object, at: object.id-1)
-        } else {
-            unsavedObjects.append(object)
-        }
+        unsavedObjects.append(object)
         unsavedObjectsIds.append(object.id)
         addId(value: object.id)
     }
@@ -157,18 +154,19 @@ class XMLObjects<MapperType: XMLObjectMapper> {
     /// Copy all unsaved objects to saved objects and insert the into XMLDocument ordered by id
     public func save() throws {
         if (unsavedObjects.count > 0) {
-            for unsavedObject in unsavedObjects {
-                let XMLElement = MapperType.toXML(object: unsavedObject)
-                
-                if unsavedObject.id-1 < savedObjects.count {
-                    xmlDocument.rootElement()?.insertChild(XMLElement, at: unsavedObject.id-1)
-                    savedObjects.insert(unsavedObject, at: unsavedObject.id-1)
-                } else {
-                    xmlDocument.rootElement()?.addChild(XMLElement)
-                    savedObjects.append(unsavedObject)
-                }
-                savedObjectsIds.append(unsavedObject.id)
+            let alreadySavedObjects = savedObjects.count
+            savedObjects += unsavedObjects
+            savedObjectsIds += unsavedObjectsIds
+            savedObjects.sort(by: {$0.id < $1.id})
+            savedObjectsIds.sort()
+            
+            for i in 0..<alreadySavedObjects {
+                xmlDocument.rootElement()!.replaceChild(at: i, with: MapperType.toXML(object: savedObjects[i]))
             }
+            for i in alreadySavedObjects..<savedObjects.count {
+                xmlDocument.rootElement()!.addChild(MapperType.toXML(object: savedObjects[i]))
+            }
+            unsavedObjectsIds.removeAll()
             unsavedObjects.removeAll()
             
             try xmlDocument.xmlData(options: XMLNode.Options.nodePrettyPrint).write(to: xmlFileURL)

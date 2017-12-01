@@ -4,7 +4,7 @@ import XCTest
 class AddressTests: XCTestCase {
     
     
-    // MARK: valid properties
+    // MARK: Properties tests
     
     func testValidProperties() {
         // different relations
@@ -33,7 +33,7 @@ class AddressTests: XCTestCase {
     }
     
     
-    // MARK: property id tests
+    // MARK: Property id tests
     
     func testInvalidId() {
         XCTAssertThrowsError(try Address(id: 0, city: "Berlin", street: "Spandauer Straße")) { error in
@@ -45,7 +45,7 @@ class AddressTests: XCTestCase {
     }
     
     
-    // MARK: property city tests
+    // MARK: Property city tests
     
     func testInvalidCities() {
         var city: String
@@ -94,7 +94,7 @@ class AddressTests: XCTestCase {
     }
     
     
-    // MARK: property street tests
+    // MARK: Property street tests
     
     func testInvalidStreets() {
         var street: String

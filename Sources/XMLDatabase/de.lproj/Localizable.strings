@@ -1,0 +1,55 @@
+/*
+ Localizable.strings
+ XMLDatabase
+ 
+ Created by Manuel Pauls on 01.12.17.
+ 
+ */
+
+
+// MARK: Descriptions for URLError
+
+/// Description for URLError.fileDoesNotExist(at: URL)
+"The file \"%@\" does not exist at \"%@\"." = "Die Datei \"%@\" existiert nicht im Pfad \"%@\".";
+
+/// Description for URLError.fileWithNewFilenameExistsAlready(oldName: String, at: URL)
+"The file \"%@\" could not be renamed to \"@\" in \"%@\"." = "Die Datei \"%@\" konnte nicht zu \"@\" im Pfad \"%@\" umbenannt werden.";
+
+
+// MARK: Descriptions for XMLObjectsError
+
+/// Description for XMLObjectsError.invalidXMLFilename(at: URL)
+"The filename of the given XML file \"%@\" located in \"%@\" is invalid." = "Der Dateiname der angegebenen XML Datei \"%@\", welche sich im Pfad \"%@\" befindet, ist ungültig.";
+
+/// Description for XMLObjectsError.xmlFileDoesNotExist(at: URL)
+"The given XML file \"%@\" located in \"%@\" does not exist." = "Die angebene XML Datei \"%@\", welche sich im Pfad \"%@\" befinden soll, existiert nicht.";
+
+/// Description for XMLObjectsError.xmlFileIsLocked(at: URL)
+"The given XML file \"%@\" located in \"%@\" is locked." = "Die angegbene XML Dateo \"%@\", welche sich im Pfad \"%@\" befindet, ist gesperrt.";
+
+/// Description for XMLObjectsError.requiredAttributeIsMissing(element: String, attribute: String, at: URL)
+"The required XML attribute \"%@\" is missing in the XML element \"%@\" in XML file \"%@\"." = "Das erforderliche XML Attribut \"%@\" für das XML Element \"%@\" wurde nicht in der XML Datei \"%@\" gefunden.";
+
+/// Description for XMLObjectsError.requiredElementIsMissing(element: String, at: URL)
+"The required XML element \"%@\" is missing in XML file \"%@\"." = "Das erforderliche XML Element \"%@\" wurde nicht in der XML Datei \"%@\" gefunden.";
+
+/// Description for XMLObjectsError.requiredElementTextIsInvalid(element: String, text: String, at: URL)
+"The text \"%@\" of the XML element \"%@\" is invalid in XML file \"%@\"." = "Der Inhalt \"%@\" des XML Elements \"%@\" ist ungültig in der XML Datei \"%@\".";
+
+/// Description for XMLObjectsError.rootXMLElementWasNotFound(rootElement: String, at: URL)
+"The XML root element \"%@\" is missing in in the XML file \"%@\"." = "Das XML Root Element \"%@\" wurde nicht in der XML Datei \"%@\" gefunden.";
+
+/// Description for XMLObjectsError.idExistsAlready(id: Int, at: URL)
+"The id \"%d\" of the object exists already in XML file \"%@\"." = "Die Id \"%d\" des Objects exisitiert bereits in der XML Datei \"%@\".";
+
+
+// MARK: Descriptions for XMLObjectError
+
+/// Description for XMLObjectError.invalidId(value: Int, at: URL)
+"The given number \"%d\" is not a valid id." = "Die angebene Zahl \"%d\" ist keine gültige Id.";
+
+/// Description for XMLObjectError.invalidId(value: String)
+"The given text \"%@\" contains not a valid id." = "Der angebene Text \"%@\" enthält keine gültige Id.";
+
+"Hello my Name is Manuel!" = "Hallo Deutsch!";
+

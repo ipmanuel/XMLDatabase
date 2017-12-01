@@ -1,11 +1,12 @@
-import SWXMLHash
+import Foundation
 import XCTest
+import SWXMLHash
 @testable import XMLDatabase
 
 class XMLAddressMapperTests: XCTestCase {
     private let randomURL = Bundle.init(for: XMLAddressMapperTests.self).resourceURL!
     
-    // MARK: valid properties
+    // MARK: Import tests
     
     func testImportAddressWithValidProperties() {
         let xmlContent = "<address id=\"1\"><city>Berlin</city><street>Spandauer Straße</street></address>"
@@ -20,9 +21,6 @@ class XMLAddressMapperTests: XCTestCase {
             XCTFail("\(error)")
         }
     }
-    
-    
-    // MARK: property id tests
     
     func testImportAddressWithInvalidId() {
         var xmlContent: String
@@ -51,9 +49,6 @@ class XMLAddressMapperTests: XCTestCase {
         }
     }
     
-    
-    // MARK: property gender tests
-    
     func testImportAddressWithInvalidCity() {
         var xmlContent: String
         var xmlElementParsed: XMLIndexer
@@ -81,13 +76,35 @@ class XMLAddressMapperTests: XCTestCase {
             XCTAssertEqual(url.path, randomURL.path)
         }
     }
+    
+    
+    // MARK: Export tests
+    
+    func testExportAddress() {
+        var address: Address?
+        var xmlElement: Foundation.XMLElement?
+        let xmlDocument = XMLDocument(rootElement: Foundation.XMLElement(name: "addresses"))
+        
+        // add first address
+        XCTAssertNoThrow(address = try Address(id: 1, city: "Berlin", street: "Spandauer Straße"))
+        xmlElement = XMLAddressMapper.toXML(object: address!)
+        xmlDocument.rootElement()!.addChild(xmlElement!)
+        
+        // add second address
+        XCTAssertNoThrow(address = try Address(id: 2, city: "Cologne", street: "Ehrenstraße"))
+        xmlElement = XMLAddressMapper.toXML(object: address!)
+        xmlDocument.rootElement()!.addChild(xmlElement!)
+        
+        XCTAssertEqual(xmlDocument.xmlString(options: XMLNode.Options.documentTidyXML), "<addresses><address id=\"1\"><city>Berlin</city><street>Spandauer Straße</street></address><address id=\"2\"><city>Cologne</city><street>Ehrenstraße</street></address></addresses>")
+    }
 }
 
 extension XMLAddressMapperTests {
     static var allTests = [
         ("testImportAddressWithValidProperties", testImportAddressWithValidProperties),
         ("testImportAddressWithInvalidId", testImportAddressWithInvalidId),
-        ("testImportAddressWithInvalidCity", testImportAddressWithInvalidCity)
+        ("testImportAddressWithInvalidCity", testImportAddressWithInvalidCity),
+        ("testExportAddress", testExportAddress),
     ]
 }
 
