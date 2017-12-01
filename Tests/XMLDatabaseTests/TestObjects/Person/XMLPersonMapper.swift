@@ -6,16 +6,16 @@ import SWXMLHash
 class XMLPersonMapper: XMLObjectMapper {
     typealias ObjectType = Person
     
-    static func toObject(element: XMLIndexer) throws -> Person {
+    static func toObject(element: XMLIndexer, at url: URL) throws -> Person {
         // get value
-        let id = try XMLPersonMapper.getId(from: element)
+        let id = try XMLPersonMapper.getId(from: element, at: url)
         
         // elements should exists
         guard let genderString = element["gender"].element?.text else {
-            throw XMLObjectsError.requiredElementIsMissing(element: "gender", in: String(describing: XMLPersonMapper.self))
+            throw XMLObjectsError.requiredElementIsMissing(element: "gender", at: url)
         }
         guard let firstName = element["firstName"].element?.text else {
-            throw XMLObjectsError.requiredElementIsMissing(element: "firstName", in: String(describing: XMLPersonMapper.self))
+            throw XMLObjectsError.requiredElementIsMissing(element: "firstName", at: url)
         }
         let newPerson = try Person(id: id, gender: genderString, firstName: firstName)
         
@@ -25,9 +25,9 @@ class XMLPersonMapper: XMLObjectMapper {
         if addressesString != nil {
             for address in addressesObjects {
                 guard let type = address.element?.attribute(by: "type")?.text else {
-                    throw XMLObjectsError.requiredAttributeIsMissing(element: "address", attribute: "type", in: String(describing: XMLPersonMapper.self))
+                    throw XMLObjectsError.requiredAttributeIsMissing(element: "address", attribute: "type", at: url)
                 }
-                try newPerson.add(addressId: XMLAddressMapper.getId(from: address), type: type)
+                try newPerson.add(addressId: XMLAddressMapper.getId(from: address, at: url), type: type)
             }
         }
         

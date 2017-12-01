@@ -3,6 +3,7 @@ import XCTest
 @testable import XMLDatabase
 
 class XMLPersonMapperTests: XCTestCase {
+    private let randomURL = Bundle.init(for: XMLAddressMapperTests.self).resourceURL!
     
     
     // MARK: valid properties
@@ -11,7 +12,7 @@ class XMLPersonMapperTests: XCTestCase {
         let xmlContent = "<person id=\"1\"><gender>male</gender><relation>me</relation><firstName>Manuel</firstName></person>"
         let xmlElementParsed: XMLIndexer = SWXMLHash.parse(xmlContent)["person"].all[0]
         do {
-            let person = try XMLPersonMapper.toObject(element: xmlElementParsed)
+            let person = try XMLPersonMapper.toObject(element: xmlElementParsed, at: randomURL)
             
             XCTAssertEqual(person.id, 1)
             XCTAssertEqual(person.gender, Person.Gender.male)
@@ -32,7 +33,7 @@ class XMLPersonMapperTests: XCTestCase {
         xmlContent = "<person id=\"0\"><gender>male</gender><relation>me</relation><firstName>Manuel</firstName></person>"
         xmlElementParsed = SWXMLHash.parse(xmlContent)["person"].all[0]
         
-        XCTAssertThrowsError(try XMLPersonMapper.toObject(element: xmlElementParsed)) { error in
+        XCTAssertThrowsError(try XMLPersonMapper.toObject(element: xmlElementParsed, at: randomURL)) { error in
             guard case XMLObjectError.invalidId(let value) = error else {
                 return XCTFail("\(error)")
             }
@@ -43,13 +44,13 @@ class XMLPersonMapperTests: XCTestCase {
         xmlContent = "<person><gender>male</gender><relation>me</relation><firstName>Manuel</firstName></person>"
         xmlElementParsed = SWXMLHash.parse(xmlContent)["person"].all[0]
         print(xmlElementParsed.element!.name)
-        XCTAssertThrowsError(try XMLPersonMapper.toObject(element: xmlElementParsed)) { error in
-            guard case XMLObjectsError.requiredAttributeIsMissing(let element, let attribute, let className) = error else {
+        XCTAssertThrowsError(try XMLPersonMapper.toObject(element: xmlElementParsed, at: randomURL)) { error in
+            guard case XMLObjectsError.requiredAttributeIsMissing(let element, let attribute, let url) = error else {
                 return XCTFail("\(error)")
             }
             XCTAssertEqual(element, "person")
             XCTAssertEqual(attribute, "id")
-            XCTAssertEqual(className, "XMLPersonMapper")
+            XCTAssertEqual(url.path, randomURL.path)
         }
     }
     
@@ -64,7 +65,7 @@ class XMLPersonMapperTests: XCTestCase {
         xmlContent = "<person id=\"1\"><gender>males</gender><relation>me</relation><firstName>Manuel</firstName></person>"
         xmlElementParsed = SWXMLHash.parse(xmlContent)["person"].all[0]
         
-        XCTAssertThrowsError(try XMLPersonMapper.toObject(element: xmlElementParsed)) { error in
+        XCTAssertThrowsError(try XMLPersonMapper.toObject(element: xmlElementParsed, at: randomURL)) { error in
             guard case PersonError.invalidGender(let value) = error else {
                 return XCTFail("\(error)")
             }
@@ -75,12 +76,12 @@ class XMLPersonMapperTests: XCTestCase {
         xmlContent = "<person id=\"1\"><relation>me</relation><firstName>Manuel</firstName></person>"
         xmlElementParsed = SWXMLHash.parse(xmlContent)["person"].all[0]
         
-        XCTAssertThrowsError(try XMLPersonMapper.toObject(element: xmlElementParsed)) { error in
-            guard case XMLObjectsError.requiredElementIsMissing(let element, let className) = error else {
+        XCTAssertThrowsError(try XMLPersonMapper.toObject(element: xmlElementParsed, at: randomURL)) { error in
+            guard case XMLObjectsError.requiredElementIsMissing(let element, let url) = error else {
                 return XCTFail("\(error)")
             }
             XCTAssertEqual(element, "gender")
-            XCTAssertEqual(className, "XMLPersonMapper")
+            XCTAssertEqual(url.path, randomURL.path)
         }
     }
     
@@ -95,7 +96,7 @@ class XMLPersonMapperTests: XCTestCase {
         xmlContent = "<person id=\"1\"><gender>male</gender><relation>me</relation><firstName>A</firstName></person>"
         xmlElementParsed = SWXMLHash.parse(xmlContent)["person"].all[0]
         
-        XCTAssertThrowsError(try XMLPersonMapper.toObject(element: xmlElementParsed)) { error in
+        XCTAssertThrowsError(try XMLPersonMapper.toObject(element: xmlElementParsed, at: randomURL)) { error in
             guard case PersonError.invalidFirstName(let value) = error else {
                 return XCTFail("\(error)")
             }
@@ -106,12 +107,12 @@ class XMLPersonMapperTests: XCTestCase {
         xmlContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><person id=\"1\"><gender>male</gender><relation>me</relation></person>"
         xmlElementParsed = SWXMLHash.parse(xmlContent)["person"].all[0]
         
-        XCTAssertThrowsError(try XMLPersonMapper.toObject(element: xmlElementParsed)) { error in
-            guard case XMLObjectsError.requiredElementIsMissing(let element, let className) = error else {
+        XCTAssertThrowsError(try XMLPersonMapper.toObject(element: xmlElementParsed, at: randomURL)) { error in
+            guard case XMLObjectsError.requiredElementIsMissing(let element, let url) = error else {
                 return XCTFail("\(error)")
             }
             XCTAssertEqual(element, "firstName")
-            XCTAssertEqual(className, "XMLPersonMapper")
+            XCTAssertEqual(url.path, randomURL.path)
         }
     }
 }

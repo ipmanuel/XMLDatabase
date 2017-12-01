@@ -1,0 +1,43 @@
+/* 
+  Localizable.strings
+  XMLDatabase
+
+  Created by Manuel Pauls on 01.12.17.
+  
+*/
+
+
+// MARK: Descriptions for XMLObjectsError
+
+/// Description for XMLObjectsError.invalidXMLFilename(at: URL)
+"The filename of the given XML file \"%s\" located in \"%s\" is invalid." = "";
+
+/// Description for XMLObjectsError.xmlFileDoesNotExist(at: URL)
+"The given XML file \"%s\" located in \"%s\" does not exist." = "";
+
+/// Description for XMLObjectsError.xmlFileIsLocked(at: URL)
+"The given XML file \"%s\" located in \"%s\" is locked." = "";
+
+/// Description for XMLObjectsError.requiredAttributeIsMissing(element: String, attribute: String, at: URL)
+"The required XML attribute \"%s\" is missing in the XML element \"%s\" in XML file \"%s\"." = "";
+
+/// Description for XMLObjectsError.requiredElementIsMissing(element: String, at: URL)
+"The required XML element \"%s\" is missing in XML file \"%s\"." = "";
+
+/// Description for XMLObjectsError.requiredElementTextIsInvalid(element: String, text: String, at: URL)
+"The text \"%s\" of the XML element \"%s\" is invalid in XML file \"%s\"." = "";
+
+/// Description for XMLObjectsError.rootXMLElementWasNotFound(rootElement: String, at: URL)
+"The XML root element \"%s\" is missing in in the XML file \"%s\"." = "";
+
+/// Description for XMLObjectsError.idExistsAlready(id: Int, at: URL)
+"The id \"%d\" of the object exists already in XML file \"%s\"." = "";
+
+
+// MARK: Descriptions for XMLObjectError
+
+/// Description for XMLObjectError.invalidId(value: Int, at: URL)
+"The given number \"%d\" is not a valid id." = "";
+
+/// Description for XMLObjectError.invalidId(value: String)
+"The given text \"%s\" contains not a valid id." = "";

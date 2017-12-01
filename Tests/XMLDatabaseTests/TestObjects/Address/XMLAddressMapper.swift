@@ -5,17 +5,17 @@ import SWXMLHash
 class XMLAddressMapper: XMLObjectMapper {
     typealias ObjectType = Address
     
-    static func toObject(element: XMLIndexer) throws -> Address {
+    static func toObject(element: XMLIndexer, at url: URL) throws -> Address {
         // get value
-        let id = try XMLAddressMapper.getId(from: element)
+        let id = try XMLAddressMapper.getId(from: element, at: url)
         
         // elements should exists
         guard let city = element["city"].element?.text else {
-            throw XMLObjectsError.requiredElementIsMissing(element: "city", in: String(describing: XMLAddressMapper.self))
+            throw XMLObjectsError.requiredElementIsMissing(element: "city", at: url)
         }
         
         guard let street = element["street"].element?.text else {
-            throw XMLObjectsError.requiredElementIsMissing(element: "street", in: String(describing: XMLAddressMapper.self))
+            throw XMLObjectsError.requiredElementIsMissing(element: "street", at: url)
         }
         
         return try Address(id: id, city: city, street: street)

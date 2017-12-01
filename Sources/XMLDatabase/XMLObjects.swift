@@ -95,13 +95,13 @@ class XMLObjects<MapperType: XMLObjectMapper> {
         let firstCharacter = objectNamePlural[objectNamePlural.startIndex]
         
         guard firstCharacter != "_" else {
-            throw XMLObjectsError.invalidXMLFilename(name: objectNamePlural)
+            throw XMLObjectsError.invalidXMLFilename(at: xmlFileURL)
         }
         guard !fileManager.fileExists(atPath: xmlLockedFileURL.path) else {
-            throw XMLObjectsError.xmlFileIsLocked(path: xmlLockedFileURL.path)
+            throw XMLObjectsError.xmlFileIsLocked(at: xmlLockedFileURL)
         }
         guard fileManager.fileExists(atPath: xmlUnlockedFileURL.path) else {
-            throw XMLObjectsError.xmlFileDoesNotExists(path: xmlUnlockedFileURL.path)
+            throw XMLObjectsError.xmlFileDoesNotExist(at: xmlUnlockedFileURL)
         }
         
         // lock file
@@ -140,7 +140,7 @@ class XMLObjects<MapperType: XMLObjectMapper> {
      */
     func addObject(object: MapperType.ObjectType) throws {
         guard !unsavedObjectsIds.contains(object.id), !savedObjectsIds.contains(object.id) else {
-            throw XMLObjectsError.idExistsAlready(value: object.id)
+            throw XMLObjectsError.idExistsAlready(id: object.id, at: xmlUnlockedFileURL)
         }
         if unsavedObjects.count > object.id-1 {
             unsavedObjects.insert(object, at: object.id-1)
@@ -213,12 +213,12 @@ class XMLObjects<MapperType: XMLObjectMapper> {
         let xmlParsed = SWXMLHash.parse(xmlDocument.xmlString)
         let rootXMLElement = objectNamePlural.lowercased()
         guard xmlParsed[rootXMLElement].element != nil else {
-            throw XMLObjectsError.rootXMLElementWasNotFound(element: rootXMLElement, in: xmlUnlockedFileURL.lastPathComponent)
+            throw XMLObjectsError.rootXMLElementWasNotFound(rootElement: rootXMLElement, at: xmlUnlockedFileURL)
         }
         let objects = xmlParsed[rootXMLElement][objectName.lowercased()].all
         
         for object in objects {
-            try addObject(object: try MapperType.toObject(element: object))
+            try addObject(object: try MapperType.toObject(element: object, at: xmlUnlockedFileURL))
         }
         
         // imported objects should not be saved a second time
@@ -228,7 +228,7 @@ class XMLObjects<MapperType: XMLObjectMapper> {
         unsavedObjectsIds.removeAll()
     }
     
-    /// Methode to set nextId for getting calculated nextId
+    /// Methode to set the next ids by filling the array nextIds
     private func addId(value id: Int) {
         // id is in nextIds
         if (nextIds.contains(id)) {
@@ -244,6 +244,7 @@ class XMLObjects<MapperType: XMLObjectMapper> {
         maxId = max(maxId, id)
     }
     
+    /// add the deleted id to the array nextId and adjust possibly maxId
     private func deleteId(value id: Int) {
         nextIds.append(id)
         nextIds.sort()
@@ -301,16 +302,4 @@ class XMLObjects<MapperType: XMLObjectMapper> {
         }
         return nil
     }
-}
-
-/// An enumeration for the various errors of XMLObjects.
-enum XMLObjectsError: Error {
-    case invalidXMLFilename(name: String)
-    case xmlFileDoesNotExists(path: String)
-    case xmlFileIsLocked(path: String)
-    case requiredAttributeIsMissing(element: String, attribute: String, in: String)
-    case requiredElementIsMissing(element: String, in: String)
-    case requiredElementIsInvalid(element: String, value: String)
-    case idExistsAlready(value: Int)
-    case rootXMLElementWasNotFound(element: String, in: String)
 }

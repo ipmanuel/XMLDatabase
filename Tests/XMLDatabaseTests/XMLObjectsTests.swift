@@ -55,10 +55,10 @@ class XMLObjectsTests: XCTestCase {
             }
         }
         XCTAssertThrowsError(try Addresses(xmlFileURL: addressesLockedXMLFileURL!)) { error in
-            guard case XMLObjectsError.invalidXMLFilename(let name) = error else {
+            guard case XMLObjectsError.invalidXMLFilename(let url) = error else {
                 return XCTFail("\(error)")
             }
-            XCTAssertEqual(name, "_Addresses")
+            XCTAssertEqual(url.deletingPathExtension().lastPathComponent, "_Addresses")
         }
     }
     
@@ -259,10 +259,11 @@ class XMLObjectsTests: XCTestCase {
         var object: Address?
         XCTAssertNoThrow(object = try Address(id: 1, city: "Cologne", street: "Ehrenstraße"))
         XCTAssertThrowsError(try xmlObjects!.addObject(object: object!)) { error in
-            guard case XMLObjectsError.idExistsAlready(let value) = error else {
+            guard case XMLObjectsError.idExistsAlready(let value, let url) = error else {
                 return XCTFail("\(error)")
             }
             XCTAssertEqual(value, 1)
+            XCTAssertEqual(url.path, addressesUnlockedXMLFileURL!.path)
         }
     }
     
@@ -271,19 +272,21 @@ class XMLObjectsTests: XCTestCase {
         let XMLContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
         XCTAssertNoThrow(try XMLContent.write(to: addressesUnlockedXMLFileURL!, atomically: true, encoding: String.Encoding.utf8))
         XCTAssertThrowsError(try XMLObjects<XMLAddressMapper>(xmlFileURL: addressesUnlockedXMLFileURL!)) { error in
-            guard case XMLObjectsError.rootXMLElementWasNotFound( _) = error else {
+            guard case XMLObjectsError.rootXMLElementWasNotFound(let rootElement, let url) = error else {
                 return XCTFail("\(error)")
             }
+            XCTAssertEqual(rootElement, "addresses")
+            XCTAssertEqual(url.path, addressesUnlockedXMLFileURL!.path)
         }
     }
     
     func testXMLFileDoesNotExist() {
         let xmlFileURL = baseURL!.appendingPathComponent("Test.xml")
         XCTAssertThrowsError(try XMLObjects<XMLAddressMapper>(xmlFileURL: xmlFileURL)) { error in
-            guard case XMLObjectsError.xmlFileDoesNotExists(let path) = error else {
+            guard case XMLObjectsError.xmlFileDoesNotExist(let url) = error else {
                 return XCTFail("\(error)")
             }
-            XCTAssertEqual(path, xmlFileURL.path)
+            XCTAssertEqual(url.path, xmlFileURL.path)
         }
     }
 }

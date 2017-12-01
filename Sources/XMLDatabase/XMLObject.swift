@@ -49,9 +49,3 @@ class XMLObject {
         return id
     }
 }
-
-/// An enumeration for the various errors of XMLObject.
-enum XMLObjectError: Error {
-    case invalidId(value: Int)
-    case invalidIdString(value: String)
-}

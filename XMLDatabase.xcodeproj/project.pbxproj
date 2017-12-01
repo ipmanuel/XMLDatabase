@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		3283E6201FD13F620004BAA3 /* XMLDBError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3283E61E1FD13F5D0004BAA3 /* XMLDBError.swift */; };
 		OBJ_100 /* SWXMLHash+TypeConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_38 /* SWXMLHash+TypeConversion.swift */; };
 		OBJ_101 /* SWXMLHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_39 /* SWXMLHash.swift */; };
 		OBJ_49 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
@@ -83,6 +84,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3283E61E1FD13F5D0004BAA3 /* XMLDBError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLDBError.swift; sourceTree = "<group>"; };
+		3283E6221FD143610004BAA3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3283E6251FD143E90004BAA3 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		OBJ_10 /* XMLDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLDatabase.swift; sourceTree = "<group>"; };
 		OBJ_11 /* XMLObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLObject.swift; sourceTree = "<group>"; };
 		OBJ_12 /* XMLObjectMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLObjectMapper.swift; sourceTree = "<group>"; };
@@ -152,11 +156,11 @@
 		OBJ_15 /* XMLDatabaseTests */ = {
 			isa = PBXGroup;
 			children = (
+				OBJ_20 /* TestObjects */,
 				OBJ_16 /* AddressTests.swift */,
 				OBJ_17 /* PersonTests.swift */,
 				OBJ_18 /* PersonsTests.swift */,
 				OBJ_19 /* PersonsXMLDatabaseTests.swift */,
-				OBJ_20 /* TestObjects */,
 				OBJ_30 /* URLExtensionTests.swift */,
 				OBJ_31 /* XMLAddressMapperTests.swift */,
 				OBJ_32 /* XMLObjectTests.swift */,
@@ -226,7 +230,7 @@
 			name = Products;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -235,7 +239,6 @@
 				OBJ_35 /* Dependencies */,
 				OBJ_40 /* Products */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_7 /* Sources */ = {
@@ -251,9 +254,11 @@
 			children = (
 				OBJ_9 /* Extensions.swift */,
 				OBJ_10 /* XMLDatabase.swift */,
+				3283E61E1FD13F5D0004BAA3 /* XMLDBError.swift */,
 				OBJ_11 /* XMLObject.swift */,
 				OBJ_12 /* XMLObjectMapper.swift */,
 				OBJ_13 /* XMLObjects.swift */,
+				3283E6231FD143610004BAA3 /* Localizable.strings */,
 			);
 			name = XMLDatabase;
 			path = Sources/XMLDatabase;
@@ -355,8 +360,9 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				de,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_40 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -416,6 +422,7 @@
 			buildActionMask = 0;
 			files = (
 				OBJ_88 /* Extensions.swift in Sources */,
+				3283E6201FD13F620004BAA3 /* XMLDBError.swift in Sources */,
 				OBJ_89 /* XMLDatabase.swift in Sources */,
 				OBJ_90 /* XMLObject.swift in Sources */,
 				OBJ_91 /* XMLObjectMapper.swift in Sources */,
@@ -457,6 +464,18 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		3283E6231FD143610004BAA3 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3283E6221FD143610004BAA3 /* en */,
+				3283E6251FD143E90004BAA3 /* de */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		OBJ_105 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -473,6 +492,7 @@
 		OBJ_3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -495,6 +515,7 @@
 		OBJ_4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;

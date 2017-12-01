@@ -35,7 +35,7 @@ class XMLObjectTests: XCTestCase {
         // id is: 0
         XCTAssertThrowsError(try XMLObject(id: 0)) { error in
             guard case XMLObjectError.invalidId(let value) = error else {
-                return XCTFail()
+                return XCTFail("\(error)")
             }
             XCTAssertEqual(value, 0)
         }
@@ -43,7 +43,7 @@ class XMLObjectTests: XCTestCase {
         // id is: -1
         XCTAssertThrowsError(try XMLObject(id: -1)) { error in
             guard case XMLObjectError.invalidId(let value) = error else {
-                return XCTFail()
+                return XCTFail("\(error)")
             }
             XCTAssertEqual(value, -1)
         }
@@ -51,7 +51,7 @@ class XMLObjectTests: XCTestCase {
         // id is: -10
         XCTAssertThrowsError(try XMLObject(id: -10)) { error in
             guard case XMLObjectError.invalidId(let value) = error else {
-                return XCTFail()
+                return XCTFail("\(error)")
             }
             XCTAssertEqual(value, -10)
         }
@@ -59,7 +59,7 @@ class XMLObjectTests: XCTestCase {
         // id is: -112312314234
         XCTAssertThrowsError(try XMLObject(id: -112312314234)) { error in
             guard case XMLObjectError.invalidId(let value) = error else {
-                return XCTFail()
+                return XCTFail("\(error)")
             }
             XCTAssertEqual(value, -112312314234)
         }

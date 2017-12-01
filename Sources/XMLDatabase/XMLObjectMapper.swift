@@ -12,17 +12,17 @@ protocol XMLObjectMapper: class {
     associatedtype ObjectType: XMLObject
     
     /// Returns generate an object with a type which is specified in ObjectType from an XML element
-    static func toObject(element: XMLIndexer) throws -> ObjectType
+    static func toObject(element: XMLIndexer, at: URL) throws -> ObjectType
     static func toXML(object: ObjectType) -> Foundation.XMLElement
 }
 
 extension XMLObjectMapper {
-    static func getId(from xmlElement: XMLIndexer) throws -> Int {
+    static func getId(from xmlElement: XMLIndexer, at url: URL) throws -> Int {
         guard let element = xmlElement.element else {
-            throw XMLObjectsError.requiredElementIsMissing(element: "? extends XMLObject", in: String(describing: Self.self))
+            throw XMLObjectsError.requiredElementIsMissing(element: String(describing: Self.ObjectType.self).lowercased(), at: url)
         }
         guard let idString = element.attribute(by: "id")?.text else {
-            throw XMLObjectsError.requiredAttributeIsMissing(element: element.name, attribute: "id", in: String(describing: Self.self))
+            throw XMLObjectsError.requiredAttributeIsMissing(element: element.name, attribute: "id", at: url)
         }
         
         return try XMLObject.getId(from: idString)
