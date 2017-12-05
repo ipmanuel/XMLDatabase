@@ -46,6 +46,7 @@ class XMLObjectsTests: XCTestCase {
     // MARK: XMLObjectsTests
     
     func testLock() {
+        // locked XML file should exists, because instance is running
         XCTAssertTrue(FileManager.default.fileExists(atPath: lockedXMLFileURL!.path))
         
         // test to init a second instance
@@ -60,6 +61,9 @@ class XMLObjectsTests: XCTestCase {
             }
             XCTAssertEqual(url.deletingPathExtension().lastPathComponent, "_Addresses")
         }
+    }
+    
+    func testDeinit() {
         xmlObjects = nil
         XCTAssertTrue(FileManager.default.fileExists(atPath: unlockedXMLFileURL!.path))
         XCTAssertFalse(FileManager.default.fileExists(atPath: lockedXMLFileURL!.path))
@@ -273,11 +277,20 @@ class XMLObjectsTests: XCTestCase {
             XCTAssertNoThrow(object = try Address(id: xmlObjects!.nextId, city: "Cologne", street: "Ehrenstraße"))
             XCTAssertNoThrow(try xmlObjects!.addObject(object: object!))
         }
-        XCTAssertNoThrow(try xmlObjects?.save())
+        XCTAssertNoThrow(try xmlObjects!.save())
         XCTAssertEqual(xmlObjects!.count, 61)
+        
+        // delete an object
         xmlObjects!.deleteObject(id: 1)
-        XCTAssertNoThrow(try xmlObjects?.save())
+        XCTAssertNoThrow(try xmlObjects!.save())
         XCTAssertEqual(xmlObjects!.count, 60)
+        
+        // delete all objects
+        for i in 1...61 {
+            xmlObjects!.deleteObject(id: i)
+        }
+        XCTAssertNoThrow(try xmlObjects!.save())
+        XCTAssertEqual(xmlObjects!.count, 0)
         
     }
     

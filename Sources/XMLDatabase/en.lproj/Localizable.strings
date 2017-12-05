@@ -27,6 +27,9 @@
 /// Description for XMLObjectsError.xmlFileIsLocked(at: URL)
 "The given XML file \"%@\" located in \"%@\" is locked." = "The given XML file \"%@\" located in \"%@\" is locked.";
 
+/// Description for XMLObjectsError.xmlFileSizeReadingFailed(at: URL, error: String)
+"Could not read the file size of the XML file \"%@\" located in \"%@\" (error: \"%@\")." = "Could not read the file size of the XML file \"%@\" located in \"%@\" (error: \"%@\").";
+
 /// Description for XMLObjectsError.requiredAttributeIsMissing(element: String, attribute: String, at: URL)
 "The required XML attribute \"%@\" is missing in the XML element \"%@\" in XML file \"%@\"." = "The required XML attribute \"%@\" is missing in the XML element \"%@\" in XML file \"%@\".";
 

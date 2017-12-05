@@ -18,6 +18,7 @@ enum XMLObjectsError: Error {
     case invalidXMLFilename(at: URL)
     case xmlFileDoesNotExist(at: URL)
     case xmlFileIsLocked(at: URL)
+    case xmlFileSizeReadingFailed(at: URL, error: String)
     case requiredAttributeIsMissing(element: String, attribute: String, at: URL)
     case requiredElementIsMissing(element: String, at: URL)
     case requiredElementTextIsInvalid(element: String, text: String, at: URL)
@@ -43,6 +44,8 @@ extension XMLObjectsError: LocalizedError {
             return String(format: NSLocalizedString("The given XML file \"%@\" located in \"%@\" does not exist.", comment: ""), arguments: [url.lastPathComponent, url.deletingLastPathComponent().path])
         case .xmlFileIsLocked(let url):
             return String(format: NSLocalizedString("The given XML file \"%@\" located in \"%@\" is locked.", comment: ""), arguments: [url.lastPathComponent, url.deletingLastPathComponent().path])
+        case .xmlFileSizeReadingFailed(let url, let error):
+            return String(format: NSLocalizedString("Could not read the file size of the XML file \"%@\" located in \"%@\" (error: \"%@\").", comment: ""), arguments: [url.lastPathComponent, url.deletingLastPathComponent().path, error])
         case .requiredAttributeIsMissing(let element, let attribute, let url):
             return String(format: NSLocalizedString("The required XML attribute \"%@\" is missing in the XML element \"%@\" in XML file \"%@\".", comment: ""), arguments: [attribute, element, url.path])
         case .requiredElementIsMissing(let element, let url):

@@ -28,6 +28,9 @@ class XMLObjects<MapperType: XMLObjectMapper> {
     /// The URL, where the locked XML file should be located
     private let xmlLockedFileURL: URL
     
+    /// The size of the XML file
+    public let fileSize: UInt64
+    
     /// The XML document, which represents the XML file as an object
     private var xmlDocument: XMLDocument
     
@@ -54,7 +57,6 @@ class XMLObjects<MapperType: XMLObjectMapper> {
     
     /// The ids of all unsaved objects
     private var unsavedObjectsIds: [Int]
-    
     
     /// includes all free ids between 1 and maxId
     private var nextIds: [Int]
@@ -104,6 +106,16 @@ class XMLObjects<MapperType: XMLObjectMapper> {
         guard fileManager.fileExists(atPath: xmlUnlockedFileURL.path) else {
             throw XMLObjectsError.xmlFileDoesNotExist(at: xmlUnlockedFileURL)
         }
+        
+        // get filesize
+        var attr: [FileAttributeKey:Any] = [:]
+        do {
+            attr = try FileManager.default.attributesOfItem(atPath: xmlFileURL.path)
+        } catch {
+            throw XMLObjectsError.xmlFileSizeReadingFailed(at: xmlFileURL, error: error.localizedDescription)
+        }
+        fileSize = attr[FileAttributeKey.size] as! UInt64
+        
         
         // lock file
         let lockedFileName = "_\(objectNamePlural).xml"
