@@ -145,12 +145,6 @@ class XMLObjects<MapperType: XMLObjectMapper> {
     // MARK: Public Methods
     
     /// Insert object with right index in array unsavedObjects and save its id in unsavedObjectsIds
-    /**
-     Executes the closure on a background queue after a set amount of seconds.
-     
-     - parameter delay:   Delay in seconds
-     - parameter closure: Code to execute after delay
-     */
     func addObject(object: MapperType.ObjectType) throws {
         guard !unsavedObjectsIds.contains(object.id), !savedObjectsIds.contains(object.id) else {
             throw XMLObjectsError.idExistsAlready(id: object.id, at: xmlUnlockedFileURL)

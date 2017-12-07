@@ -8,6 +8,7 @@
 import Foundation
 
 // MARK: - Error Enumerations
+
 enum URLError: Error {
     case fileDoesNotExist(at: URL)
     case fileWithNewFilenameExistsAlready(oldName: String, at: URL)

@@ -35,8 +35,12 @@ class Person: XMLObject, CustomStringConvertible {
     }
     
     // addresses (optional)
-    var addressesIds: [Int]
-    var addressesTypes: [String]
+    private var addressesIdsMutable: [Int]
+    public var addressesIds: [Int] {
+        let addressesIds = addressesIdsMutable
+        return addressesIds
+    }
+    public var addressesTypes: [String]
     
     // string, when print(XMLObject) is used
     var description: String {
@@ -50,7 +54,7 @@ class Person: XMLObject, CustomStringConvertible {
         // init vars
         self.genderMutable = gender
         self.firstNameMutable = try Person.getFirstName(from: firstName)
-        self.addressesIds = []
+        self.addressesIdsMutable = []
         self.addressesTypes = []
         
         try super.init(id: id)
@@ -79,7 +83,7 @@ class Person: XMLObject, CustomStringConvertible {
     // MARK: set optional values
     
     public func add(addressId: Int, type: String) {
-        self.addressesIds.append(addressId)
+        self.addressesIdsMutable.append(addressId)
         self.addressesTypes.append(type)
     }
     

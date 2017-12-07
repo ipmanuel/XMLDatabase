@@ -11,8 +11,10 @@ import SWXMLHash
 protocol XMLObjectMapper: class {
     associatedtype ObjectType: XMLObject
     
-    /// Returns generate an object with a type which is specified in ObjectType from an XML element
+    /// Returns an object with a type which is specified in ObjectType from an XML element
     static func toObject(element: XMLIndexer, at: URL) throws -> ObjectType
+    
+    /// Returns an XMLElement with the data of the object
     static func toXML(object: ObjectType) -> Foundation.XMLElement
 }
 

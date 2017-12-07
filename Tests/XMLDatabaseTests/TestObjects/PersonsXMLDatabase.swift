@@ -16,15 +16,10 @@ class PersonsXMLDatabase: XMLDatabase {
     
     required init (url: URL) throws {
         // unlock all xml files
-        var addressesLockedXMLFilePath = url.appendingPathComponent("_\(addressesXMLFilename)")
-        var personsLockedXMLFilePath = url.appendingPathComponent("_\(personsXMLFilename)")
-        
-        if FileManager.default.fileExists(atPath: addressesLockedXMLFilePath.path) {
-            try addressesLockedXMLFilePath.rename(newName: "Addresses.xml")
-        }
-        if FileManager.default.fileExists(atPath: personsLockedXMLFilePath.path) {
-            try personsLockedXMLFilePath.rename(newName: "Persons.xml")
-        }
+        var addressesLockedXMLFileURL = url.appendingPathComponent("_\(addressesXMLFilename)")
+        var personsLockedXMLFileURL = url.appendingPathComponent("_\(personsXMLFilename)")
+        try PersonsXMLDatabase.unlockIfXMLFileExists(url: &addressesLockedXMLFileURL)
+        try PersonsXMLDatabase.unlockIfXMLFileExists(url: &personsLockedXMLFileURL)
         
         // init addresses
         let addressesUnlockedXMLFilePath = url.appendingPathComponent(addressesXMLFilename)
@@ -33,5 +28,23 @@ class PersonsXMLDatabase: XMLDatabase {
         // init persons
         let personsUnlockedXMLFilePath = url.appendingPathComponent(personsXMLFilename)
         try personsInstance = Persons(xmlFileURL: personsUnlockedXMLFilePath)
+        
+        print("AddressesCheck: \(eachAddressShouldExists())")
     }
+    
+    
+    // MARK: Persons Constraints
+    
+    func eachAddressShouldExists() -> Bool {
+        for i in 0..<persons.count {
+            for addressId in persons.get(at: i).addressesIds {
+                if addresses.getBy(id: addressId) == nil {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+    
+    
 }
