@@ -8,7 +8,7 @@
 import Foundation
 
 /// XML Object with an id
-class XMLObject {
+open class XMLObject {
     
     
     // MARK: Properties

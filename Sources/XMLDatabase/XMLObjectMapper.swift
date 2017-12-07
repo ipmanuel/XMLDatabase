@@ -8,7 +8,7 @@
 import Foundation
 import SWXMLHash
 
-protocol XMLObjectMapper: class {
+public protocol XMLObjectMapper: class {
     associatedtype ObjectType: XMLObject
     
     /// Returns an object with a type which is specified in ObjectType from an XML element

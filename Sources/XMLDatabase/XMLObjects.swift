@@ -13,7 +13,7 @@ import SWXMLHash
 // MARK: XMLObjects
 
 /// XMLObjects manage all objects with a specific type of a XML file
-class XMLObjects<MapperType: XMLObjectMapper> {
+open class XMLObjects<MapperType: XMLObjectMapper> {
     
     
     // MARK: Properties

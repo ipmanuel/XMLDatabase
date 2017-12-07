@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol XMLDatabase: class {
+public protocol XMLDatabase: class {
     init (url: URL) throws
 }
 
