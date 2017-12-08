@@ -145,7 +145,7 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
     // MARK: Public Methods
     
     /// Insert object with right index in array unsavedObjects and save its id in unsavedObjectsIds
-    public func addObject(object: MapperType.ObjectType) throws {
+    open func addObject(object: MapperType.ObjectType) throws {
         guard !unsavedObjectsIds.contains(object.id), !savedObjectsIds.contains(object.id) else {
             throw XMLObjectsError.idExistsAlready(id: object.id, at: xmlUnlockedFileURL)
         }
@@ -158,7 +158,7 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
     // MARK: Actions on XML file
     
     /// Copy all unsaved objects to saved objects and insert the into XMLDocument ordered by id
-    public func save() throws {
+    open func save() throws {
         if (unsavedObjects.count > 0) {
             let alreadySavedObjects = savedObjects.count
             savedObjects += unsavedObjects
