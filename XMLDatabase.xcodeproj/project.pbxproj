@@ -44,8 +44,8 @@
 		OBJ_79 /* XMLDatabase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "XMLDatabase::XMLDatabase::Product" /* XMLDatabase.framework */; };
 		OBJ_80 /* SWXMLHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "SWXMLHash::SWXMLHash::Product" /* SWXMLHash.framework */; };
 		OBJ_89 /* URL+Rename.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* URL+Rename.swift */; };
-		OBJ_90 /* XMLDatabaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* XMLDatabaseError.swift */; };
-		OBJ_91 /* XMLDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* XMLDatabase.swift */; };
+		OBJ_90 /* XMLDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* XMLDatabase.swift */; };
+		OBJ_91 /* XMLDatabaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* XMLDatabaseError.swift */; };
 		OBJ_92 /* XMLObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* XMLObject.swift */; };
 		OBJ_93 /* XMLObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* XMLObjectMapper.swift */; };
 		OBJ_94 /* XMLObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* XMLObjects.swift */; };
@@ -53,28 +53,28 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		3265BBFE1FD1B4FC007F9DDB /* PBXContainerItemProxy */ = {
+		32F5059A1FD9B19500A42746 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "SWXMLHash::SWXMLHash";
 			remoteInfo = SWXMLHash;
 		};
-		3265BBFF1FD1B4FC007F9DDB /* PBXContainerItemProxy */ = {
+		32F5059B1FD9B19500A42746 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "XMLDatabase::XMLDatabase";
 			remoteInfo = XMLDatabase;
 		};
-		3265BC001FD1B4FC007F9DDB /* PBXContainerItemProxy */ = {
+		32F5059C1FD9B19500A42746 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "SWXMLHash::SWXMLHash";
 			remoteInfo = SWXMLHash;
 		};
-		3265BC011FD1B4FD007F9DDB /* PBXContainerItemProxy */ = {
+		32F5059D1FD9B19600A42746 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
@@ -84,10 +84,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3265BC031FD1B64A007F9DDB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3265BC041FD1B65B007F9DDB /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		OBJ_10 /* XMLDatabaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLDatabaseError.swift; sourceTree = "<group>"; };
-		OBJ_11 /* XMLDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLDatabase.swift; sourceTree = "<group>"; };
+		OBJ_10 /* XMLDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLDatabase.swift; sourceTree = "<group>"; };
+		OBJ_11 /* XMLDatabaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLDatabaseError.swift; sourceTree = "<group>"; };
 		OBJ_12 /* XMLObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLObject.swift; sourceTree = "<group>"; };
 		OBJ_13 /* XMLObjectMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLObjectMapper.swift; sourceTree = "<group>"; };
 		OBJ_14 /* XMLObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLObjects.swift; sourceTree = "<group>"; };
@@ -156,11 +154,11 @@
 		OBJ_16 /* XMLDatabaseTests */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_21 /* TestObjects */,
 				OBJ_17 /* AddressTests.swift */,
 				OBJ_18 /* PersonTests.swift */,
 				OBJ_19 /* PersonsTests.swift */,
 				OBJ_20 /* PersonsXMLDatabaseTests.swift */,
+				OBJ_21 /* TestObjects */,
 				OBJ_31 /* URL+RenameTests.swift */,
 				OBJ_32 /* XMLAddressMapperTests.swift */,
 				OBJ_33 /* XMLObjectTests.swift */,
@@ -254,12 +252,11 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_9 /* URL+Rename.swift */,
-				OBJ_10 /* XMLDatabaseError.swift */,
-				OBJ_11 /* XMLDatabase.swift */,
+				OBJ_10 /* XMLDatabase.swift */,
+				OBJ_11 /* XMLDatabaseError.swift */,
 				OBJ_12 /* XMLObject.swift */,
 				OBJ_13 /* XMLObjectMapper.swift */,
 				OBJ_14 /* XMLObjects.swift */,
-				3265BC021FD1B64A007F9DDB /* Localizable.strings */,
 			);
 			name = XMLDatabase;
 			path = Sources/XMLDatabase;
@@ -361,7 +358,6 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				de,
 			);
 			mainGroup = OBJ_5 /*  */;
 			productRefGroup = OBJ_41 /* Products */;
@@ -432,8 +428,8 @@
 			buildActionMask = 0;
 			files = (
 				OBJ_89 /* URL+Rename.swift in Sources */,
-				OBJ_90 /* XMLDatabaseError.swift in Sources */,
-				OBJ_91 /* XMLDatabase.swift in Sources */,
+				OBJ_90 /* XMLDatabase.swift in Sources */,
+				OBJ_91 /* XMLDatabaseError.swift in Sources */,
 				OBJ_92 /* XMLObject.swift in Sources */,
 				OBJ_93 /* XMLObjectMapper.swift in Sources */,
 				OBJ_94 /* XMLObjects.swift in Sources */,
@@ -446,36 +442,24 @@
 		OBJ_109 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "XMLDatabase::XMLDatabaseTests" /* XMLDatabaseTests */;
-			targetProxy = 3265BC011FD1B4FD007F9DDB /* PBXContainerItemProxy */;
+			targetProxy = 32F5059D1FD9B19600A42746 /* PBXContainerItemProxy */;
 		};
 		OBJ_81 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "XMLDatabase::XMLDatabase" /* XMLDatabase */;
-			targetProxy = 3265BBFF1FD1B4FC007F9DDB /* PBXContainerItemProxy */;
+			targetProxy = 32F5059B1FD9B19500A42746 /* PBXContainerItemProxy */;
 		};
 		OBJ_83 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "SWXMLHash::SWXMLHash" /* SWXMLHash */;
-			targetProxy = 3265BC001FD1B4FC007F9DDB /* PBXContainerItemProxy */;
+			targetProxy = 32F5059C1FD9B19500A42746 /* PBXContainerItemProxy */;
 		};
 		OBJ_97 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "SWXMLHash::SWXMLHash" /* SWXMLHash */;
-			targetProxy = 3265BBFE1FD1B4FC007F9DDB /* PBXContainerItemProxy */;
+			targetProxy = 32F5059A1FD9B19500A42746 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		3265BC021FD1B64A007F9DDB /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3265BC031FD1B64A007F9DDB /* en */,
-				3265BC041FD1B65B007F9DDB /* de */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		OBJ_100 /* Release */ = {

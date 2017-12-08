@@ -9,13 +9,13 @@ import Foundation
 
 // MARK: - Error Enumerations
 
-enum URLError: Error {
+public enum URLError: Error {
     case fileDoesNotExist(at: URL)
     case fileWithNewFilenameExistsAlready(oldName: String, at: URL)
 }
 
 /// An enumeration for the various errors of `XMLObjects`.
-enum XMLObjectsError: Error {
+public enum XMLObjectsError: Error {
     case invalidXMLFilename(at: URL)
     case xmlFileDoesNotExist(at: URL)
     case xmlFileIsLocked(at: URL)

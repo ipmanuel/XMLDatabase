@@ -14,7 +14,7 @@ open class XMLObject {
     // MARK: Properties
     
     private var idMutable: Int
-    var id: Int {
+    public var id: Int {
         return idMutable
     }
     
