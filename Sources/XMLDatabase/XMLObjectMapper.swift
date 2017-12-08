@@ -19,7 +19,7 @@ public protocol XMLObjectMapper: class {
 }
 
 extension XMLObjectMapper {
-    static func getId(from xmlElement: XMLIndexer, at url: URL) throws -> Int {
+    public static func getId(from xmlElement: XMLIndexer, at url: URL) throws -> Int {
         guard let element = xmlElement.element else {
             throw XMLObjectsError.requiredElementIsMissing(element: String(describing: Self.ObjectType.self).lowercased(), at: url)
         }

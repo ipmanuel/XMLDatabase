@@ -80,7 +80,7 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
     // MARK: Init
     
     /// Set all properties and check wether the XML file is locked or does not exist
-    init(xmlFileURL: URL) throws {
+    public init(xmlFileURL: URL) throws {
         savedObjectsIds = []
         savedObjects = []
         unsavedObjects = []
@@ -145,7 +145,7 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
     // MARK: Public Methods
     
     /// Insert object with right index in array unsavedObjects and save its id in unsavedObjectsIds
-    func addObject(object: MapperType.ObjectType) throws {
+    public func addObject(object: MapperType.ObjectType) throws {
         guard !unsavedObjectsIds.contains(object.id), !savedObjectsIds.contains(object.id) else {
             throw XMLObjectsError.idExistsAlready(id: object.id, at: xmlUnlockedFileURL)
         }
@@ -181,7 +181,7 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
     
     
     /// Delete a saved/unsaved object by removing from arrays and additionally remove from XMLDocument for a saved object
-    func deleteObject(id: Int) {
+    public func deleteObject(id: Int) {
         if (savedObjectsIds+unsavedObjectsIds).contains(id) {
             if let index = getIndexOfSavedObjectsBy(id: id), let indexId = getIndexOfSavedObjectsIdsBy(id: id) {
                 savedObjects.remove(at: index)
@@ -197,12 +197,12 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
     }
     
     /// Return a saved object selected by index
-    func get(at index: Int) -> MapperType.ObjectType {
+    public func get(at index: Int) -> MapperType.ObjectType {
         return savedObjects[index]
     }
     
     /// Return a saved object selected by id
-    func getBy(id: Int) -> MapperType.ObjectType? {
+    public func getBy(id: Int) -> MapperType.ObjectType? {
         guard savedObjectsIds.contains(id) else {
             return nil
         }

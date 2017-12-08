@@ -9,7 +9,7 @@ import Foundation
 
 extension URL {
     /// rename the file specified in the url
-    mutating func rename(newName: String) throws {
+    public mutating func rename(newName: String) throws {
         // save old name
         let oldName = self.lastPathComponent
         

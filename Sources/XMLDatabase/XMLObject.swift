@@ -21,7 +21,7 @@ open class XMLObject {
     
     // MARK: Init
     
-    init(id: Int) throws {
+    public init(id: Int) throws {
         guard XMLObject.isValid(id: id) else {
             throw XMLObjectError.invalidId(value: id)
         }
@@ -31,14 +31,14 @@ open class XMLObject {
     
     // MARK: Validate
     
-    class func isValid(id: Int) -> Bool {
+    public class func isValid(id: Int) -> Bool {
         return id > 0
     }
     
     
     // MARK: Convert
     
-    class func getId(from idString: String) throws -> Int {
+    public class func getId(from idString: String) throws -> Int {
         guard let id = Int(idString) else {
             throw XMLObjectError.invalidIdString(value: idString)
         }

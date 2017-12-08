@@ -13,7 +13,7 @@ public protocol XMLDatabase: class {
 
 
 extension XMLDatabase {
-    static func unlockIfXMLFileExists(url: inout URL) throws {
+    public static func unlockIfXMLFileExists(url: inout URL) throws {
         var filename = url.lastPathComponent
         if FileManager.default.fileExists(atPath: url.path) {
             filename.remove(at: filename.startIndex)
