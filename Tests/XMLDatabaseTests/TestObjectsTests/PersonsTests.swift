@@ -2,13 +2,16 @@ import XCTest
 @testable import XMLDatabase
 
 class PersonsTests: XCTestCase {
-    // basePath
-    private var basePath: URL?
     
-    // persons locked XMLFile
+    // MARK: - Properties
+    
+    private var basePath: URL?
     private var personsXMLContent: String?
     private var personsLockedXMLFilePath: URL?
     private var personsUnlockedXMLFilePath: URL?
+    
+    
+    // MARK: - Init
     
     override func setUp() {
         super.setUp()
@@ -30,7 +33,7 @@ class PersonsTests: XCTestCase {
     }
     
     
-    // MARK: Persons
+    // MARK: - PersonsTests
     
     func testConstraintOnePersonExists() {
         personsXMLContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><persons></persons>"
@@ -44,6 +47,9 @@ class PersonsTests: XCTestCase {
             }
         }
     }
+    
+    
+    // MARK: - Private Methods
     
     private func createUnlockedXMLFile() {
         XCTAssertNoThrow(try personsXMLContent!.write(to: personsUnlockedXMLFilePath!, atomically: true, encoding: String.Encoding.utf8))

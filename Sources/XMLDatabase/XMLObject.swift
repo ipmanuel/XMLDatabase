@@ -11,7 +11,7 @@ import Foundation
 open class XMLObject {
     
     
-    // MARK: Properties
+    // MARK: - Properties
     
     private var idMutable: Int
     public var id: Int {
@@ -19,7 +19,7 @@ open class XMLObject {
     }
     
     
-    // MARK: Init
+    // MARK: - Init
     
     public init(id: Int) throws {
         guard XMLObject.isValid(id: id) else {
@@ -29,14 +29,14 @@ open class XMLObject {
     }
     
     
-    // MARK: Validate
+    // MARK: - Validate
     
     public class func isValid(id: Int) -> Bool {
         return id > 0
     }
     
     
-    // MARK: Convert
+    // MARK: - Convert
     
     public class func getId(from idString: String) throws -> Int {
         guard let id = Int(idString) else {

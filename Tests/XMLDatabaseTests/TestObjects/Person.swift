@@ -1,5 +1,5 @@
 import Foundation
-@testable import XMLDatabase
+import XMLDatabase
 
 
 enum PersonError: Error {
@@ -8,10 +8,10 @@ enum PersonError: Error {
 }
 
 
-class Person: XMLObject, CustomStringConvertible {
+class Person: XMLObject {
     
     
-    // MARK: enumerations
+    // MARK: - Enumerations
     
     /// possible genders
     enum Gender: String {
@@ -20,42 +20,43 @@ class Person: XMLObject, CustomStringConvertible {
     }
     
     
-    // MARK: vars
+    // MARK: - Properties
     
-    // gender
+    /// Gender of the person
     private var genderMutable: Person.Gender
     var gender: Person.Gender {
         return genderMutable
     }
     
-    // firstName
+    /// First name of the person
     private var firstNameMutable: String
     var firstName: String {
         return firstNameMutable
     }
     
-    // addresses (optional)
+    /// Optional addresses ids of the person
     private var addressesIdsMutable: [Int]
     public var addressesIds: [Int] {
         let addressesIds = addressesIdsMutable
         return addressesIds
     }
-    public var addressesTypes: [String]
     
-    // string, when print(XMLObject) is used
-    var description: String {
-        return "Person_\(id): \(firstName); \(gender)"
+    /// Optional addresses types of the person
+    private var addressesTypesMutable: [String]
+    public var addressesTypes: [String] {
+        let addressesTypes = addressesTypesMutable
+        return addressesTypes
     }
     
     
-    // MARK: init
+    // MARK: - Init
     
     init(id: Int, gender: Person.Gender, firstName: String) throws {
         // init vars
         self.genderMutable = gender
         self.firstNameMutable = try Person.getFirstName(from: firstName)
         self.addressesIdsMutable = []
-        self.addressesTypes = []
+        self.addressesTypesMutable = []
         
         try super.init(id: id)
     }
@@ -69,7 +70,7 @@ class Person: XMLObject, CustomStringConvertible {
     }
     
     
-    // MARK: change required values
+    // MARK: - Change required properties
     
     public func change(gender: Person.Gender) {
         genderMutable = gender
@@ -80,15 +81,15 @@ class Person: XMLObject, CustomStringConvertible {
     }
     
     
-    // MARK: set optional values
+    // MARK: - Add optional properties
     
     public func add(addressId: Int, type: String) {
         self.addressesIdsMutable.append(addressId)
-        self.addressesTypes.append(type)
+        self.addressesTypesMutable.append(type)
     }
     
     
-    // MARK: validate
+    // MARK: - Validate
     
     class func isValid(gender: String) -> Bool {
         return Person.Gender(rawValue: gender) != nil
@@ -99,7 +100,7 @@ class Person: XMLObject, CustomStringConvertible {
     }
     
     
-    // MARK: convert
+    // MARK: - Convert
     
     class func getGender(from gender: String) throws -> Person.Gender {
         guard isValid(gender: gender) else {

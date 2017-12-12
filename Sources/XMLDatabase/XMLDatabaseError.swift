@@ -18,6 +18,7 @@ public enum URLError: Error {
 public enum XMLObjectsError: Error {
     case invalidXMLFilename(at: URL)
     case xmlFileDoesNotExist(at: URL)
+    case xmlFileExistsAlready(at: URL)
     case xmlFileIsLocked(at: URL)
     case xmlFileSizeReadingFailed(at: URL, error: String)
     case requiredAttributeIsMissing(element: String, attribute: String, at: URL)
@@ -43,6 +44,8 @@ extension XMLObjectsError: LocalizedError {
             return String(format: NSLocalizedString("The filename of the given XML file \"%@\" located in \"%@\" is invalid.", comment: ""), arguments: [url.lastPathComponent, url.deletingLastPathComponent().path])
         case .xmlFileDoesNotExist(let url):
             return String(format: NSLocalizedString("The given XML file \"%@\" located in \"%@\" does not exist.", comment: ""), arguments: [url.lastPathComponent, url.deletingLastPathComponent().path])
+        case .xmlFileExistsAlready(let url):
+            return String(format: NSLocalizedString("The given XML file \"%@\" located in \"%@\" exists already.", comment: ""), arguments: [url.lastPathComponent, url.deletingLastPathComponent().path])
         case .xmlFileIsLocked(let url):
             return String(format: NSLocalizedString("The given XML file \"%@\" located in \"%@\" is locked.", comment: ""), arguments: [url.lastPathComponent, url.deletingLastPathComponent().path])
         case .xmlFileSizeReadingFailed(let url, let error):

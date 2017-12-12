@@ -26,16 +26,11 @@ class URLExtensionTests: XCTestCase {
         
         XCTAssertNoThrow(try FileManager.default.removeItem(at: newFileURL))
     }
-    /*
-    func testRemove() {
-        let path = Bundle.init(for: URLExtensionTests.self).resourceURL!
-        let fileExists = path.appendingPathComponent("FileToDelete.xml")
-        let fileDoesNotExists = path.appendingPathComponent("FileNotExists.xml")
-        URL.removeFileIfExists(file: fileExists)
-        URL.removeFileIfExists(file: fileDoesNotExists)
-        
-        XCTAssertFalse(FileManager.default.fileExists(atPath: fileExists.path))
-        XCTAssertFalse(FileManager.default.fileExists(atPath: fileExists.path))
-    }*/
+}
 
+
+extension URLExtensionTests {
+    static var allTests = [
+        ("testRename", testRename)
+    ]
 }

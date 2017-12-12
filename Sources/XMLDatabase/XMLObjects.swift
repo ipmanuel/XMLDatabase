@@ -16,7 +16,7 @@ import SWXMLHash
 open class XMLObjects<MapperType: XMLObjectMapper> {
     
     
-    // MARK: Properties
+    // MARK: - Properties
     
     /// The URL, where the corresponding XML file is located
     /// -note: The file url changes, because after initializing file is locked by adding `_` at the beginning of the filename
@@ -69,15 +69,14 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
     public var nextId: Int {
         get {
             if nextIds.count > 0 {
-                let first = nextIds.first!
-                return first
+                return nextIds.first!
             }
             return maxId + 1
         }
     }
     
     
-    // MARK: Init
+    // MARK: - Init
     
     /// Set all properties and check wether the XML file is locked or does not exist
     public init(xmlFileURL: URL) throws {
@@ -142,7 +141,7 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
     }
     
     
-    // MARK: Public Methods
+    // MARK: - Open Methods
     
     /// Insert object with right index in array unsavedObjects and save its id in unsavedObjectsIds
     open func addObject(object: MapperType.ObjectType) throws {
@@ -153,9 +152,6 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
         unsavedObjectsIds.append(object.id)
         addId(value: object.id)
     }
-    
-    
-    // MARK: Actions on XML file
     
     /// Copy all unsaved objects to saved objects and insert the into XMLDocument ordered by id
     open func save() throws {
@@ -179,22 +175,35 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
         }
     }
     
-    
     /// Delete a saved/unsaved object by removing from arrays and additionally remove from XMLDocument for a saved object
-    public func deleteObject(id: Int) {
+    open func deleteObject(id: Int) throws {
         if (savedObjectsIds+unsavedObjectsIds).contains(id) {
-            if let index = getIndexOfSavedObjectsBy(id: id), let indexId = getIndexOfSavedObjectsIdsBy(id: id) {
+            if let index = savedObjects.index(where: {$0.id == id}), let indexId = savedObjectsIds.index(where: {$0 == id}) {
                 savedObjects.remove(at: index)
                 savedObjectsIds.remove(at: indexId)
                 xmlDocument.rootElement()!.removeChild(at: index)
                 deleteId(value: id)
-            } else if let index = getIndexOfUnsavedObjectsBy(id: id), let indexId = getIndexOfUnsavedObjectsIdsBy(id: id) {
+            } else if let index = unsavedObjects.index(where: {$0.id == id}), let indexId = unsavedObjectsIds.index(where: {$0 == id}) {
                 unsavedObjects.remove(at: index)
                 unsavedObjectsIds.remove(at: indexId)
                 deleteId(value: id)
             }
         }
     }
+    
+    /// create an empty XML file with a root element same as lowercased XML filename
+    open class func createEmptyXMLFile(url: URL) throws {
+        guard !FileManager.default.fileExists(atPath: url.path) else {
+            throw XMLObjectsError.xmlFileExistsAlready(at: url)
+        }
+        
+        let rootElementName = url.deletingPathExtension().lastPathComponent.capitalized
+        let xmlDocument = XMLDocument(rootElement: Foundation.XMLElement(name: rootElementName))
+        try xmlDocument.xmlData.write(to: url)
+    }
+    
+    
+    // MARK: - Public Methods
     
     /// Return a saved object selected by index
     public func get(at index: Int) -> MapperType.ObjectType {
@@ -211,7 +220,7 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
     }
     
     
-    // MARK: Private Methods
+    // MARK: - Private Methods
     
     private func importObjects() throws {
         let xmlParsed = SWXMLHash.parse(xmlDocument.xmlString)
@@ -222,7 +231,7 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
         let objects = xmlParsed[rootXMLElement][objectName.lowercased()].all
         
         for object in objects {
-            try addObject(object: try MapperType.toObject(element: object, at: xmlUnlockedFileURL))
+            try addObject(object: try MapperType.toObject(xmlIndexer: object, at: xmlUnlockedFileURL))
         }
         
         // imported objects should not be saved a second time
@@ -232,7 +241,7 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
         unsavedObjectsIds.removeAll()
     }
     
-    /// Methode to set the next ids by filling the array nextIds
+    /// Method to set the next ids by filling the array nextIds
     private func addId(value id: Int) {
         // id is in nextIds
         if (nextIds.contains(id)) {
@@ -248,7 +257,7 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
         maxId = max(maxId, id)
     }
     
-    /// add the deleted id to the array nextId and adjust possibly maxId
+    /// Add the deleted id to the array nextId and adjust possibly maxId
     private func deleteId(value id: Int) {
         nextIds.append(id)
         nextIds.sort()
@@ -269,41 +278,5 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
                 maxId -= 1
             }
         }
-    }
-    
-    private func getIndexOfSavedObjectsBy(id: Int) -> Int? {
-        for (index, object) in savedObjects.enumerated() {
-            if object.id == id {
-                return index
-            }
-        }
-        return nil
-    }
-    
-    private func getIndexOfUnsavedObjectsBy(id: Int) -> Int? {
-        for (index, object) in unsavedObjects.enumerated() {
-            if object.id == id {
-                return index
-            }
-        }
-        return nil
-    }
-    
-    private func getIndexOfSavedObjectsIdsBy(id: Int) -> Int? {
-        for (index, objectId) in savedObjectsIds.enumerated() {
-            if objectId == id {
-                return index
-            }
-        }
-        return nil
-    }
-    
-    private func getIndexOfUnsavedObjectsIdsBy(id: Int) -> Int? {
-        for (index, objectId) in unsavedObjectsIds.enumerated() {
-            if objectId == id {
-                return index
-            }
-        }
-        return nil
     }
 }

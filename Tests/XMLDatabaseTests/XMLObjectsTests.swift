@@ -10,26 +10,28 @@ import XCTest
 
 class XMLObjectsTests: XCTestCase {
 
-    // addresses XML file
+    
+    // MARK: - Properties
+    
     private var baseURL: URL?
     private var xmlContent: String?
     private var lockedXMLFileURL: URL?
     private var unlockedXMLFileURL: URL?
-    private var xmlObjects: XMLObjects<XMLAddressMapper>?
+    private var xmlObjects: XMLObjects<PersonMapper>?
     
     
-    // MARK: Init
+    // MARK: - Init
     
     override func setUp() {
         super.setUp()
         
         baseURL = Bundle.init(for: XMLObjectsTests.self).resourceURL!
-        xmlContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><addresses><address id=\"1\"><city>Berlin</city><street>Spandauer Straße</street></address><address id=\"32\"><city>Amsterdam</city><street>Rozengracht</street></address></addresses>"
-        lockedXMLFileURL = baseURL!.appendingPathComponent("_Addresses.xml")
-        unlockedXMLFileURL = baseURL!.appendingPathComponent("Addresses.xml")
+        xmlContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><persons><person id=\"1\"><gender>male</gender><firstName>Manuel</firstName></person><person id=\"32\"><gender>female</gender><firstName>Sophie</firstName></person></persons>"
+        lockedXMLFileURL = baseURL!.appendingPathComponent("_Persons.xml")
+        unlockedXMLFileURL = baseURL!.appendingPathComponent("Persons.xml")
         do {
             try xmlContent!.write(to: unlockedXMLFileURL!, atomically: true, encoding: String.Encoding.utf8)
-            xmlObjects = try XMLObjects<XMLAddressMapper>(xmlFileURL: unlockedXMLFileURL!)
+            xmlObjects = try XMLObjects<PersonMapper>(xmlFileURL: unlockedXMLFileURL!)
         } catch {
             XCTFail("\(error)")
         }
@@ -43,23 +45,23 @@ class XMLObjectsTests: XCTestCase {
     }
     
     
-    // MARK: XMLObjectsTests
+    // MARK: - Init tests
     
     func testLock() {
         // locked XML file should exists, because instance is running
         XCTAssertTrue(FileManager.default.fileExists(atPath: lockedXMLFileURL!.path))
         
         // test to init a second instance
-        XCTAssertThrowsError(try Addresses(xmlFileURL: unlockedXMLFileURL!)) { error in
+        XCTAssertThrowsError(try Persons(xmlFileURL: unlockedXMLFileURL!)) { error in
             guard case XMLObjectsError.xmlFileIsLocked( _) = error else {
                 return XCTFail("\(error)")
             }
         }
-        XCTAssertThrowsError(try Addresses(xmlFileURL: lockedXMLFileURL!)) { error in
+        XCTAssertThrowsError(try Persons(xmlFileURL: lockedXMLFileURL!)) { error in
             guard case XMLObjectsError.invalidXMLFilename(let url) = error else {
                 return XCTFail("\(error)")
             }
-            XCTAssertEqual(url.deletingPathExtension().lastPathComponent, "_Addresses")
+            XCTAssertEqual(url.deletingPathExtension().lastPathComponent, "_Persons")
         }
     }
     
@@ -75,8 +77,8 @@ class XMLObjectsTests: XCTestCase {
         // get object with id 1
         if let object = xmlObjects!.getBy(id: 1) {
             XCTAssertEqual(object.id, 1)
-            XCTAssertEqual(object.city, "Berlin")
-            XCTAssertEqual(object.street, "Spandauer Straße")
+            XCTAssertEqual(object.gender, Person.Gender.male)
+            XCTAssertEqual(object.firstName, "Manuel")
         } else {
             XCTFail("Object with id \"1\" was not found.")
         }
@@ -84,35 +86,37 @@ class XMLObjectsTests: XCTestCase {
         // get object with id 32
         if let object = xmlObjects!.getBy(id: 32) {
             XCTAssertEqual(object.id, 32)
-            XCTAssertEqual(object.city, "Amsterdam")
-            XCTAssertEqual(object.street, "Rozengracht")
+            XCTAssertEqual(object.gender, Person.Gender.female)
+            XCTAssertEqual(object.firstName, "Sophie")
         } else {
             XCTFail("Object with id \"32\" was not found.")
         }
     }
     
     func testAddAndSaveObjects() {
-        var address: Address?
-        XCTAssertNoThrow(address = try Address(id: 5, city: "Cologne", street: "Ehrenstraße"))
-        XCTAssertNoThrow(try xmlObjects!.addObject(object: address!))
+        var xmlObject: Person?
+        XCTAssertNoThrow(xmlObject = try getXMLObject(id: 5))
+        XCTAssertNoThrow(try xmlObjects!.addObject(object: xmlObject!))
         XCTAssertEqual(xmlObjects!.count, 2)
         XCTAssertNoThrow(try xmlObjects!.save())
         XCTAssertEqual(xmlObjects!.count, 3)
         
         // init again
         xmlObjects = nil
-        XCTAssertNoThrow(xmlObjects = try XMLObjects<XMLAddressMapper>(xmlFileURL: unlockedXMLFileURL!))
+        XCTAssertNoThrow(xmlObjects = try XMLObjects<PersonMapper>(xmlFileURL: unlockedXMLFileURL!))
         XCTAssertEqual(xmlObjects!.count, 3)
         xmlObjects = nil
         
         // test file content
         var xmlDocument: XMLDocument?
         XCTAssertNoThrow(xmlDocument = try XMLDocument(contentsOf: unlockedXMLFileURL!, options: XMLNode.Options.documentTidyXML))
-        XCTAssertEqual(xmlDocument!.xmlString, "<?xml version=\"1.0\" encoding=\"UTF-8\"?><addresses><address id=\"1\"><city>Berlin</city><street>Spandauer Straße</street></address><address id=\"5\"><city>Cologne</city><street>Ehrenstraße</street></address><address id=\"32\"><city>Amsterdam</city><street>Rozengracht</street></address></addresses>")
+        XCTAssertEqual(xmlDocument!.xmlString, "<?xml version=\"1.0\" encoding=\"UTF-8\"?><persons><person id=\"1\"><gender>male</gender><firstName>Manuel</firstName></person><person id=\"5\"><gender>male</gender><firstName>Manuel</firstName></person><person id=\"32\"><gender>female</gender><firstName>Sophie</firstName></person></persons>")
     }
     
-    func testNextId() {
-        var address: Address?
+    // MARK: - Property `nextId` tests
+    
+    func testPropertyNextId() {
+        var xmlObject: Person?
         
         // 1.   addObject(id: 1)    xmlObjects.nextIds = []
         // 2.   addObject(id: 32)   xmlObjects.nextIds = [2,...,31,33,34]
@@ -122,86 +126,86 @@ class XMLObjectsTests: XCTestCase {
         // 32.  addObject(id: 31)   xmlObjects.nextIds = [33,34]
         for i in 2...31 {
             XCTAssertEqual(xmlObjects!.nextId, i)
-            XCTAssertNoThrow(address = try Address(id: i, city: "Cologne", street: "Ehrenstraße"))
-            XCTAssertNoThrow(try xmlObjects!.addObject(object: address!))
+            XCTAssertNoThrow(xmlObject = try getXMLObject(id: i))
+            XCTAssertNoThrow(try xmlObjects!.addObject(object: xmlObject!))
         }
         XCTAssertEqual(xmlObjects!.nextId, 33)
         
         // 33. deleteObject(id: 4)  xmlObjects.nextIds = [4,33,34]
-        xmlObjects!.deleteObject(id: 4)
+        XCTAssertNoThrow(try xmlObjects!.deleteObject(id: 4))
         
         // 34. deleteObject(id: 5)  xmlObjects.nextIds = [4,5,33,34]
-        xmlObjects!.deleteObject(id: 5)
+        XCTAssertNoThrow(try xmlObjects!.deleteObject(id: 5))
         
         // 35. addObject(id: 4)     xmlObjects.nextIds = [5,33,34]
         XCTAssertEqual(xmlObjects!.nextId, 4)
-        XCTAssertNoThrow(address = try Address(id: xmlObjects!.nextId, city: "Cologne", street: "Ehrenstraße"))
-        XCTAssertNoThrow(try xmlObjects!.addObject(object: address!))
+        XCTAssertNoThrow(xmlObject = try getXMLObject(id: xmlObjects!.nextId))
+        XCTAssertNoThrow(try xmlObjects!.addObject(object: xmlObject!))
         
         // 36. addObject(id: 5)    xmlObjects.nextIds = [33,34]
         XCTAssertEqual(xmlObjects!.nextId, 5)
-        XCTAssertNoThrow(address = try Address(id: xmlObjects!.nextId, city: "Cologne", street: "Ehrenstraße"))
-        XCTAssertNoThrow(try xmlObjects!.addObject(object: address!))
+        XCTAssertNoThrow(xmlObject = try getXMLObject(id: xmlObjects!.nextId))
+        XCTAssertNoThrow(try xmlObjects!.addObject(object: xmlObject!))
         
         // 37. addObject(id: 33)   xmlObjects.nextIds = [34]
         XCTAssertEqual(xmlObjects!.nextId, 33)
-        XCTAssertNoThrow(address = try Address(id: xmlObjects!.nextId, city: "Cologne", street: "Ehrenstraße"))
-        XCTAssertNoThrow(try xmlObjects!.addObject(object: address!))
+        XCTAssertNoThrow(xmlObject = try getXMLObject(id: xmlObjects!.nextId))
+        XCTAssertNoThrow(try xmlObjects!.addObject(object: xmlObject!))
         
         // 38. addObject(id: 34)   xmlObjects.nextIds = []
         XCTAssertEqual(xmlObjects!.nextId, 34)
-        XCTAssertNoThrow(address = try Address(id: xmlObjects!.nextId, city: "Cologne", street: "Ehrenstraße"))
-        XCTAssertNoThrow(try xmlObjects!.addObject(object: address!))
+        XCTAssertNoThrow(xmlObject = try getXMLObject(id: xmlObjects!.nextId))
+        XCTAssertNoThrow(try xmlObjects!.addObject(object: xmlObject!))
         
         // 39. deleteObject(id: 6)  xmlObjects.nextIds = [6, 35]
-        xmlObjects!.deleteObject(id: 6)
+        XCTAssertNoThrow(try xmlObjects!.deleteObject(id: 6))
         
         // 40. addObject(id: 6)     xmlObjects.nextIds = [35]
         XCTAssertEqual(xmlObjects!.nextId, 6)
-        XCTAssertNoThrow(address = try Address(id: xmlObjects!.nextId, city: "Cologne", street: "Ehrenstraße"))
-        XCTAssertNoThrow(try xmlObjects!.addObject(object: address!))
+        XCTAssertNoThrow(xmlObject = try getXMLObject(id: xmlObjects!.nextId))
+        XCTAssertNoThrow(try xmlObjects!.addObject(object: xmlObject!))
         
-        // 40. addObject(id: 36)   xmlObjects.nextIds = [35,37,38]
+        // 41. addObject(id: 37)   xmlObjects.nextIds = [35,37,38]
         XCTAssertEqual(xmlObjects!.nextId, 35)
-        XCTAssertNoThrow(address = try Address(id: 37, city: "Cologne", street: "Ehrenstraße"))
-        XCTAssertNoThrow(try xmlObjects!.addObject(object: address!))
+        XCTAssertNoThrow(xmlObject = try getXMLObject(id: 37))
+        XCTAssertNoThrow(try xmlObjects!.addObject(object: xmlObject!))
         
-        // 41. addObject(id: 35)   xmlObjects.nextIds = [37,38]
+        // 42. addObject(id: 35)   xmlObjects.nextIds = [35,38]
         XCTAssertEqual(xmlObjects!.nextId, 35)
-        XCTAssertNoThrow(address = try Address(id: xmlObjects!.nextId, city: "Cologne", street: "Ehrenstraße"))
-        XCTAssertNoThrow(try xmlObjects!.addObject(object: address!))
+        XCTAssertNoThrow(xmlObject = try getXMLObject(id: xmlObjects!.nextId))
+        XCTAssertNoThrow(try xmlObjects!.addObject(object: xmlObject!))
     }
     
     func testSimmulateRandomNextId() {
-        var object: Address?
-        XCTAssertNoThrow(object = try Address(id: 40, city: "Cologne", street: "Ehrenstraße"))
-        XCTAssertNoThrow(try xmlObjects!.addObject(object: object!))
+        var xmlObject: Person?
+        XCTAssertNoThrow(xmlObject = try getXMLObject(id: 40))
+        XCTAssertNoThrow(try xmlObjects!.addObject(object: xmlObject!))
         
-        XCTAssertNoThrow(object = try Address(id: 60, city: "Cologne", street: "Ehrenstraße"))
-        XCTAssertNoThrow(try xmlObjects!.addObject(object: object!))
+        XCTAssertNoThrow(xmlObject = try getXMLObject(id: 60))
+        XCTAssertNoThrow(try xmlObjects!.addObject(object: xmlObject!))
         
         // fill from id = 2 to id = 31 by nextId
         for i in 2...31 {
             XCTAssertEqual(xmlObjects!.nextId, i)
-            XCTAssertNoThrow(object = try Address(id: xmlObjects!.nextId, city: "Cologne", street: "Ehrenstraße"))
-            XCTAssertNoThrow(try xmlObjects!.addObject(object: object!))
+            XCTAssertNoThrow(xmlObject = try getXMLObject(id: xmlObjects!.nextId))
+            XCTAssertNoThrow(try xmlObjects!.addObject(object: xmlObject!))
         }
         
         // fill from id = 33 to id = 39 by nextId
         for i in 33...39 {
             XCTAssertEqual(xmlObjects!.nextId, i)
-            XCTAssertNoThrow(object = try Address(id: xmlObjects!.nextId, city: "Cologne", street: "Ehrenstraße"))
-            XCTAssertNoThrow(try xmlObjects!.addObject(object: object!))
+            XCTAssertNoThrow(xmlObject = try getXMLObject(id: xmlObjects!.nextId))
+            XCTAssertNoThrow(try xmlObjects!.addObject(object: xmlObject!))
         }
         
         // delete last object
-        xmlObjects!.deleteObject(id: 60)
+        XCTAssertNoThrow(try xmlObjects!.deleteObject(id: 60))
         
         // fill from id = 41 to id = 59 by nextId
         for i in 41...59 {
             XCTAssertEqual(xmlObjects!.nextId, i)
-            XCTAssertNoThrow(object = try Address(id: xmlObjects!.nextId, city: "Cologne", street: "Ehrenstraße"))
-            XCTAssertNoThrow(try xmlObjects!.addObject(object: object!))
+            XCTAssertNoThrow(xmlObject = try getXMLObject(id: xmlObjects!.nextId))
+            XCTAssertNoThrow(try xmlObjects!.addObject(object: xmlObject!))
         }
         
         XCTAssertNoThrow(try xmlObjects!.save())
@@ -209,18 +213,18 @@ class XMLObjectsTests: XCTestCase {
         
         // delete all objects
         for i in 0...59 {
-            xmlObjects!.deleteObject(id: i)
+            XCTAssertNoThrow(try xmlObjects!.deleteObject(id: i))
         }
         XCTAssertNoThrow(try xmlObjects!.save())
         XCTAssertEqual(xmlObjects!.count, 0)
         
         XCTAssertEqual(xmlObjects!.nextId, 1)
-        XCTAssertNoThrow(object = try Address(id: xmlObjects!.nextId, city: "Cologne", street: "Ehrenstraße"))
-        XCTAssertNoThrow(try xmlObjects!.addObject(object: object!))
+        XCTAssertNoThrow(xmlObject = try getXMLObject(id: xmlObjects!.nextId))
+        XCTAssertNoThrow(try xmlObjects!.addObject(object: xmlObject!))
     }
     
     func testSimmulateTotallyRandomNextId() {
-        var address: Address?
+        var xmlObject: Person?
         var randomId: Int
         var insertedIds = [1, 32]
         
@@ -230,8 +234,8 @@ class XMLObjectsTests: XCTestCase {
             while(insertedIds.contains(randomId)) {
                 randomId = Int(arc4random_uniform(UInt32(400))) + 1
             }
-            XCTAssertNoThrow(address = try Address(id: randomId, city: "Cologne", street: "Ehrenstraße"))
-            XCTAssertNoThrow(try xmlObjects!.addObject(object: address!))
+            XCTAssertNoThrow(xmlObject = try getXMLObject(id: randomId))
+            XCTAssertNoThrow(try xmlObjects!.addObject(object: xmlObject!))
             insertedIds.append(randomId)
         }
         
@@ -240,20 +244,15 @@ class XMLObjectsTests: XCTestCase {
         var index: Int
         for _ in 0...200 {
             index = Int(arc4random_uniform(UInt32(insertedIds.count)))
-            xmlObjects!.deleteObject(id: insertedIds[index])
+            XCTAssertNoThrow(try xmlObjects!.deleteObject(id: insertedIds[index]))
             insertedIds.remove(at: index)
         }
         
         // insert objects with nextId
         for _ in 1...400 {
             insertedIds.append(xmlObjects!.nextId)
-            XCTAssertNoThrow(address = try Address(id: xmlObjects!.nextId, city: "Cologne", street: "Ehrenstraße"))
-            do {
-                try xmlObjects!.addObject(object: address!)
-            } catch {
-                XCTFail("\(error)")
-                break
-            }
+            XCTAssertNoThrow(xmlObject = try getXMLObject(id: xmlObjects!.nextId))
+            XCTAssertNoThrow(try xmlObjects!.addObject(object: xmlObject!))
         }
         XCTAssertNoThrow(try xmlObjects!.save())
         
@@ -268,36 +267,35 @@ class XMLObjectsTests: XCTestCase {
     
     func testDelete() {
         // delete saved object
-        xmlObjects!.deleteObject(id: 1)
+        XCTAssertNoThrow(try xmlObjects!.deleteObject(id: 1))
         XCTAssertEqual(xmlObjects!.count, 1)
         
         // delete unsaved object
-        var object: Address?
+        var xmlObject: Person?
         for _ in 1...60 {
-            XCTAssertNoThrow(object = try Address(id: xmlObjects!.nextId, city: "Cologne", street: "Ehrenstraße"))
-            XCTAssertNoThrow(try xmlObjects!.addObject(object: object!))
+            XCTAssertNoThrow(xmlObject = try getXMLObject(id: xmlObjects!.nextId))
+            XCTAssertNoThrow(try xmlObjects!.addObject(object: xmlObject!))
         }
         XCTAssertNoThrow(try xmlObjects!.save())
         XCTAssertEqual(xmlObjects!.count, 61)
         
         // delete an object
-        xmlObjects!.deleteObject(id: 1)
+        XCTAssertNoThrow(try xmlObjects!.deleteObject(id: 1))
         XCTAssertNoThrow(try xmlObjects!.save())
         XCTAssertEqual(xmlObjects!.count, 60)
         
         // delete all objects
         for i in 1...61 {
-            xmlObjects!.deleteObject(id: i)
+            XCTAssertNoThrow(try xmlObjects!.deleteObject(id: i))
         }
         XCTAssertNoThrow(try xmlObjects!.save())
         XCTAssertEqual(xmlObjects!.count, 0)
-        
     }
     
     func testConstraintIdShouldBeUnique() {
-        var object: Address?
-        XCTAssertNoThrow(object = try Address(id: 1, city: "Cologne", street: "Ehrenstraße"))
-        XCTAssertThrowsError(try xmlObjects!.addObject(object: object!)) { error in
+        var xmlObject: Person?
+        XCTAssertNoThrow(xmlObject = try getXMLObject(id: 1))
+        XCTAssertThrowsError(try xmlObjects!.addObject(object: xmlObject!)) { error in
             guard case XMLObjectsError.idExistsAlready(let value, let url) = error else {
                 return XCTFail("\(error)")
             }
@@ -310,24 +308,63 @@ class XMLObjectsTests: XCTestCase {
         xmlObjects = nil
         let XMLContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
         XCTAssertNoThrow(try XMLContent.write(to: unlockedXMLFileURL!, atomically: true, encoding: String.Encoding.utf8))
-        XCTAssertThrowsError(try XMLObjects<XMLAddressMapper>(xmlFileURL: unlockedXMLFileURL!)) { error in
+        XCTAssertThrowsError(try XMLObjects<PersonMapper>(xmlFileURL: unlockedXMLFileURL!)) { error in
             guard case XMLObjectsError.rootXMLElementWasNotFound(let rootElement, let url) = error else {
                 return XCTFail("\(error)")
             }
-            XCTAssertEqual(rootElement, "addresses")
+            XCTAssertEqual(rootElement, "persons")
             XCTAssertEqual(url.path, unlockedXMLFileURL!.path)
         }
     }
     
     func testXMLFileDoesNotExist() {
         let xmlFileURL = baseURL!.appendingPathComponent("Test.xml")
-        XCTAssertThrowsError(try XMLObjects<XMLAddressMapper>(xmlFileURL: xmlFileURL)) { error in
+        XCTAssertThrowsError(try XMLObjects<PersonMapper>(xmlFileURL: xmlFileURL)) { error in
             guard case XMLObjectsError.xmlFileDoesNotExist(let url) = error else {
                 return XCTFail("\(error)")
             }
             XCTAssertEqual(url.path, xmlFileURL.path)
         }
     }
+    /*
+    func testAddManyPersons() {
+        // create xml file
+        XCTAssertNoThrow(try personsXMLContent!.write(to: personsLockedXMLFilePath!, atomically: true, encoding: String.Encoding.utf8))
+        XCTAssert(FileManager.default.fileExists(atPath: personsLockedXMLFilePath!.path))
+        
+        // init XML database
+        var db: PersonsXMLDatabase?
+        XCTAssertNoThrow(db = try PersonsXMLDatabase(url: basePath!))
+        
+        // add and save 5000 persons
+        var person: Person?
+        for _ in 0...5000 {
+            XCTAssertNoThrow(try person = Person(id: db!.persons.nextId, gender: .male, firstName: "Peter"))
+            XCTAssertNoThrow(try db!.persons.addObject(object: person!))
+        }
+        XCTAssertNoThrow(try db!.persons.save())
+    }*/
+    
+    
+    private func getXMLObject(id: Int) throws -> Person {
+        return try Person(id: id, gender: .male, firstName: "Manuel")
+    }
+}
+
+extension XMLObjectsTests {
+    static var allTests = [
+        ("testLock", testLock),
+        ("testDeinit", testDeinit),
+        ("testImportObjects", testImportObjects),
+        ("testAddAndSaveObjects", testAddAndSaveObjects),
+        ("testPropertyNextId", testPropertyNextId),
+        ("testSimmulateRandomNextId", testSimmulateRandomNextId),
+        ("testSimmulateTotallyRandomNextId", testSimmulateTotallyRandomNextId),
+        ("testDelete", testDelete),
+        ("testConstraintIdShouldBeUnique", testConstraintIdShouldBeUnique),
+        ("testXMLFileWithoutRootElement", testXMLFileWithoutRootElement),
+        ("testXMLFileDoesNotExist", testXMLFileDoesNotExist)
+    ]
 }
 
 internal func removeFileIfExists(file url: URL) {

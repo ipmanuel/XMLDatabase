@@ -4,7 +4,7 @@ import XCTest
 class XMLObjectTests: XCTestCase {
     
     
-    // MARK: valid properties
+    // MARK: - Valid properties tests
     
     func testValidProperties() {
         XCTAssertNoThrow(try XMLObject(id: 1))
@@ -17,21 +17,16 @@ class XMLObjectTests: XCTestCase {
         XCTAssertNoThrow(try XMLObject(id: 100000000000))
     }
     
-    func testProperties() {
-        do {
-            let object = try XMLObject(id: 1)
-            
-            // init properties
-            XCTAssertEqual(object.id, 1)
-        } catch {
-            XCTFail("\(error)")
-        }
+    func testPropertiesAreSet() {
+        var object: XMLObject?
+        XCTAssertNoThrow(object = try XMLObject(id: 1))
+        XCTAssertEqual(object!.id, 1)
     }
     
     
-     // MARK: property id tests
+    // MARK: - Property `id` tests
     
-    func testInvalidId() {
+    func testIdsNull() {
         // id is: 0
         XCTAssertThrowsError(try XMLObject(id: 0)) { error in
             guard case XMLObjectError.invalidId(let value) = error else {
@@ -39,7 +34,9 @@ class XMLObjectTests: XCTestCase {
             }
             XCTAssertEqual(value, 0)
         }
-        
+    }
+    
+    func testIdIsNegative() {
         // id is: -1
         XCTAssertThrowsError(try XMLObject(id: -1)) { error in
             guard case XMLObjectError.invalidId(let value) = error else {
@@ -69,7 +66,8 @@ class XMLObjectTests: XCTestCase {
 extension XMLObjectTests {
     static var allTests = [
         ("testValidProperties", testValidProperties),
-        ("testProperties", testProperties),
-        ("testInvalidId", testInvalidId)
+        ("testProperties", testPropertiesAreSet),
+        ("testIdsNull", testIdsNull),
+        ("testIdIsNegative", testIdIsNegative)
     ]
 }

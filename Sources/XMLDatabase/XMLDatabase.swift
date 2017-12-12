@@ -7,12 +7,15 @@
 
 import Foundation
 
-public protocol XMLDatabase: class {
+/// Protocol in which all XMLObjects should be in (located in url)
+public protocol XMLDatabase {
     init (url: URL) throws
 }
 
-
+/// Each `XMLDatabase` should unlock all XML files if they are locked
 extension XMLDatabase {
+    
+    /// unlock a XML file by remove first character ("_")
     public static func unlockIfXMLFileExists(url: inout URL) throws {
         var filename = url.lastPathComponent
         if FileManager.default.fileExists(atPath: url.path) {

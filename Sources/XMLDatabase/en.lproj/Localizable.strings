@@ -1,10 +1,9 @@
-/* 
-  Localizable.strings
-  XMLDatabase
-
-  Created by Manuel Pauls on 01.12.17.
-  
-*/
+//
+//  Localizable.strings
+//  XMLDatabase
+//
+//  Created by Manuel Pauls on 01.12.17.
+//
 
 
 // MARK: Descriptions for URLError
@@ -23,6 +22,9 @@
 
 /// Description for XMLObjectsError.xmlFileDoesNotExist(at: URL)
 "The given XML file \"%@\" located in \"%@\" does not exist." = "The given XML file \"%@\" located in \"%@\" does not exist.";
+
+/// Description for XMLObjectsError.xmlFileExistsAlready(at: URL)
+"The given XML file \"%@\" located in \"%@\" exists already." = "The given XML file \"%@\" located in \"%@\" exists already.";
 
 /// Description for XMLObjectsError.xmlFileIsLocked(at: URL)
 "The given XML file \"%@\" located in \"%@\" is locked." = "The given XML file \"%@\" located in \"%@\" is locked.";

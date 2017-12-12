@@ -4,41 +4,26 @@ import XCTest
 class PersonsXMLDatabaseTests: XCTestCase {
     
     
-    // MARK: init
+    // MARK: - Properties
     
-    // basePath
     private var basePath: URL?
-    
-    // addresses XMLFiles
-    private var addressesXMLFileContent: String?
-    private var addressesLockedXMLFilePath: URL?
-    private var addressesUnlockedXMLFilePath: URL?
-    
-    // persons locked XMLFile
     private var personsXMLContent: String?
     private var personsLockedXMLFilePath: URL?
     private var personsUnlockedXMLFilePath: URL?
     
+    
+    // MARK: - Init
+    
     override func setUp() {
         super.setUp()
         
-        // basePath
         basePath = Bundle.init(for: PersonsXMLDatabaseTests.self).resourceURL!
-        
-        // addresses locked and unlocked xml files
-        addressesXMLFileContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><addresses><address id=\"1\"><city>Title</city><street>Name</street></address></addresses>"
-        addressesLockedXMLFilePath = basePath!.appendingPathComponent("_Addresses.xml")
-        addressesUnlockedXMLFilePath = basePath!.appendingPathComponent("Addresses.xml")
-        
-        // persons locked and unlocked xml files
         personsXMLContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><persons><person id=\"1\"><gender>male</gender><firstName>Manuel</firstName><lastName>Pauls</lastName></person></persons>"
         personsLockedXMLFilePath = basePath!.appendingPathComponent("_Persons.xml")
         personsUnlockedXMLFilePath = basePath!.appendingPathComponent("Persons.xml")
     }
     
     override func tearDown() {
-        removeFileIfExists(file: addressesLockedXMLFilePath!)
-        removeFileIfExists(file: addressesUnlockedXMLFilePath!)
         removeFileIfExists(file: personsLockedXMLFilePath!)
         removeFileIfExists(file: personsUnlockedXMLFilePath!)
         
@@ -50,9 +35,6 @@ class PersonsXMLDatabaseTests: XCTestCase {
     
     func testXMLDatabaseWithLockedFiles() {
         do {
-            try addressesXMLFileContent!.write(to: addressesLockedXMLFilePath!, atomically: true, encoding: String.Encoding.utf8)
-            XCTAssert(FileManager.default.fileExists(atPath: addressesLockedXMLFilePath!.path))
-            
             try personsXMLContent!.write(to: personsLockedXMLFilePath!, atomically: true, encoding: String.Encoding.utf8)
             XCTAssert(FileManager.default.fileExists(atPath: personsLockedXMLFilePath!.path))
             
@@ -64,9 +46,6 @@ class PersonsXMLDatabaseTests: XCTestCase {
     
     func testXMLDatabaseWithAddressesLockedFile() {
         do {
-            try addressesXMLFileContent!.write(to: addressesLockedXMLFilePath!, atomically: true, encoding: String.Encoding.utf8)
-            XCTAssert(FileManager.default.fileExists(atPath: addressesLockedXMLFilePath!.path))
-            
             try personsXMLContent!.write(to: personsUnlockedXMLFilePath!, atomically: true, encoding: String.Encoding.utf8)
             XCTAssert(FileManager.default.fileExists(atPath: personsUnlockedXMLFilePath!.path))
             
@@ -79,9 +58,6 @@ class PersonsXMLDatabaseTests: XCTestCase {
     
     func testXMLDatabaseWithPersonsLockedFile() {
         do {
-            try addressesXMLFileContent!.write(to: addressesUnlockedXMLFilePath!, atomically: true, encoding: String.Encoding.utf8)
-            XCTAssert(FileManager.default.fileExists(atPath: addressesUnlockedXMLFilePath!.path))
-            
             try personsXMLContent!.write(to: personsLockedXMLFilePath!, atomically: true, encoding: String.Encoding.utf8)
             XCTAssert(FileManager.default.fileExists(atPath: personsLockedXMLFilePath!.path))
             
@@ -92,26 +68,24 @@ class PersonsXMLDatabaseTests: XCTestCase {
         }
     }
     
+    /*
     func testAddManyPersons() {
-        do {
-            try addressesXMLFileContent!.write(to: addressesUnlockedXMLFilePath!, atomically: true, encoding: String.Encoding.utf8)
-            XCTAssert(FileManager.default.fileExists(atPath: addressesUnlockedXMLFilePath!.path))
-            
-            try personsXMLContent!.write(to: personsLockedXMLFilePath!, atomically: true, encoding: String.Encoding.utf8)
-            XCTAssert(FileManager.default.fileExists(atPath: personsLockedXMLFilePath!.path))
-            let db = try PersonsXMLDatabase(url: basePath!)
-            do {
-                for _ in 0...1000 {
-                    try db.persons.addObject(object: Person(id: db.persons.nextId, gender: Person.Gender.male, firstName: "Peter"))
-                }
-            } catch {
-                XCTFail("\(error)")
-            }
-            XCTAssertNoThrow(try db.persons.save())
-        } catch {
-            XCTFail("\(error)")
+        // create xml file
+        XCTAssertNoThrow(try personsXMLContent!.write(to: personsLockedXMLFilePath!, atomically: true, encoding: String.Encoding.utf8))
+        XCTAssert(FileManager.default.fileExists(atPath: personsLockedXMLFilePath!.path))
+        
+        // init XML database
+        var db: PersonsXMLDatabase?
+        XCTAssertNoThrow(db = try PersonsXMLDatabase(url: basePath!))
+        
+        // add and save 5000 persons
+        var person: Person?
+        for _ in 0...5000 {
+            XCTAssertNoThrow(try person = Person(id: db!.persons.nextId, gender: .male, firstName: "Peter"))
+            XCTAssertNoThrow(try db!.persons.addObject(object: person!))
         }
-    }
+        XCTAssertNoThrow(try db!.persons.save())
+    }*/
 }
 
 extension PersonsXMLDatabaseTests {
@@ -119,6 +93,6 @@ extension PersonsXMLDatabaseTests {
         ("testXMLDatabaseWithLockedFiles", testXMLDatabaseWithLockedFiles),
         ("testXMLDatabaseWithAddressesLockedFile", testXMLDatabaseWithAddressesLockedFile),
         ("testXMLDatabaseWithPersonsLockedFile", testXMLDatabaseWithPersonsLockedFile),
-        ("testAddManyPersons", testAddManyPersons)
+        //("testAddManyPersons", testAddManyPersons)
         ]
 }

@@ -11,22 +11,38 @@ import SWXMLHash
 public protocol XMLObjectMapper: class {
     associatedtype ObjectType: XMLObject
     
-    /// Returns an object with a type which is specified in ObjectType from an XML element
-    static func toObject(element: XMLIndexer, at: URL) throws -> ObjectType
+    /// Return an object with a type which is specified in ObjectType from an XML element
+    static func toObject(xmlIndexer: XMLIndexer, at: URL) throws -> ObjectType
     
-    /// Returns an XMLElement with the data of the object
+    /// Return an XMLElement with the data of the object
     static func toXML(object: ObjectType) -> Foundation.XMLElement
 }
 
 extension XMLObjectMapper {
-    public static func getId(from xmlElement: XMLIndexer, at url: URL) throws -> Int {
-        guard let element = xmlElement.element else {
-            throw XMLObjectsError.requiredElementIsMissing(element: String(describing: Self.ObjectType.self).lowercased(), at: url)
-        }
-        guard let idString = element.attribute(by: "id")?.text else {
-            throw XMLObjectsError.requiredAttributeIsMissing(element: element.name, attribute: "id", at: url)
-        }
+    
+    /// Return an id as Int from an attribute of a XML element
+    public static func getId(from xmlElement: SWXMLHash.XMLElement, at url: URL) throws -> Int {
+        let idString = try getElementAttributeValue(xmlElement: xmlElement, name: "id", at: url)
         
         return try XMLObject.getId(from: idString)
     }
+    
+    /// Return an XML element
+    public static func getElement(xmlIndexer: XMLIndexer, name: String, url: URL) throws -> SWXMLHash.XMLElement {
+        guard let xmlElement = xmlIndexer[name].element else {
+            throw XMLObjectsError.requiredElementIsMissing(element: name, at: url)
+        }
+        
+        return xmlElement
+    }
+    
+    /// Return an attribute value of an XML element
+    public static func getElementAttributeValue(xmlElement: SWXMLHash.XMLElement, name: String, at url: URL) throws -> String {
+        guard let attribute = xmlElement.attribute(by: name) else {
+            throw XMLObjectsError.requiredAttributeIsMissing(element: xmlElement.name, attribute: name, at: url)
+        }
+        
+        return attribute.text
+    }
 }
+
