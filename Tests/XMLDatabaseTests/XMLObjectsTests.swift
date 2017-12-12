@@ -65,11 +65,37 @@ class XMLObjectsTests: XCTestCase {
         }
     }
     
+    func testXMLFileWithoutRootElement() {
+        xmlObjects = nil
+        let XMLContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+        XCTAssertNoThrow(try XMLContent.write(to: unlockedXMLFileURL!, atomically: true, encoding: String.Encoding.utf8))
+        XCTAssertThrowsError(try XMLObjects<PersonMapper>(xmlFileURL: unlockedXMLFileURL!)) { error in
+            guard case XMLObjectsError.rootXMLElementWasNotFound(let rootElement, let url) = error else {
+                return XCTFail("\(error)")
+            }
+            XCTAssertEqual(rootElement, "persons")
+            XCTAssertEqual(url.path, unlockedXMLFileURL!.path)
+        }
+    }
+    
+    func testXMLFileDoesNotExist() {
+        let xmlFileURL = baseURL!.appendingPathComponent("Test.xml")
+        XCTAssertThrowsError(try XMLObjects<PersonMapper>(xmlFileURL: xmlFileURL)) { error in
+            guard case XMLObjectsError.xmlFileDoesNotExist(let url) = error else {
+                return XCTFail("\(error)")
+            }
+            XCTAssertEqual(url.path, xmlFileURL.path)
+        }
+    }
+    
     func testDeinit() {
         xmlObjects = nil
         XCTAssertTrue(FileManager.default.fileExists(atPath: unlockedXMLFileURL!.path))
         XCTAssertFalse(FileManager.default.fileExists(atPath: lockedXMLFileURL!.path))
     }
+    
+    
+    // MARK: - Method `importObjects()` tests
     
     func testImportObjects() {
         XCTAssertEqual(xmlObjects!.count, 2)
@@ -93,6 +119,8 @@ class XMLObjectsTests: XCTestCase {
         }
     }
     
+    // MARK: - Methods `addObject()`, `save()` tests
+    
     func testAddAndSaveObjects() {
         var xmlObject: Person?
         XCTAssertNoThrow(xmlObject = try getXMLObject(id: 5))
@@ -111,6 +139,18 @@ class XMLObjectsTests: XCTestCase {
         var xmlDocument: XMLDocument?
         XCTAssertNoThrow(xmlDocument = try XMLDocument(contentsOf: unlockedXMLFileURL!, options: XMLNode.Options.documentTidyXML))
         XCTAssertEqual(xmlDocument!.xmlString, "<?xml version=\"1.0\" encoding=\"UTF-8\"?><persons><person id=\"1\"><gender>male</gender><firstName>Manuel</firstName></person><person id=\"5\"><gender>male</gender><firstName>Manuel</firstName></person><person id=\"32\"><gender>female</gender><firstName>Sophie</firstName></person></persons>")
+    }
+    
+    func testConstraintIdShouldBeUnique() {
+        var xmlObject: Person?
+        XCTAssertNoThrow(xmlObject = try getXMLObject(id: 1))
+        XCTAssertThrowsError(try xmlObjects!.addObject(object: xmlObject!)) { error in
+            guard case XMLObjectsError.idExistsAlready(let value, let url) = error else {
+                return XCTFail("\(error)")
+            }
+            XCTAssertEqual(value, 1)
+            XCTAssertEqual(url.path, unlockedXMLFileURL!.path)
+        }
     }
     
     // MARK: - Property `nextId` tests
@@ -279,13 +319,16 @@ class XMLObjectsTests: XCTestCase {
         XCTAssertEqual(insertedIds.count, xmlObjects!.count)
         
         var previousId: Int = -1
-        for id in insertedIds.sorted() {
+        for id in (insertedIds).sorted() {
             if previousId != -1 {
-                XCTAssertTrue(id - previousId == 1)
+                XCTAssertTrue(id - previousId == 1, "id: \(id); previousId: \(previousId)")
             }
             previousId = id
         }
     }
+    
+    
+    // MARK: - Method `deleteObject()` tests
     
     func testDelete() {
         // delete saved object
@@ -314,59 +357,21 @@ class XMLObjectsTests: XCTestCase {
         XCTAssertEqual(xmlObjects!.count, 0)
     }
     
-    func testConstraintIdShouldBeUnique() {
-        var xmlObject: Person?
-        XCTAssertNoThrow(xmlObject = try getXMLObject(id: 1))
-        XCTAssertThrowsError(try xmlObjects!.addObject(object: xmlObject!)) { error in
-            guard case XMLObjectsError.idExistsAlready(let value, let url) = error else {
-                return XCTFail("\(error)")
-            }
-            XCTAssertEqual(value, 1)
-            XCTAssertEqual(url.path, unlockedXMLFileURL!.path)
-        }
-    }
     
-    func testXMLFileWithoutRootElement() {
-        xmlObjects = nil
-        let XMLContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-        XCTAssertNoThrow(try XMLContent.write(to: unlockedXMLFileURL!, atomically: true, encoding: String.Encoding.utf8))
-        XCTAssertThrowsError(try XMLObjects<PersonMapper>(xmlFileURL: unlockedXMLFileURL!)) { error in
-            guard case XMLObjectsError.rootXMLElementWasNotFound(let rootElement, let url) = error else {
-                return XCTFail("\(error)")
-            }
-            XCTAssertEqual(rootElement, "persons")
-            XCTAssertEqual(url.path, unlockedXMLFileURL!.path)
-        }
-    }
+    // MARK: - Method `importObjects()` tests
     
-    func testXMLFileDoesNotExist() {
-        let xmlFileURL = baseURL!.appendingPathComponent("Test.xml")
-        XCTAssertThrowsError(try XMLObjects<PersonMapper>(xmlFileURL: xmlFileURL)) { error in
-            guard case XMLObjectsError.xmlFileDoesNotExist(let url) = error else {
-                return XCTFail("\(error)")
-            }
-            XCTAssertEqual(url.path, xmlFileURL.path)
-        }
-    }
-    /*
-    func testAddManyPersons() {
-        // create xml file
-        XCTAssertNoThrow(try personsXMLContent!.write(to: personsLockedXMLFilePath!, atomically: true, encoding: String.Encoding.utf8))
-        XCTAssert(FileManager.default.fileExists(atPath: personsLockedXMLFilePath!.path))
+    func testCreateEmptyXMLFile() {
+        XCTAssertNoThrow(try XMLObjects<PersonMapper>.createEmptyXMLFile(url: unlockedXMLFileURL!))
+        XCTAssertTrue(FileManager.default.fileExists(atPath: unlockedXMLFileURL!.path))
         
-        // init XML database
-        var db: PersonsXMLDatabase?
-        XCTAssertNoThrow(db = try PersonsXMLDatabase(url: basePath!))
-        
-        // add and save 5000 persons
-        var person: Person?
-        for _ in 0...5000 {
-            XCTAssertNoThrow(try person = Person(id: db!.persons.nextId, gender: .male, firstName: "Peter"))
-            XCTAssertNoThrow(try db!.persons.addObject(object: person!))
-        }
-        XCTAssertNoThrow(try db!.persons.save())
-    }*/
+        var xmlDocument: XMLDocument?
+        XCTAssertNoThrow(xmlDocument = try XMLDocument(contentsOf: unlockedXMLFileURL!, options: XMLNode.Options.documentTidyXML))
+        let rootElement = xmlDocument!.rootElement()!
+        XCTAssertTrue(rootElement.children == nil)
+    }
     
+    
+    // MARK: - Private Methods
     
     private func getXMLObject(id: Int) throws -> Person {
         return try Person(id: id, gender: .male, firstName: "Manuel")
@@ -385,7 +390,8 @@ extension XMLObjectsTests {
         ("testDelete", testDelete),
         ("testConstraintIdShouldBeUnique", testConstraintIdShouldBeUnique),
         ("testXMLFileWithoutRootElement", testXMLFileWithoutRootElement),
-        ("testXMLFileDoesNotExist", testXMLFileDoesNotExist)
+        ("testXMLFileDoesNotExist", testXMLFileDoesNotExist),
+        ("testCreateEmptyXMLFile", testCreateEmptyXMLFile)
     ]
 }
 

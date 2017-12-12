@@ -137,6 +137,7 @@ extension XMlObjectMapperTests {
     static var allTests = [
         ("testValidId", testValidId),
         ("testInvalidId", testInvalidId),
+        ("testIdIsMissing", testIdIsMissing),
         ("testElementIsValid", testElementIsValid),
         ("testElementIsMissing", testElementIsMissing),
         ("testElementAttributeIsValid", testElementAttributeIsValid),

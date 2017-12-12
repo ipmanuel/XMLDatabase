@@ -3,6 +3,9 @@ import XCTest
 
 class URLExtensionTests: XCTestCase {
 
+    
+    // MARK: - Method `rename()` tests
+    
     func testRename() {
         let fileContent = "ABC"
         let url = Bundle.init(for: URLExtensionTests.self).resourceURL!
