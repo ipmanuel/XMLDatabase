@@ -266,14 +266,21 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
             if nextIds.count > 0 {
                 var previousId: Int = nextIds.last!
                 var currentId: Int = 0
-                for i in 0..<nextIds.count {
+                var counter = 0
+                for i in 1..<nextIds.count {
                     currentId = nextIds[nextIds.count-1-i]
                     if previousId - currentId > 1 {
                         break
                     }
                     previousId = currentId
+                    counter += 1
                 }
-                maxId = currentId - 1
+                maxId = previousId - 1
+                
+                // delete nextIds bigger than new maxId
+                for _ in 0...counter {
+                    nextIds.removeLast()
+                }
             } else {
                 maxId -= 1
             }

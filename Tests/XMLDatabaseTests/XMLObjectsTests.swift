@@ -218,9 +218,24 @@ class XMLObjectsTests: XCTestCase {
         XCTAssertNoThrow(try xmlObjects!.save())
         XCTAssertEqual(xmlObjects!.count, 0)
         
+        // add object with id = 1
         XCTAssertEqual(xmlObjects!.nextId, 1)
         XCTAssertNoThrow(xmlObject = try getXMLObject(id: xmlObjects!.nextId))
         XCTAssertNoThrow(try xmlObjects!.addObject(object: xmlObject!))
+        
+        // add object with id = 70
+        XCTAssertNoThrow(xmlObject = try getXMLObject(id: 70))
+        XCTAssertNoThrow(try xmlObjects!.addObject(object: xmlObject!))
+        XCTAssertEqual(xmlObjects!.nextId, 2)
+        
+        // delete object with id = 1
+        XCTAssertNoThrow(try xmlObjects!.deleteObject(id: 1))
+        
+        // delete object with id = 70
+        XCTAssertNoThrow(try xmlObjects!.deleteObject(id: 70))
+        XCTAssertEqual(xmlObjects!.nextId, 1)
+        XCTAssertNoThrow(try xmlObjects!.save())
+        XCTAssertEqual(xmlObjects!.count, 0)
     }
     
     func testSimmulateTotallyRandomNextId() {
@@ -228,33 +243,40 @@ class XMLObjectsTests: XCTestCase {
         var randomId: Int
         var insertedIds = [1, 32]
         
-        // insert 200 objects with random ids
-        for _ in 1...200 {
-            randomId = Int(arc4random_uniform(UInt32(400))) + 1
+        // insert 400 objects with random ids
+        for _ in 1...400 {
+            randomId = Int(arc4random_uniform(UInt32(500))) + 1
             while(insertedIds.contains(randomId)) {
-                randomId = Int(arc4random_uniform(UInt32(400))) + 1
+                randomId = Int(arc4random_uniform(UInt32(500))) + 1
             }
             XCTAssertNoThrow(xmlObject = try getXMLObject(id: randomId))
             XCTAssertNoThrow(try xmlObjects!.addObject(object: xmlObject!))
             insertedIds.append(randomId)
         }
+        XCTAssertNoThrow(try xmlObjects!.save())
+        XCTAssertEqual(insertedIds.count, xmlObjects!.count)
         
         
-        // delete randomly 100 objects
+        // delete randomly 300 objects
         var index: Int
-        for _ in 0...200 {
+        for _ in 0...300 {
             index = Int(arc4random_uniform(UInt32(insertedIds.count)))
             XCTAssertNoThrow(try xmlObjects!.deleteObject(id: insertedIds[index]))
             insertedIds.remove(at: index)
         }
+        XCTAssertNoThrow(try xmlObjects!.save())
+        XCTAssertEqual(insertedIds.count, xmlObjects!.count)
+        
         
         // insert objects with nextId
         for _ in 1...400 {
-            insertedIds.append(xmlObjects!.nextId)
+            let id = xmlObjects!.nextId
             XCTAssertNoThrow(xmlObject = try getXMLObject(id: xmlObjects!.nextId))
             XCTAssertNoThrow(try xmlObjects!.addObject(object: xmlObject!))
+            insertedIds.append(id)
         }
         XCTAssertNoThrow(try xmlObjects!.save())
+        XCTAssertEqual(insertedIds.count, xmlObjects!.count)
         
         var previousId: Int = -1
         for id in insertedIds.sorted() {
