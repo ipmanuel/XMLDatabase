@@ -9,7 +9,7 @@ class PersonsXMLDatabase: XMLDatabase {
     }
     
     required init (url: URL) throws {
-        // unlock all xml files
+        // unlock xml file
         var personsLockedXMLFileURL = url.appendingPathComponent("_\(personsXMLFilename)")
         try PersonsXMLDatabase.unlockIfXMLFileExists(url: &personsLockedXMLFileURL)
         

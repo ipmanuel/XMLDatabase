@@ -3,6 +3,10 @@ import XCTest
 @testable import XMLDatabase
 
 class PersonMapperTests: XCTestCase {
+    
+    
+    // MARK: - Properties
+    
     private let randomURL = Bundle.init(for: PersonMapperTests.self).resourceURL!
     
     

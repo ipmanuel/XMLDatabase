@@ -4,7 +4,7 @@ import XCTest
 class PersonTests: XCTestCase {
     
     
-    // MARK: - Valid properties tests
+     // MARK: - Init tests
     
     func testValidProperties() {
         // different relations

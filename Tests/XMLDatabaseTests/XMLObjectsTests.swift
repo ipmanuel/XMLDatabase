@@ -381,6 +381,29 @@ class XMLObjectsTests: XCTestCase {
     }
     
     
+    // MARK: - Performance tests
+    /*
+    func testAddManyXMLObjects() {
+        // create xml file
+        XCTAssertNoThrow(try xmlContent!.write(to: lockedXMLFileURL!, atomically: true, encoding: String.Encoding.utf8))
+        XCTAssert(FileManager.default.fileExists(atPath: lockedXMLFileURL!.path))
+        
+        // add and save 5000 persons
+        self.measure {
+            do {
+                var xmlObject: Person?
+                for _ in 0...5000 {
+                    XCTAssertNoThrow(xmlObject = try getXMLObject(id: xmlObjects!.nextId))
+                    XCTAssertNoThrow(try xmlObjects!.addObject(object: xmlObject!))
+                }
+                XCTAssertNoThrow(try xmlObjects!.save())
+            } catch {
+                
+            }
+        }
+    }*/
+    
+    
     // MARK: - Private Methods
     
     private func getXMLObject(id: Int) throws -> Person {
