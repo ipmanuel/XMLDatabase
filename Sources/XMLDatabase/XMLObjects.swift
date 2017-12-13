@@ -41,7 +41,7 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
     private let objectNamePlural: String
     
     /// The array with saved objects
-    private var savedObjects: [MapperType.ObjectType]
+    fileprivate var savedObjects: [MapperType.ObjectType]
     
     /// The array with unsaved objects
     /// -note: all added objectes will be put in there
@@ -205,11 +205,6 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
     
     // MARK: - Public Methods
     
-    /// Return a saved object selected by index
-    public func get(at index: Int) -> MapperType.ObjectType {
-        return savedObjects[index]
-    }
-    
     /// Return a saved object selected by id
     public func getBy(id: Int) -> MapperType.ObjectType? {
         guard savedObjectsIds.contains(id) else {
@@ -254,7 +249,7 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
                 nextIds.append(i)
             }
         }
-        maxId = max(maxId, id)
+        maxId = Swift.max(maxId, id)
     }
     
     /// Add the deleted id to the array nextId and adjust possibly maxId
@@ -285,5 +280,14 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
                 maxId -= 1
             }
         }
+    }
+}
+
+
+// MARK: - Sequence Protocol
+
+extension XMLObjects: Sequence {
+    public func makeIterator() -> Array<MapperType.ObjectType>.Iterator {
+        return savedObjects.makeIterator()
     }
 }

@@ -371,6 +371,16 @@ class XMLObjectsTests: XCTestCase {
     }
     
     
+    // MARK: - Method `makeIterator()` tests
+    
+    func testIterateThroughObjects() {
+        let ids = [1, 32]
+        for (index,xmlObject) in xmlObjects!.enumerated() {
+            XCTAssertEqual(xmlObject.id, ids[index])
+        }
+    }
+    
+    
     // MARK: - Private Methods
     
     private func getXMLObject(id: Int) throws -> Person {
