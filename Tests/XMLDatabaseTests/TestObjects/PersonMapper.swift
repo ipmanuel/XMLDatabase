@@ -22,6 +22,12 @@ class PersonMapper: XMLObjectMapper {
         // init person
         let newPerson = try Person(id: id, gender: genderString, firstName: firstName)
         
+        // optional XML elements
+        let lastNameXMLElement = xmlIndexer["lastName"].element
+        if lastNameXMLElement != nil {
+            try newPerson.set(lastName: lastNameXMLElement!.text)
+        }
+        
         return newPerson
     }
     
@@ -42,6 +48,12 @@ class PersonMapper: XMLObjectMapper {
         // add XML elements to person XML element
         personXMLElement.addChild(genderXMLElement)
         personXMLElement.addChild(firstNameXMLElement)
+        
+        // optional lastName XML element
+        if person.lastName != nil {
+            let lastNameXMLElement = Foundation.XMLElement(name: "lastName", stringValue: person.lastName!)
+            personXMLElement.addChild(lastNameXMLElement)
+        }
         
         return personXMLElement
     }

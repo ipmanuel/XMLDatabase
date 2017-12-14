@@ -7,124 +7,67 @@ class PersonMapperTests: XCTestCase {
     
     // MARK: - Properties
     
-    private let randomURL = Bundle.init(for: PersonMapperTests.self).resourceURL!
+    private let baseURL = Bundle.init(for: PersonMapperTests.self).resourceURL!
     
     
-    // MARK: valid properties
+    // MARK: - Method `toXMLObject()` tests
     
-    func testImportPersonWithValidProperties() {
+    func testMapToXMLObject() {
         let xmlContent = "<person id=\"1\"><gender>male</gender><firstName>Manuel</firstName></person>"
-        let xmlElementParsed: XMLIndexer = SWXMLHash.parse(xmlContent)["person"].all[0]
-        do {
-            let person = try PersonMapper.toXMLObject(from: xmlElementParsed, at: randomURL)
-            
-            XCTAssertEqual(person.id, 1)
-            XCTAssertEqual(person.gender, Person.Gender.male)
-            XCTAssertEqual(person.firstName, "Manuel")
-        } catch {
-            XCTFail("\(error)")
-        }
+        let personXMLIndexer: XMLIndexer = SWXMLHash.parse(xmlContent)["person"].all[0]
+        
+        var person: Person?
+        XCTAssertNoThrow(person = try PersonMapper.toXMLObject(from: personXMLIndexer, at: baseURL))
+        
+        XCTAssertEqual(person!.id, 1)
+        XCTAssertEqual(person!.gender, Person.Gender.male)
+        XCTAssertEqual(person!.firstName, "Manuel")
+    }
+    
+    func testMaptToXMLObjectWithOptionalPropertyLastName() {
+        let xmlContent = "<person id=\"1\"><gender>male</gender><firstName>Manuel</firstName><lastName>Pauls</lastNam>/person>"
+        let personXMLIndexer: XMLIndexer = SWXMLHash.parse(xmlContent)["person"].all[0]
+        
+        var person: Person?
+        XCTAssertNoThrow(person = try PersonMapper.toXMLObject(from: personXMLIndexer, at: baseURL))
+        
+        XCTAssertEqual(person!.lastName, "Pauls")
     }
     
     
-    // MARK: property id tests
+    // MARK: - Method `toXMLElement()` tests
     
-    func testImportPersonWithInvalidId() {
-        var xmlContent: String
-        var xmlElementParsed: XMLIndexer
+    func testMapToXMLElement() {
+        var person: Person?
+        var xmlElement: Foundation.XMLElement?
+        let xmlContent = "<person id=\"1\"><gender>male</gender><firstName>Manuel</firstName></person>"
         
-        // id exists but is invalid
-        xmlContent = "<person id=\"0\"><gender>male</gender><firstName>Manuel</firstName></person>"
-        xmlElementParsed = SWXMLHash.parse(xmlContent)["person"].all[0]
+        XCTAssertNoThrow(person = try Person(id: 1, gender: Person.Gender.male, firstName: "Manuel"))
+        xmlElement = PersonMapper.toXMLElement(from: person!)
         
-        XCTAssertThrowsError(try PersonMapper.toXMLObject(from: xmlElementParsed, at: randomURL)) { error in
-            guard case XMLObjectError.invalidId(let value) = error else {
-                return XCTFail("\(error)")
-            }
-            XCTAssertEqual(value, 0)
-        }
-        
-        // id does not exist
-        xmlContent = "<person><gender>male</gender><relation>me</relation><firstName>Manuel</firstName></person>"
-        xmlElementParsed = SWXMLHash.parse(xmlContent)["person"].all[0]
-        XCTAssertThrowsError(try PersonMapper.toXMLObject(from: xmlElementParsed, at: randomURL)) { error in
-            guard case XMLObjectsError.requiredAttributeIsMissing(let element, let attribute, let url) = error else {
-                return XCTFail("\(error)")
-            }
-            XCTAssertEqual(element, "person")
-            XCTAssertEqual(attribute, "id")
-            XCTAssertEqual(url.path, randomURL.path)
-        }
+        let xmlDocument = XMLDocument(rootElement: xmlElement)
+        XCTAssertEqual(xmlDocument.xmlString, xmlContent)
     }
     
-    
-    // MARK: property gender tests
-    
-    func testImportPersonWithInvalidGender() {
-        var xmlContent: String
-        var xmlElementParsed: XMLIndexer
+    func testMapToXMLElementWithOptionalPropertyLastName() {
+        var person: Person?
+        var xmlElement: Foundation.XMLElement?
+        let xmlContent = "<person id=\"1\"><gender>male</gender><firstName>Manuel</firstName><lastName>Pauls</lastName></person>"
         
-        // gender exists but is invalid
-        xmlContent = "<person id=\"1\"><gender>males</gender><relation>me</relation><firstName>Manuel</firstName></person>"
-        xmlElementParsed = SWXMLHash.parse(xmlContent)["person"].all[0]
+        XCTAssertNoThrow(person = try Person(id: 1, gender: Person.Gender.male, firstName: "Manuel"))
+        XCTAssertNoThrow(try person!.set(lastName: "Pauls"))
+        xmlElement = PersonMapper.toXMLElement(from: person!)
         
-        XCTAssertThrowsError(try PersonMapper.toXMLObject(from: xmlElementParsed, at: randomURL)) { error in
-            guard case PersonError.invalidGender(let value) = error else {
-                return XCTFail("\(error)")
-            }
-            XCTAssertEqual(value, "males")
-        }
-        
-        // gender does not exist
-        xmlContent = "<person id=\"1\"><relation>me</relation><firstName>Manuel</firstName></person>"
-        xmlElementParsed = SWXMLHash.parse(xmlContent)["person"].all[0]
-        
-        XCTAssertThrowsError(try PersonMapper.toXMLObject(from: xmlElementParsed, at: randomURL)) { error in
-            guard case XMLObjectsError.requiredElementIsMissing(let element, let url) = error else {
-                return XCTFail("\(error)")
-            }
-            XCTAssertEqual(element, "gender")
-            XCTAssertEqual(url.path, randomURL.path)
-        }
-    }
-    
-    
-    // MARK: property firstName tests
-    
-    func testImportPersonWithInvalidFirstName() {
-        var xmlContent: String
-        var xmlElementParsed: XMLIndexer
-        
-        // relation exists but is invalid
-        xmlContent = "<person id=\"1\"><gender>male</gender><relation>me</relation><firstName>A</firstName></person>"
-        xmlElementParsed = SWXMLHash.parse(xmlContent)["person"].all[0]
-        
-        XCTAssertThrowsError(try PersonMapper.toXMLObject(from: xmlElementParsed, at: randomURL)) { error in
-            guard case PersonError.invalidFirstName(let value) = error else {
-                return XCTFail("\(error)")
-            }
-            XCTAssertEqual(value, "A")
-        }
-        
-        // relation does not exist
-        xmlContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><person id=\"1\"><gender>male</gender><relation>me</relation></person>"
-        xmlElementParsed = SWXMLHash.parse(xmlContent)["person"].all[0]
-        
-        XCTAssertThrowsError(try PersonMapper.toXMLObject(from: xmlElementParsed, at: randomURL)) { error in
-            guard case XMLObjectsError.requiredElementIsMissing(let element, let url) = error else {
-                return XCTFail("\(error)")
-            }
-            XCTAssertEqual(element, "firstName")
-            XCTAssertEqual(url.path, randomURL.path)
-        }
+        let xmlDocument = XMLDocument(rootElement: xmlElement)
+        XCTAssertEqual(xmlDocument.xmlString, xmlContent)
     }
 }
 
 extension PersonMapperTests {
     static var allTests = [
-        ("testImportPersonWithValidProperties", testImportPersonWithValidProperties),
-        ("testImportPersonWithInvalidId", testImportPersonWithInvalidId),
-        ("testImportPersonWithInvalidGender", testImportPersonWithInvalidGender),
-        ("testImportPersonWithInvalidFirstName", testImportPersonWithInvalidFirstName)
+        ("testMapToXMLObject", testMapToXMLObject),
+        ("testMapToXMLElement", testMaptToXMLObjectWithOptionalPropertyLastName),
+        ("testImportPersonWithInvalidGender", testMapToXMLElement),
+        ("testMapToXMLElementWithOptionalPropertyLastName", testMapToXMLElementWithOptionalPropertyLastName)
     ]
 }
