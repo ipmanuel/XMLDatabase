@@ -12,6 +12,7 @@ import XMLDatabase
 enum PersonError: Error {
     case invalidGender(value: String)
     case invalidFirstName(value: String)
+    case invalidLastName(value: String)
 }
 
 
@@ -41,6 +42,12 @@ public class Person: XMLObject {
         return firstNameMutable
     }
     
+    /// Optional last name of the person
+    private var lastNameMutable: String?
+    var lastName: String? {
+        return lastNameMutable
+    }
+    
     
     // MARK: - Init
     
@@ -61,7 +68,7 @@ public class Person: XMLObject {
     }
     
     
-    // MARK: - Change required properties
+    // MARK: - Change properties
     
     public func change(gender: Person.Gender) {
         genderMutable = gender
@@ -69,6 +76,13 @@ public class Person: XMLObject {
     
     public func change(firstName: String) throws {
         firstNameMutable = try Person.getFirstName(from: firstName)
+    }
+    
+    
+    // MARK: - set/add optional properties
+    
+    public func set(lastName: String) throws {
+        lastNameMutable = try Person.getLastName(from: lastName)
     }
     
     
@@ -80,6 +94,10 @@ public class Person: XMLObject {
     
     class func isValid(firstName: String) -> Bool {
         return firstName.count >= 2 && firstName.count <= 50
+    }
+    
+    class func isValid(lastName: String) -> Bool {
+        return lastName.count >= 2 && lastName.count <= 50
     }
     
     
@@ -97,6 +115,13 @@ public class Person: XMLObject {
             throw PersonError.invalidFirstName(value: firstName)
         }
         return firstName.capitalized
+    }
+    
+    class func getLastName(from lastName: String) throws -> String {
+        guard Person.isValid(lastName: lastName) else {
+            throw PersonError.invalidLastName(value: lastName)
+        }
+        return lastName.capitalized
     }
 }
 

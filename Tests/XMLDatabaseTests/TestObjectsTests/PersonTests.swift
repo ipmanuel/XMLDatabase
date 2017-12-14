@@ -128,7 +128,37 @@ class PersonTests: XCTestCase {
         testFirstNameException(firstName: firstName)
     }
     
-    // MARK: - Private Methods
+    
+    // MARK: - Property `lastName` tests
+    
+    func testValidLastNames() {
+        // create dummy Person
+        var dummyPerson: Person?
+        XCTAssertNoThrow(dummyPerson = try Person(id: 1, gender: Person.Gender.male, firstName: "Manuel"))
+        
+        // test last name
+        XCTAssertNoThrow(try dummyPerson!.set(lastName: "Pauls"))
+        XCTAssertEqual(dummyPerson!.lastName!, "Pauls")
+    }
+    
+    func testInvalidLastNames() {
+        // create dummy Person
+        var dummyPerson: Person?
+        XCTAssertNoThrow(dummyPerson = try Person(id: 1, gender: Person.Gender.male, firstName: "Manuel"))
+        
+        // lastName is too short (1 character)
+        var lastName: String = "A"
+        XCTAssert(lastName.count == 1)
+        testLastNameException(dummyPerson: dummyPerson!, lastName: lastName)
+        
+        // lastName is too long (51 characters)
+        lastName = "AbcdefghijklmnopqrstuvwxyzAbcdefghijklmnopqrstuvwxa"
+        XCTAssert(lastName.count == 51)
+        testLastNameException(dummyPerson: dummyPerson!, lastName: lastName)
+    }
+    
+    
+    // MARK: - Private methods
     
     private func testFirstNameException(firstName: String) {
         // set firstName
@@ -152,6 +182,16 @@ class PersonTests: XCTestCase {
             XCTFail("\(error)")
         }
     }
+    
+    private func testLastNameException(dummyPerson: Person, lastName: String) {
+        // set lastName
+        XCTAssertThrowsError(try dummyPerson.set(lastName: lastName)) { error in
+            guard case PersonError.invalidLastName(let value) = error else {
+                return XCTFail()
+            }
+            XCTAssertEqual(value, lastName)
+        }
+    }
 }
 
 extension PersonTests {
@@ -162,7 +202,9 @@ extension PersonTests {
         ("testValidGenders", testValidGenders),
         ("testInvalidGenders", testInvalidGenders),
         ("testInvalidFirstNames", testInvalidFirstNames),
-        ("testValidFirstNames", testValidFirstNames)
+        ("testValidFirstNames", testValidFirstNames),
+        ("testValidLastNames", testValidLastNames),
+        ("testInvalidLastNames", testInvalidLastNames),
     ]
 }
 
