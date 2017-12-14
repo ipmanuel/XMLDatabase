@@ -1,3 +1,10 @@
+//
+//  Person.swift
+//  PersonsXMLDatabase
+//
+//  Created by Manuel Pauls on 14.12.17.
+//
+
 import Foundation
 import XMLDatabase
 
@@ -8,13 +15,13 @@ enum PersonError: Error {
 }
 
 
-class Person: XMLObject {
+public class Person: XMLObject {
     
     
     // MARK: - Enumerations
     
-    /// possible genders
-    enum Gender: String {
+    /// Possible genders of a person
+    public enum Gender: String {
         case male
         case female
     }
@@ -34,20 +41,6 @@ class Person: XMLObject {
         return firstNameMutable
     }
     
-    /// Optional addresses ids of the person
-    private var addressesIdsMutable: [Int]
-    public var addressesIds: [Int] {
-        let addressesIds = addressesIdsMutable
-        return addressesIds
-    }
-    
-    /// Optional addresses types of the person
-    private var addressesTypesMutable: [String]
-    public var addressesTypes: [String] {
-        let addressesTypes = addressesTypesMutable
-        return addressesTypes
-    }
-    
     
     // MARK: - Init
     
@@ -55,8 +48,6 @@ class Person: XMLObject {
         // init vars
         self.genderMutable = gender
         self.firstNameMutable = try Person.getFirstName(from: firstName)
-        self.addressesIdsMutable = []
-        self.addressesTypesMutable = []
         
         try super.init(id: id)
     }
@@ -78,14 +69,6 @@ class Person: XMLObject {
     
     public func change(firstName: String) throws {
         firstNameMutable = try Person.getFirstName(from: firstName)
-    }
-    
-    
-    // MARK: - Add optional properties
-    
-    public func add(addressId: Int, type: String) {
-        self.addressesIdsMutable.append(addressId)
-        self.addressesTypesMutable.append(type)
     }
     
     
@@ -116,3 +99,4 @@ class Person: XMLObject {
         return firstName.capitalized
     }
 }
+

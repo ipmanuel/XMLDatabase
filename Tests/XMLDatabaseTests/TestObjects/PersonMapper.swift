@@ -1,3 +1,10 @@
+//
+//  Person.swift
+//  PersonsXMLDatabase
+//
+//  Created by Manuel Pauls on 14.12.17.
+//
+
 import Foundation
 import SWXMLHash
 import XMLDatabase
@@ -5,36 +12,37 @@ import XMLDatabase
 class PersonMapper: XMLObjectMapper {
     typealias ObjectType = Person
     
-    static func toObject(xmlIndexer: XMLIndexer, at url: URL) throws -> Person {
-        guard let xmlElement = xmlIndexer.element else {
-            throw XMLObjectsError.requiredElementIsMissing(element: String(describing: ObjectType.self).lowercased(), at: url)
-        }
-        let id = try PersonMapper.getId(from: xmlElement, at: url)
-        let genderString = try PersonMapper.getElement(xmlIndexer: xmlIndexer, name: "gender", url: url).text
-        let firstName = try PersonMapper.getElement(xmlIndexer: xmlIndexer, name: "firstName", url: url).text
+    static func toXMLObject(from xmlIndexer: XMLIndexer, at url: URL) throws -> Person {
+        // XML elements should exists
+        let personXMLElement = try getRootXMLElement(of: xmlIndexer, at: url)
+        let id = try PersonMapper.getAttributeId(of: personXMLElement, at: url)
+        let genderString = try PersonMapper.getXMLElement(of: xmlIndexer, name: "gender", at: url).text
+        let firstName = try PersonMapper.getXMLElement(of: xmlIndexer, name: "firstName", at: url).text
+        
+        // init person
         let newPerson = try Person(id: id, gender: genderString, firstName: firstName)
         
         return newPerson
     }
     
-    static func toXML(object person: Person) -> Foundation.XMLElement {
-        // person node
-        let personNode = Foundation.XMLElement(name: "person")
+    static func toXMLElement(from person: Person) -> Foundation.XMLElement {
+        // person XML element
+        let personXMLElement = Foundation.XMLElement(name: "person")
         let personIdAttribute = Foundation.XMLNode(kind: XMLNode.Kind.attribute)
         personIdAttribute.name = "id"
         personIdAttribute.stringValue = "\(person.id)"
-        personNode.addAttribute(personIdAttribute)
+        personXMLElement.addAttribute(personIdAttribute)
         
-        // gender node
-        let genderNode = Foundation.XMLElement(name: "gender", stringValue: person.gender.rawValue)
+        // gender XML element
+        let genderXMLElement = Foundation.XMLElement(name: "gender", stringValue: person.gender.rawValue)
         
-        // fistName node
-        let firstNameNode = Foundation.XMLElement(name: "firstName", stringValue: person.firstName)
+        // fistName XML element
+        let firstNameXMLElement = Foundation.XMLElement(name: "firstName", stringValue: person.firstName)
         
-        // add required elements to personNode
-        personNode.addChild(genderNode)
-        personNode.addChild(firstNameNode)
+        // add XML elements to person XML element
+        personXMLElement.addChild(genderXMLElement)
+        personXMLElement.addChild(firstNameXMLElement)
         
-        return personNode
+        return personXMLElement
     }
 }

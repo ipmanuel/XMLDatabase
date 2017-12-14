@@ -163,10 +163,10 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
             savedObjectsIds.sort()
             
             for i in 0..<alreadySavedObjects {
-                xmlDocument.rootElement()!.replaceChild(at: i, with: MapperType.toXML(object: savedObjects[i]))
+                xmlDocument.rootElement()!.replaceChild(at: i, with: MapperType.toXMLElement(from: savedObjects[i]))
             }
             for i in alreadySavedObjects..<savedObjects.count {
-                xmlDocument.rootElement()!.addChild(MapperType.toXML(object: savedObjects[i]))
+                xmlDocument.rootElement()!.addChild(MapperType.toXMLElement(from: savedObjects[i]))
             }
             unsavedObjectsIds.removeAll()
             unsavedObjects.removeAll()
@@ -226,7 +226,7 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
         let objects = xmlParsed[rootXMLElement][objectName.lowercased()].all
         
         for object in objects {
-            try addObject(object: try MapperType.toObject(xmlIndexer: object, at: xmlUnlockedFileURL))
+            try addObject(object: try MapperType.toXMLObject(from: object, at: xmlUnlockedFileURL))
         }
         
         // imported objects should not be saved a second time

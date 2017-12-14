@@ -42,7 +42,7 @@ class XMlObjectMapperTests: XCTestCase {
         
         var value: Int?
         for object in objects {
-            XCTAssertNoThrow(value = try PersonMapper.getId(from: object.element!, at: basePath!))
+            XCTAssertNoThrow(value = try PersonMapper.getAttributeId(of: object.element!, at: basePath!))
             XCTAssertEqual(value, 1)
         }
     }
@@ -53,7 +53,7 @@ class XMlObjectMapperTests: XCTestCase {
         let objects = xmlParsed["persons"]["person"].all
         
         for object in objects {
-            XCTAssertThrowsError(try PersonMapper.getId(from: object.element!, at: basePath!))
+            XCTAssertThrowsError(try PersonMapper.getAttributeId(of: object.element!, at: basePath!))
         }
     }
     
@@ -63,7 +63,7 @@ class XMlObjectMapperTests: XCTestCase {
         let objects = xmlParsed["persons"]["person"].all
         
         for object in objects {
-            XCTAssertThrowsError(try PersonMapper.getId(from: object.element!, at: basePath!)) { error in
+            XCTAssertThrowsError(try PersonMapper.getAttributeId(of: object.element!, at: basePath!)) { error in
                 guard case XMLObjectsError.requiredAttributeIsMissing(_, _, _) = error else {
                     return XCTFail("\(error)")
                 }
@@ -71,7 +71,7 @@ class XMlObjectMapperTests: XCTestCase {
         }
     }
     
-    // MARK: - Method `getElement()` tests
+    // MARK: - Method `getXMLElement()` tests
     
     func testElementIsValid() {
         let xmlParsed = SWXMLHash.parse(xmlContent!)
@@ -79,7 +79,7 @@ class XMlObjectMapperTests: XCTestCase {
         
         var xmlElement: SWXMLHash.XMLElement?
         for object in objects {
-            XCTAssertNoThrow(xmlElement = try PersonMapper.getElement(xmlIndexer: object, name: "gender", url: unlockedXMLFilePath!))
+            XCTAssertNoThrow(xmlElement = try PersonMapper.getXMLElement(of: object, name: "gender", at: unlockedXMLFilePath!))
             XCTAssertEqual(xmlElement!.text, "male")
         }
     }
@@ -89,7 +89,7 @@ class XMlObjectMapperTests: XCTestCase {
         let objects = xmlParsed["persons"]["person"].all
         
         for object in objects {
-            XCTAssertThrowsError(try PersonMapper.getElement(xmlIndexer: object, name: "lastName", url: unlockedXMLFilePath!)) { error in
+            XCTAssertThrowsError(try PersonMapper.getXMLElement(of: object, name: "lastName", at: unlockedXMLFilePath!)) { error in
                 guard case XMLObjectsError.requiredElementIsMissing(let element, let url) = error else {
                     return XCTFail("\(error)")
                 }
@@ -100,7 +100,7 @@ class XMlObjectMapperTests: XCTestCase {
     }
     
     
-    // MARK: - Method `getElementAttributeValue()` tests
+    // MARK: - Method `getXMLElementAttributeValue()` tests
     
     func testElementAttributeIsValid() {
         let xmlParsed = SWXMLHash.parse(xmlContent!)
@@ -110,7 +110,7 @@ class XMlObjectMapperTests: XCTestCase {
         var attributeValue: String?
         for object in objects {
             xmlElement = object.element!
-            XCTAssertNoThrow(attributeValue = try PersonMapper.getElementAttributeValue(xmlElement: xmlElement, name: "id", at: unlockedXMLFilePath!))
+            XCTAssertNoThrow(attributeValue = try PersonMapper.getAttributeValue(of: xmlElement, name: "id", at: unlockedXMLFilePath!))
             XCTAssertEqual(attributeValue!, "1")
         }
     }
@@ -121,7 +121,7 @@ class XMlObjectMapperTests: XCTestCase {
         let objects = xmlParsed["persons"]["person"].all
         
         for object in objects {
-            XCTAssertThrowsError(try PersonMapper.getElementAttributeValue(xmlElement: object.element!, name: "id", at: unlockedXMLFilePath!)) { error in
+            XCTAssertThrowsError(try PersonMapper.getAttributeValue(of: object.element!, name: "id", at: unlockedXMLFilePath!)) { error in
                 guard case XMLObjectsError.requiredAttributeIsMissing(let element, let attribute, let url) = error else {
                     return XCTFail("\(error)")
                 }
