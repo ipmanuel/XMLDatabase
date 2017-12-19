@@ -16,8 +16,8 @@ enum PersonError: Error, Equatable {
     case givenValueIsTooShort(property: String, value: String, minCharacters: Int)
     case givenValueIsTooLong(property: String, value: String, maxCharacters: Int)
     case givenValueDoesNotIncludeADate(property: String, value: String)
-    case givenDateOfBirthShouldBeInThePast(value: Date)
-    case givenDateOfBirthIsTooFarInThePast(value: Date, maxYearsBetweenToday: Int)
+    case givenDateShouldBeInThePast(property: String, value: Date)
+    case givenDateIsTooFarInThePast(property: String, value: Date, maxYearsBetweenToday: Int)
     
     static func ==(lhs: PersonError, rhs: PersonError) -> Bool {
         switch lhs {
@@ -45,12 +45,12 @@ enum PersonError: Error, Equatable {
             if case .givenValueDoesNotIncludeADate(let property2, let value2) = rhs, property == property2, value == value2 {
                 return true
             }
-        case .givenDateOfBirthShouldBeInThePast(let value):
-            if case .givenDateOfBirthShouldBeInThePast(let value2) = rhs, value == value2 {
+        case .givenDateShouldBeInThePast(let property, let value):
+            if case .givenDateShouldBeInThePast(let property2, let value2) = rhs, property == property2, value == value2 {
                 return true
             }
-        case .givenDateOfBirthIsTooFarInThePast(let value, let maxYearsBetweenToday):
-            if case .givenDateOfBirthIsTooFarInThePast(let value2, let maxYearsBetweenToday2) = rhs, value == value2, maxYearsBetweenToday == maxYearsBetweenToday2  {
+        case .givenDateIsTooFarInThePast(let property, let value, let maxYearsBetweenToday):
+            if case .givenDateIsTooFarInThePast(let property2, let value2, let maxYearsBetweenToday2) = rhs, property == property2, value == value2, maxYearsBetweenToday == maxYearsBetweenToday2  {
                 return true
             }
         }
@@ -183,11 +183,11 @@ public class Person: XMLObject {
         let years = components.year
         
         if today < dateOfBirth {
-            errors.append(PersonError.givenDateOfBirthShouldBeInThePast(value: dateOfBirth))
+            errors.append(PersonError.givenDateShouldBeInThePast(property: "dateOfBirth", value: dateOfBirth))
             returnValue = false
         }
         if years != nil && years! > 500 {
-            errors.append(PersonError.givenDateOfBirthIsTooFarInThePast(value: dateOfBirth, maxYearsBetweenToday: 500))
+            errors.append(PersonError.givenDateIsTooFarInThePast(property: "dateOfBirth", value: dateOfBirth, maxYearsBetweenToday: 500))
             returnValue = false
         }
         

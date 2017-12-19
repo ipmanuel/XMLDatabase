@@ -121,7 +121,7 @@ class PersonTests: XCTestCase {
         let calendar = Calendar.current
         let dateOfBirth = calendar.date(byAdding: .year, value: 1, to: Date())!
         XCTAssertThrowsError(try validPerson!.set(dateOfBirth: dateOfBirth)) { error in
-            guard case PersonError.givenDateOfBirthShouldBeInThePast(_) = error else {
+            guard case PersonError.givenDateShouldBeInThePast(_) = error else {
                 return XCTFail("\(error)")
             }
         }
@@ -212,7 +212,7 @@ class PersonTests: XCTestCase {
         let dayInFuture = calendar.date(byAdding: .day, value: 1, to: Date())!
         XCTAssertEqual(Person.isValid(dateOfBirth: dayInFuture, errors: &errors), false)
         XCTAssertEqual(errors.count, 1)
-        XCTAssertEqual(errors.first!, PersonError.givenDateOfBirthShouldBeInThePast(value: dayInFuture))
+        XCTAssertEqual(errors.first!, PersonError.givenDateShouldBeInThePast(property: "dateOfBirth", value: dayInFuture))
     }
     
     func testIsValidDateOfBirthIsTooFarInPast() {
@@ -221,7 +221,7 @@ class PersonTests: XCTestCase {
         let dayTooFarInPast = calendar.date(byAdding: .year, value: -501, to: Date())!
         XCTAssertEqual(Person.isValid(dateOfBirth: dayTooFarInPast, errors: &errors), false)
         XCTAssertEqual(errors.count, 1)
-        XCTAssertEqual(errors.first!, PersonError.givenDateOfBirthIsTooFarInThePast(value: dayTooFarInPast, maxYearsBetweenToday: 500))
+        XCTAssertEqual(errors.first!, PersonError.givenDateIsTooFarInThePast(property: "dateOfBirth", value: dayTooFarInPast, maxYearsBetweenToday: 500))
     }
     
     
