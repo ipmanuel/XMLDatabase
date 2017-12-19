@@ -18,6 +18,7 @@ enum PersonError: Error, Equatable {
     case givenValueDoesNotIncludeADate(property: String, value: String)
     case givenDateShouldBeInThePast(property: String, value: Date)
     case givenDateIsTooFarInThePast(property: String, value: Date, maxYearsBetweenToday: Int)
+    case dateOfDeathShouldBeAfterDateOfBirth(dateOfBirth: Date, dateOfDeath: Date)
     
     static func ==(lhs: PersonError, rhs: PersonError) -> Bool {
         switch lhs {
@@ -51,6 +52,10 @@ enum PersonError: Error, Equatable {
             }
         case .givenDateIsTooFarInThePast(let property, let value, let maxYearsBetweenToday):
             if case .givenDateIsTooFarInThePast(let property2, let value2, let maxYearsBetweenToday2) = rhs, property == property2, value == value2, maxYearsBetweenToday == maxYearsBetweenToday2  {
+                return true
+            }
+        case .dateOfDeathShouldBeAfterDateOfBirth(let dateOfBirth, let dateOfDeath):
+            if case .dateOfDeathShouldBeAfterDateOfBirth(let dateOfBirth2, let dateOfDeath2) = rhs, dateOfBirth == dateOfBirth2, dateOfDeath == dateOfDeath2  {
                 return true
             }
         }
@@ -145,6 +150,9 @@ public class Person: XMLObject {
         guard Person.isValid(dateOfBirth: dateOfBirth, errors: &errors) else {
             throw errors.first!
         }
+        if dateOfDeath != nil && dateOfBirth < dateOfDeath! {
+            throw PersonError.dateOfDeathShouldBeAfterDateOfBirth(dateOfBirth: dateOfBirth, dateOfDeath: dateOfDeath!)
+        }
         self.dateOfBirthMutable = dateOfBirth
     }
     
@@ -152,6 +160,9 @@ public class Person: XMLObject {
         var errors: [PersonError] = []
         guard Person.isValid(dateOfDeath: dateOfDeath, errors: &errors) else {
             throw errors.first!
+        }
+        if dateOfBirth != nil && dateOfBirth! < dateOfDeath {
+            throw PersonError.dateOfDeathShouldBeAfterDateOfBirth(dateOfBirth: dateOfBirth!, dateOfDeath: dateOfDeath)
         }
         self.dateOfDeathMutable = dateOfDeath
     }
@@ -259,16 +270,24 @@ public class Person: XMLObject {
         guard let dateOfBirth = dateFormatter.date(from: dateString) else {
             throw PersonError.givenValueDoesNotIncludeADate(property: "dateOfBirth", value: dateString)
         }
+        var errors: [PersonError] = []
+        guard Person.isValid(dateOfBirth: dateOfBirth, errors: &errors) else {
+            throw errors.first!
+        }
         return dateOfBirth
     }
     
     class func getDateOfDeath(from dateString: String) throws -> Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        guard let dateOfBirth = dateFormatter.date(from: dateString) else {
+        guard let dateOfDeath = dateFormatter.date(from: dateString) else {
             throw PersonError.givenValueDoesNotIncludeADate(property: "dateOfDeath", value: dateString)
         }
-        return dateOfBirth
+        var errors: [PersonError] = []
+        guard Person.isValid(dateOfDeath: dateOfDeath, errors: &errors) else {
+            throw errors.first!
+        }
+        return dateOfDeath
     }
 }
 
