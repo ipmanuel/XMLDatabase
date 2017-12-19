@@ -97,6 +97,12 @@ public class Person: XMLObject {
         return dateOfBirthMutable
     }
     
+    /// Optional date of death of the person
+    private var dateOfDeathMutable: Date?
+    var dateOfDeath: Date? {
+        return dateOfDeathMutable
+    }
+    
     
     // MARK: - Init
     
@@ -140,6 +146,14 @@ public class Person: XMLObject {
             throw errors.first!
         }
         self.dateOfBirthMutable = dateOfBirth
+    }
+    
+    public func set(dateOfDeath: Date) throws {
+        var errors: [PersonError] = []
+        guard Person.isValid(dateOfDeath: dateOfDeath, errors: &errors) else {
+            throw errors.first!
+        }
+        self.dateOfDeathMutable = dateOfDeath
     }
     
     
@@ -194,6 +208,25 @@ public class Person: XMLObject {
         return returnValue
     }
     
+    class func isValid(dateOfDeath: Date, errors: inout [PersonError]) -> Bool {
+        var returnValue = true
+        let today = Date()
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year], from: dateOfDeath, to: today)
+        let years = components.year
+        
+        if today < dateOfDeath {
+            errors.append(PersonError.givenDateShouldBeInThePast(property: "dateOfDeath", value: dateOfDeath))
+            returnValue = false
+        }
+        if years != nil && years! > 500 {
+            errors.append(PersonError.givenDateIsTooFarInThePast(property: "dateOfDeath", value: dateOfDeath, maxYearsBetweenToday: 500))
+            returnValue = false
+        }
+        
+        return returnValue
+    }
+    
     
     // MARK: - Convert
     
@@ -225,6 +258,15 @@ public class Person: XMLObject {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         guard let dateOfBirth = dateFormatter.date(from: dateString) else {
             throw PersonError.givenValueDoesNotIncludeADate(property: "dateOfBirth", value: dateString)
+        }
+        return dateOfBirth
+    }
+    
+    class func getDateOfDeath(from dateString: String) throws -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        guard let dateOfBirth = dateFormatter.date(from: dateString) else {
+            throw PersonError.givenValueDoesNotIncludeADate(property: "dateOfDeath", value: dateString)
         }
         return dateOfBirth
     }
