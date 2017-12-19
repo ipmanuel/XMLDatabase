@@ -9,10 +9,53 @@ import Foundation
 import XMLDatabase
 
 
-enum PersonError: Error {
+enum PersonError: Error, Equatable {
     case invalidGender(value: String)
     case invalidFirstName(value: String)
     case invalidLastName(value: String)
+    case givenValueIsTooShort(property: String, value: String, minCharacters: Int)
+    case givenValueIsTooLong(property: String, value: String, maxCharacters: Int)
+    case givenValueDoesNotIncludeADate(property: String, value: String)
+    case givenDateOfBirthShouldBeInThePast(value: Date)
+    case givenDateOfBirthIsTooFarInThePast(value: Date, maxYearsBetweenToday: Int)
+    
+    static func ==(lhs: PersonError, rhs: PersonError) -> Bool {
+        switch lhs {
+        case .invalidGender(let value):
+            if case .invalidGender(let value2) = rhs, value == value2 {
+                return true
+            }
+        case .invalidFirstName(let value):
+            if case .invalidFirstName(let value2) = rhs, value == value2 {
+                return true
+            }
+        case .invalidLastName(let value):
+            if case .invalidLastName(let value2) = rhs, value == value2 {
+                return true
+            }
+        case .givenValueIsTooShort(let property, let value, let minCharacters):
+            if case .givenValueIsTooShort(let property2, let value2, let minCharacters2) = rhs, property == property2, value == value2, minCharacters == minCharacters2 {
+                return true
+            }
+        case .givenValueIsTooLong(let property, let value, let maxCharacters):
+            if case .givenValueIsTooLong(let property2, let value2, let minCharacters2) = rhs, property == property2, value == value2, maxCharacters == minCharacters2 {
+                return true
+            }
+        case .givenValueDoesNotIncludeADate(let property, let value):
+            if case .givenValueDoesNotIncludeADate(let property2, let value2) = rhs, property == property2, value == value2 {
+                return true
+            }
+        case .givenDateOfBirthShouldBeInThePast(let value):
+            if case .givenDateOfBirthShouldBeInThePast(let value2) = rhs, value == value2 {
+                return true
+            }
+        case .givenDateOfBirthIsTooFarInThePast(let value, let maxYearsBetweenToday):
+            if case .givenDateOfBirthIsTooFarInThePast(let value2, let maxYearsBetweenToday2) = rhs, value == value2, maxYearsBetweenToday == maxYearsBetweenToday2  {
+                return true
+            }
+        }
+        return false
+    }
 }
 
 
@@ -46,6 +89,12 @@ public class Person: XMLObject {
     private var lastNameMutable: String?
     var lastName: String? {
         return lastNameMutable
+    }
+    
+    /// Optional date of birth of the person
+    private var dateOfBirthMutable: Date?
+    var dateOfBirth: Date? {
+        return dateOfBirthMutable
     }
     
     
@@ -85,43 +134,99 @@ public class Person: XMLObject {
         lastNameMutable = try Person.getLastName(from: lastName)
     }
     
+    public func set(dateOfBirth: Date) throws {
+        var errors: [PersonError] = []
+        guard Person.isValid(dateOfBirth: dateOfBirth, errors: &errors) else {
+            throw errors.first!
+        }
+        self.dateOfBirthMutable = dateOfBirth
+    }
+    
     
     // MARK: - Validate
     
-    class func isValid(gender: String) -> Bool {
-        return Person.Gender(rawValue: gender) != nil
+    class func isValid(firstName: String, errors: inout [PersonError]) -> Bool {
+        var returnValue = true
+        
+        if firstName.count < 2 {
+            errors.append(PersonError.givenValueIsTooShort(property: "firstName", value: firstName, minCharacters: 2))
+            returnValue = false
+        }
+        if firstName.count > 50 {
+            errors.append(PersonError.givenValueIsTooLong(property: "firstName", value: firstName, maxCharacters: 50))
+            returnValue = false
+        }
+        
+        return returnValue
     }
     
-    class func isValid(firstName: String) -> Bool {
-        return firstName.count >= 2 && firstName.count <= 50
+    class func isValid(lastName: String, errors: inout [PersonError]) -> Bool {
+        var returnValue = true
+        if lastName.count < 2 {
+            errors.append(PersonError.givenValueIsTooShort(property: "lastName", value: lastName, minCharacters: 2))
+            returnValue = false
+        }
+        
+        if lastName.count > 50 {
+            errors.append(PersonError.givenValueIsTooLong(property: "lastName", value: lastName, maxCharacters: 50))
+            returnValue = false
+        }
+        
+        return returnValue
     }
     
-    class func isValid(lastName: String) -> Bool {
-        return lastName.count >= 2 && lastName.count <= 50
+    class func isValid(dateOfBirth: Date, errors: inout [PersonError]) -> Bool {
+        var returnValue = true
+        let today = Date()
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year], from: dateOfBirth, to: today)
+        let years = components.year
+        
+        if today < dateOfBirth {
+            errors.append(PersonError.givenDateOfBirthShouldBeInThePast(value: dateOfBirth))
+            returnValue = false
+        }
+        if years != nil && years! > 500 {
+            errors.append(PersonError.givenDateOfBirthIsTooFarInThePast(value: dateOfBirth, maxYearsBetweenToday: 500))
+            returnValue = false
+        }
+        
+        return returnValue
     }
     
     
     // MARK: - Convert
     
-    class func getGender(from gender: String) throws -> Person.Gender {
-        guard isValid(gender: gender) else {
-            throw PersonError.invalidGender(value: gender)
+    class func getGender(from genderString: String) throws -> Person.Gender {
+        guard let gender = Person.Gender(rawValue: genderString) else {
+            throw PersonError.invalidGender(value: genderString)
         }
-        return Person.Gender(rawValue: gender)!
+        return gender
     }
     
     class func getFirstName(from firstName: String) throws -> String {
-        guard Person.isValid(firstName: firstName) else {
-            throw PersonError.invalidFirstName(value: firstName)
+        var errors: [PersonError] = []
+        guard Person.isValid(firstName: firstName, errors: &errors) else {
+            throw errors.first!
         }
         return firstName.capitalized
     }
     
     class func getLastName(from lastName: String) throws -> String {
-        guard Person.isValid(lastName: lastName) else {
-            throw PersonError.invalidLastName(value: lastName)
+        var errors: [PersonError] = []
+        guard Person.isValid(lastName: lastName, errors: &errors) else {
+            throw errors.first!
         }
         return lastName.capitalized
+    }
+    
+    class func getDateOfBirth(from dateString: String) throws -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        guard let dateOfBirth = dateFormatter.date(from: dateString) else {
+            throw PersonError.givenValueDoesNotIncludeADate(property: "dateOfBirth", value: dateString)
+        }
+        return dateOfBirth
     }
 }
 
