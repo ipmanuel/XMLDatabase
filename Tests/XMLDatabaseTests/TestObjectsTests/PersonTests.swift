@@ -4,41 +4,48 @@ import XCTest
 class PersonTests: XCTestCase {
     
     
-     // MARK: - Init tests
+    // MARK: - Properties
     
-    func testValidProperties() {
-        // different relations
-        XCTAssertNoThrow(try Person(id: 1, gender: Person.Gender.male, firstName: "Manuel"))
-        XCTAssertNoThrow(try Person(id: 1, gender: Person.Gender.male, firstName: "Manuel"))
-        XCTAssertNoThrow(try Person(id: 1, gender: Person.Gender.male, firstName: "Manuel"))
-        XCTAssertNoThrow(try Person(id: 1, gender: Person.Gender.male, firstName: "Manuel"))
+    private var validPerson: Person?
+    
+    
+    // MARK: - Init
+    
+    override func setUp() {
+        super.setUp()
         
-        // different gender
-        XCTAssertNoThrow(try Person(id: 1, gender: Person.Gender.female, firstName: "Clara"))
-        XCTAssertNoThrow(try Person(id: 1, gender: Person.Gender.female, firstName: "Clara"))
-        XCTAssertNoThrow(try Person(id: 1, gender: Person.Gender.female, firstName: "Clara"))
-        XCTAssertNoThrow(try Person(id: 1, gender: Person.Gender.female, firstName: "Clara"))
-    }
-    
-    func testProperties() {
         do {
-            let person = try Person(id: 1, gender: Person.Gender.male, firstName: "Manuel")
-            
-            // init properties
-            XCTAssertEqual(person.id, 1)
-            XCTAssertEqual(person.gender, Person.Gender.male)
-            XCTAssertEqual(person.firstName, "Manuel")
-            
-            // change gender
-            person.change(gender: Person.Gender.female)
-            XCTAssertEqual(person.gender, Person.Gender.female)
+            validPerson = try Person(id: 1, gender: Person.Gender.male, firstName: "Manuel")
         } catch {
-            XCTFail("\(error)")
+            print("setUp failed!")
         }
     }
     
+    override func tearDown() {
+        super.tearDown()
+        
+        validPerson = nil
+    }
     
-    // MARK: - Property `id` tests
+    
+    
+    // MARK: - Init tests
+    
+    func testValidProperties() {
+        // man
+        XCTAssertNoThrow(try Person(id: 1, gender: Person.Gender.male, firstName: "Manuel"))
+        XCTAssertNoThrow(try Person(id: 1, gender: "male", firstName: "Manuel"))
+        
+        // woman
+        XCTAssertNoThrow(try Person(id: 1, gender: Person.Gender.female, firstName: "Clara"))
+        XCTAssertNoThrow(try Person(id: 1, gender: "female", firstName: "Clara"))
+    }
+    
+    func testProperties() {
+        XCTAssertEqual(validPerson!.id, 1)
+        XCTAssertEqual(validPerson!.gender, Person.Gender.male)
+        XCTAssertEqual(validPerson!.firstName, "Manuel")
+    }
     
     func testInvalidId() {
         XCTAssertThrowsError(try Person(id: 0, gender: Person.Gender.male, firstName: "Manuel")) { error in
@@ -50,161 +57,340 @@ class PersonTests: XCTestCase {
     }
     
     
-    // MARK: - Property `gender` tests
+    // MARK: - Method `change(gender:)` tests
     
-    func testValidGenders() {
-        XCTAssertNoThrow(try Person(id: 1, gender: "male", firstName: "Manuel"))
-        XCTAssertNoThrow(try Person(id: 1, gender: "female", firstName: "Manuel"))
+    func testChangeValidGender() {
+        // change to female
+        validPerson!.change(gender: Person.Gender.female)
+        XCTAssertEqual(validPerson!.gender, Person.Gender.female)
+        
+        // change to male
+        validPerson!.change(gender: Person.Gender.male)
+        XCTAssertEqual(validPerson!.gender, Person.Gender.male)
     }
     
-    func testInvalidGenders() {
+    
+    // MARK: - Method `change(firstName:)` tests
+    
+    func testChangeValidFirstName() {
+        XCTAssertNoThrow(try validPerson!.change(firstName: "Peter"))
+        XCTAssertEqual(validPerson!.firstName, "Peter")
+        
+        XCTAssertNoThrow(try validPerson!.change(firstName: "Manuel"))
+        XCTAssertEqual(validPerson!.firstName, "Manuel")
+    }
+    
+    func testChangeInvalidFirstName() {
+        XCTAssertThrowsError(try validPerson!.change(firstName: "M")) { error in
+            guard case PersonError.givenValueIsTooShort(_, _, _) = error else {
+                return XCTFail("\(error)")
+            }
+        }
+        XCTAssertEqual(validPerson!.firstName, "Manuel")
+    }
+    
+    
+    // MARK: - Method `set(lastName:)` tests
+    
+    func testSetValidLastName() {
+        XCTAssertNoThrow(try validPerson!.set(lastName: "Pauls"))
+        XCTAssertEqual(validPerson!.lastName, "Pauls")
+    }
+    
+    func testSetInvalidLastName() {
+        XCTAssertThrowsError(try validPerson!.set(lastName: "P")) { error in
+            guard case PersonError.givenValueIsTooShort(_, _, _) = error else {
+                return XCTFail("\(error)")
+            }
+        }
+        XCTAssertEqual(validPerson!.lastName, nil)
+    }
+    
+    
+    // MARK: - Method `set(dateOfBirth:)` tests
+    
+    func testSetValidDateOfBirth() {
+        let calendar = Calendar.current
+        let dateOfBirth = calendar.date(byAdding: .year, value: -80, to: Date())!
+        XCTAssertNoThrow(try validPerson!.set(dateOfBirth: dateOfBirth))
+        XCTAssertEqual(validPerson!.dateOfBirth, dateOfBirth)
+    }
+    
+    func testSetInvalidDateOfBirth() {
+        // set valid dateOfBirth
+        let calendar = Calendar.current
+        let dateOfBirth = calendar.date(byAdding: .year, value: 1, to: Date())!
+        XCTAssertThrowsError(try validPerson!.set(dateOfBirth: dateOfBirth)) { error in
+            guard case PersonError.givenDateOfBirthShouldBeInThePast(_) = error else {
+                return XCTFail("\(error)")
+            }
+        }
+        XCTAssertEqual(validPerson!.dateOfBirth, nil)
+    }
+    
+    
+    // MARK: - Method `isValid(firstName:)` tests
+    
+    func testValidFirstName() {
+        var errors: [PersonError] = []
+        XCTAssertTrue(Person.isValid(firstName: "Manuel", errors: &errors))
+    }
+    
+    func testFirstNameIsTooShort() {
+        var errors: [PersonError] = []
+        XCTAssertFalse(Person.isValid(firstName: "M", errors: &errors))
+        XCTAssertEqual(errors.count, 1)
+        XCTAssertEqual(errors.first!, PersonError.givenValueIsTooShort(property: "firstName", value: "M", minCharacters: 2))
+    }
+    
+    func testFirstNameIsTooLong() {
+        var errors: [PersonError] = []
+        let tooLongFirstName = "Abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxy"
+        XCTAssertEqual(tooLongFirstName.count, 51)
+        XCTAssertFalse(Person.isValid(firstName: tooLongFirstName, errors: &errors))
+        XCTAssertEqual(errors.count, 1)
+        XCTAssertEqual(errors.first!, PersonError.givenValueIsTooLong(property: "firstName", value: tooLongFirstName, maxCharacters: 50))
+    }
+    
+    
+    // MARK: - Method `isValid(lastName:)` tests
+    
+    func testLastNameWithMinCharacters() {
+        var errors: [PersonError] = []
+        let lastNameWithMinCharacters = "Pa"
+        XCTAssertTrue(Person.isValid(lastName: lastNameWithMinCharacters, errors: &errors))
+        XCTAssertEqual(errors.count, 0)
+    }
+    
+    func testLastNameWithMaxCharacters() {
+        var errors: [PersonError] = []
+        let lastNameWithMaxCharacters = "Abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwx"
+        XCTAssertEqual(lastNameWithMaxCharacters.count, 50)
+        XCTAssertTrue(Person.isValid(lastName: lastNameWithMaxCharacters, errors: &errors))
+        XCTAssertEqual(errors.count, 0)
+    }
+    
+    func testLastNameIsTooShort() {
+        var errors: [PersonError] = []
+        XCTAssertFalse(Person.isValid(lastName: "P", errors: &errors))
+        XCTAssertEqual(errors.count, 1)
+        XCTAssertEqual(errors.first!, PersonError.givenValueIsTooShort(property: "lastName", value: "P", minCharacters: 2))
+    }
+    
+    func testLastNameIsTooLong() {
+        var errors: [PersonError] = []
+        let tooLongFirstName = "Abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxy"
+        XCTAssertEqual(tooLongFirstName.count, 51)
+        XCTAssertFalse(Person.isValid(firstName: tooLongFirstName, errors: &errors))
+        XCTAssertEqual(errors.count, 1)
+        XCTAssertEqual(errors.first!, PersonError.givenValueIsTooLong(property: "firstName", value: tooLongFirstName, maxCharacters: 50))
+    }
+    
+    
+    // MARK: - Method `isValid(dateOfBirth:)` tests
+    
+    func testIsValidDateOfBirthOnToday() {
+        var errors: [PersonError] = []
+        let today = Date()
+        let calendar = Calendar.current
+        let dateOfBirth = calendar.date(byAdding: .minute, value: -1, to: today)!
+        XCTAssertEqual(Person.isValid(dateOfBirth: dateOfBirth, errors: &errors), true)
+        XCTAssertEqual(errors.count, 0)
+    }
+    
+    func testIsValidDateOfBirthMaxDistanceBetween() {
+        var errors: [PersonError] = []
+        let calendar = Calendar.current
+        let dateOfBirth = calendar.date(byAdding: .year, value: -500, to: Date())!
+        XCTAssertEqual(Person.isValid(dateOfBirth: dateOfBirth, errors: &errors), true)
+        XCTAssertEqual(errors.count, 0)
+    }
+    
+    func testIsValidDateOfBirthIsInFuture() {
+        var errors: [PersonError] = []
+        let calendar = Calendar.current
+        let dayInFuture = calendar.date(byAdding: .day, value: 1, to: Date())!
+        XCTAssertEqual(Person.isValid(dateOfBirth: dayInFuture, errors: &errors), false)
+        XCTAssertEqual(errors.count, 1)
+        XCTAssertEqual(errors.first!, PersonError.givenDateOfBirthShouldBeInThePast(value: dayInFuture))
+    }
+    
+    func testIsValidDateOfBirthIsTooFarInPast() {
+        var errors: [PersonError] = []
+        let calendar = Calendar.current
+        let dayTooFarInPast = calendar.date(byAdding: .year, value: -501, to: Date())!
+        XCTAssertEqual(Person.isValid(dateOfBirth: dayTooFarInPast, errors: &errors), false)
+        XCTAssertEqual(errors.count, 1)
+        XCTAssertEqual(errors.first!, PersonError.givenDateOfBirthIsTooFarInThePast(value: dayTooFarInPast, maxYearsBetweenToday: 500))
+    }
+    
+    
+    // MARK: - Method `getGender()` tests
+    
+    func testGetGenderValidValue() {
+        var gender: Person.Gender?
+        
+        // male
+        XCTAssertNoThrow(gender = try Person.getGender(from: "male"))
+        XCTAssertEqual(gender, Person.Gender.male)
+        
+        // female
+        XCTAssertNoThrow(gender = try Person.getGender(from: "female"))
+        XCTAssertEqual(gender, Person.Gender.female)
+    }
+    
+    func testInvalidGenderValidValue() {
         var gender: String
         
         // set gender: males
         gender = "males"
-        XCTAssertThrowsError(try Person(id: 1, gender: gender, firstName: "Manuel")) { error in
+        XCTAssertThrowsError(try Person.getGender(from: gender)) { error in
             guard case PersonError.invalidGender((let value)) = error else {
-                return XCTFail()
+                return XCTFail("\(error)")
             }
             XCTAssertEqual(value, gender)
         }
         
-        // set gender: abc
-        gender = "abc"
-        XCTAssertThrowsError(try Person(id: 1, gender: gender, firstName: "Manuel")) { error in
+        // set gender: mal
+        gender = "mal"
+        XCTAssertThrowsError(try Person.getGender(from: gender)) { error in
             guard case PersonError.invalidGender((let value)) = error else {
-                return XCTFail()
+                return XCTFail("\(error)")
             }
             XCTAssertEqual(value, gender)
         }
         
         // set gender: females
         gender = "females"
-        XCTAssertThrowsError(try Person(id: 1, gender: gender, firstName: "Manuel")) { error in
+        XCTAssertThrowsError(try Person.getGender(from: gender)) { error in
             guard case PersonError.invalidGender((let value)) = error else {
-                return XCTFail()
+                return XCTFail("\(error)")
             }
             XCTAssertEqual(value, gender)
         }
         
         // set gender: female
         gender = "femal"
-        XCTAssertThrowsError(try Person(id: 1, gender: gender, firstName: "Manuel")) { error in
+        XCTAssertThrowsError(try Person.getGender(from: gender)) { error in
             guard case PersonError.invalidGender((let value)) = error else {
-                return XCTFail()
+                return XCTFail("\(error)")
             }
             XCTAssertEqual(value, gender)
         }
     }
     
     
-    // MARK: - Property `firstName` tests
+    // MARK: - Method `getFirstName()` tests
     
-    func testValidFirstNames() {
-        // via init
-        XCTAssertNoThrow(try Person(id: 1, gender: Person.Gender.male, firstName: "Manuel"))
-        XCTAssertNoThrow(try Person(id: 1, gender: Person.Gender.male, firstName: "Clara"))
-        XCTAssertNoThrow(try Person(id: 1, gender: Person.Gender.male, firstName: "He"))
-        XCTAssertNoThrow(try Person(id: 1, gender: Person.Gender.male, firstName: "AbcdefghijklmnopqrstuvwxyzAbcdefghijklmnopqrstuvwx"))
+    func testGetFirstNameValidValue() {
+        var firstName: String?
         
-        // via convenience init
-        XCTAssertNoThrow(try Person(id: 1, gender: "male", firstName: "Manuel"))
-        XCTAssertNoThrow(try Person(id: 1, gender: "male", firstName: "Clara"))
-        XCTAssertNoThrow(try Person(id: 1, gender: "male", firstName: "He"))
-        XCTAssertNoThrow(try Person(id: 1, gender: "male", firstName: "AbcdefghijklmnopqrstuvwxyzAbcdefghijklmnopqrstuvwx"))
+        XCTAssertNoThrow(firstName = try Person.getFirstName(from: "manuel"))
+        XCTAssertEqual(firstName!, "Manuel")
+        
+        XCTAssertNoThrow(firstName = try Person.getFirstName(from: "Peter"))
+        XCTAssertEqual(firstName, "Peter")
     }
     
-    func testInvalidFirstNames() {
-        var firstName: String
+    func testGetFirstNameInvalidValue() {
+        var firstName: String?
         
-        // firstName is too short (1 character)
-        firstName = "A"
-        XCTAssert(firstName.count == 1)
-        testFirstNameException(firstName: firstName)
-        
-        // firstName is too long (51 characters)
-        firstName = "AbcdefghijklmnopqrstuvwxyzAbcdefghijklmnopqrstuvwxa"
-        XCTAssert(firstName.count == 51)
-        testFirstNameException(firstName: firstName)
+        XCTAssertThrowsError(firstName = try Person.getFirstName(from: "M"))
+        XCTAssertEqual(firstName, nil)
     }
     
     
-    // MARK: - Property `lastName` tests
+    // MARK: - Method `getLastName()` tests
     
-    func testValidLastNames() {
-        // create dummy Person
-        var dummyPerson: Person?
-        XCTAssertNoThrow(dummyPerson = try Person(id: 1, gender: Person.Gender.male, firstName: "Manuel"))
+    func testGetLastNameValidValue() {
+        var lastName: String?
         
-        // test last name
-        XCTAssertNoThrow(try dummyPerson!.set(lastName: "Pauls"))
-        XCTAssertEqual(dummyPerson!.lastName!, "Pauls")
+        XCTAssertNoThrow(lastName = try Person.getFirstName(from: "pauls"))
+        XCTAssertEqual(lastName!, "Pauls")
+        
+        XCTAssertNoThrow(lastName = try Person.getFirstName(from: "Pauls"))
+        XCTAssertEqual(lastName, "Pauls")
     }
     
-    func testInvalidLastNames() {
-        // create dummy Person
-        var dummyPerson: Person?
-        XCTAssertNoThrow(dummyPerson = try Person(id: 1, gender: Person.Gender.male, firstName: "Manuel"))
+    func testGetLastNameInvalidValue() {
+        var lastName: String?
         
-        // lastName is too short (1 character)
-        var lastName: String = "A"
-        XCTAssert(lastName.count == 1)
-        testLastNameException(dummyPerson: dummyPerson!, lastName: lastName)
-        
-        // lastName is too long (51 characters)
-        lastName = "AbcdefghijklmnopqrstuvwxyzAbcdefghijklmnopqrstuvwxa"
-        XCTAssert(lastName.count == 51)
-        testLastNameException(dummyPerson: dummyPerson!, lastName: lastName)
+        XCTAssertThrowsError(lastName = try Person.getLastName(from: "P"))
+        XCTAssertEqual(lastName, nil)
     }
     
     
-    // MARK: - Private methods
+    // MARK: - Method `getDateOfBirth()` tests
     
-    private func testFirstNameException(firstName: String) {
-        // set firstName
-        XCTAssertThrowsError(try Person(id: 1, gender: Person.Gender.male, firstName: firstName)) { error in
-            guard case PersonError.invalidFirstName(let value) = error else {
-                return XCTFail()
+    func testGetDateOfBirthValidValue() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let todayString = dateFormatter.string(from: Date())
+        let today = dateFormatter.date(from: todayString)!
+        var dateOfBirth: Date?
+        
+        XCTAssertNoThrow(dateOfBirth = try Person.getDateOfBirth(from: dateFormatter.string(from: today)))
+        XCTAssertEqual(dateOfBirth!, today)
+    }
+    
+    func testGetDateOfBirthInvalidValue() {
+        var dateOfBirthString: String
+        
+        // set dateOfBirthString: 01.01.1990
+        dateOfBirthString = "01.01.1990"
+        XCTAssertThrowsError(try Person.getDateOfBirth(from: dateOfBirthString)) { error in
+            guard case PersonError.givenValueDoesNotIncludeADate(let property, let value) = error else {
+                return XCTFail("\(error)")
             }
-            XCTAssertEqual(value, firstName)
+            XCTAssertEqual(property, "dateOfBirth")
+            XCTAssertEqual(value, "01.01.1990")
         }
         
-        // change firstName
-        do {
-            let person = try Person(id: 1, gender: Person.Gender.male, firstName: "Manuel")
-            XCTAssertThrowsError(try person.change(firstName: firstName)) { error in
-                guard case PersonError.invalidFirstName(let value) = error else {
-                    return XCTFail()
-                }
-                XCTAssertEqual(value, firstName)
+        // set dateOfBirthString: 1990-13-01
+        dateOfBirthString = "1990-13-01"
+        XCTAssertThrowsError(try Person.getDateOfBirth(from: dateOfBirthString)) { error in
+            guard case PersonError.givenValueDoesNotIncludeADate(let property, let value) = error else {
+                return XCTFail("\(error)")
             }
-        } catch {
-            XCTFail("\(error)")
-        }
-    }
-    
-    private func testLastNameException(dummyPerson: Person, lastName: String) {
-        // set lastName
-        XCTAssertThrowsError(try dummyPerson.set(lastName: lastName)) { error in
-            guard case PersonError.invalidLastName(let value) = error else {
-                return XCTFail()
-            }
-            XCTAssertEqual(value, lastName)
+            XCTAssertEqual(property, "dateOfBirth")
+            XCTAssertEqual(value, "1990-13-01")
         }
     }
 }
+
 
 extension PersonTests {
     static var allTests = [
         ("testValidProperties", testValidProperties),
         ("testProperties", testProperties),
         ("testInvalidId", testInvalidId),
-        ("testValidGenders", testValidGenders),
-        ("testInvalidGenders", testInvalidGenders),
-        ("testInvalidFirstNames", testInvalidFirstNames),
-        ("testValidFirstNames", testValidFirstNames),
-        ("testValidLastNames", testValidLastNames),
-        ("testInvalidLastNames", testInvalidLastNames),
+        ("testChangeValidGender", testChangeValidGender),
+        ("testChangeValidFirstName", testChangeValidFirstName),
+        ("testChangeInvalidFirstName", testChangeInvalidFirstName),
+        ("testSetValidLastName", testSetValidLastName),
+        ("testSetInvalidLastName", testSetInvalidLastName),
+        ("testSetValidDateOfBirth", testSetValidDateOfBirth),
+        ("testSetInvalidDateOfBirth", testSetInvalidDateOfBirth),
+        ("testValidFirstName", testValidFirstName),
+        ("testFirstNameIsTooShort", testFirstNameIsTooShort),
+        ("testFirstNameIsTooLong", testFirstNameIsTooLong),
+        ("testLastNameWithMinCharacters", testLastNameWithMinCharacters),
+        ("testLastNameWithMaxCharacters", testLastNameWithMaxCharacters),
+        ("testLastNameIsTooShort", testLastNameIsTooShort),
+        ("testLastNameIsTooLong", testLastNameIsTooLong),
+        ("testIsValidDateOfBirthOnToday", testIsValidDateOfBirthOnToday),
+        ("testIsValidDateOfBirthMaxDistanceBetween", testIsValidDateOfBirthMaxDistanceBetween),
+        ("testIsValidDateOfBirthIsInFuture", testIsValidDateOfBirthIsInFuture),
+        ("testIsValidDateOfBirthIsTooFarInPast", testIsValidDateOfBirthIsTooFarInPast),
+        ("testGetGenderValidValue", testGetGenderValidValue),
+        ("testInvalidGenderValidValue", testInvalidGenderValidValue),
+        ("testGetFirstNameValidValue", testGetFirstNameValidValue),
+        ("testGetFirstNameInvalidValue", testGetFirstNameInvalidValue),
+        ("testGetLastNameValidValue", testGetLastNameValidValue),
+        ("testGetLastNameInvalidValue", testGetLastNameInvalidValue),
+        ("testGetDateOfBirthValidValue", testGetDateOfBirthValidValue),
+        ("testGetDateOfBirthInvalidValue", testGetDateOfBirthInvalidValue)
+        
     ]
 }
 
