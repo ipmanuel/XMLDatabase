@@ -197,7 +197,7 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
             throw XMLObjectsError.xmlFileExistsAlready(at: url)
         }
         
-        let rootElementName = url.deletingPathExtension().lastPathComponent.capitalized
+        let rootElementName = url.deletingPathExtension().lastPathComponent.lowercased()
         let xmlDocument = XMLDocument(rootElement: Foundation.XMLElement(name: rootElementName))
         try xmlDocument.xmlData.write(to: url)
     }

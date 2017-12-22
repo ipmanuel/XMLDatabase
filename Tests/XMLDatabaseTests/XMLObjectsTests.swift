@@ -367,6 +367,7 @@ class XMLObjectsTests: XCTestCase {
         var xmlDocument: XMLDocument?
         XCTAssertNoThrow(xmlDocument = try XMLDocument(contentsOf: unlockedXMLFileURL!, options: XMLNode.Options.documentTidyXML))
         let rootElement = xmlDocument!.rootElement()!
+        XCTAssertEqual(rootElement.name, "persons")
         XCTAssertTrue(rootElement.children == nil)
     }
     
