@@ -116,7 +116,7 @@ class PersonTests: XCTestCase {
         XCTAssertEqual(validPerson!.dateOfBirth, dateOfBirth)
     }
     
-    func testSetInvalidDateOfBirth() {
+    func testSetDateOfBirthWhichIsInPast() {
         // set valid dateOfBirth
         let calendar = Calendar.current
         let dateOfBirth = calendar.date(byAdding: .year, value: 1, to: Date())!
@@ -126,6 +126,78 @@ class PersonTests: XCTestCase {
             }
         }
         XCTAssertEqual(validPerson!.dateOfBirth, nil)
+    }
+    
+    func testSetInvalidDateOfBirth() {
+        let calendar = Calendar.current
+        
+        let dateOfBirth = calendar.date(byAdding: .year, value: 1, to: Date())!
+        XCTAssertThrowsError(try validPerson!.set(dateOfBirth: dateOfBirth)) { error in
+            guard case PersonError.givenDateShouldBeInThePast(_) = error else {
+                return XCTFail("\(error)")
+            }
+        }
+        XCTAssertEqual(validPerson!.dateOfBirth, nil)
+    }
+    
+    func testSetDateOfBirthWhichIsBeforeDeath() {
+        let calendar = Calendar.current
+        
+        // set valid dateOfDeath
+        let dateOfDeath = calendar.date(byAdding: .year, value: -10, to: Date())!
+        XCTAssertNoThrow(try validPerson!.set(dateOfDeath: dateOfDeath))
+        
+        // set dateOfBirth
+        let dateOfBirth = calendar.date(byAdding: .year, value: -23, to: Date())!
+        XCTAssertThrowsError(try validPerson!.set(dateOfBirth: dateOfBirth)) { error in
+            guard case PersonError.dateOfDeathShouldBeAfterDateOfBirth(let dateOfBirth2, let dateOfDeath2) = error else {
+                return XCTFail("\(error)")
+            }
+            XCTAssertEqual(dateOfBirth, dateOfBirth2)
+            XCTAssertEqual(dateOfDeath, dateOfDeath2)
+        }
+        XCTAssertEqual(validPerson!.dateOfBirth, nil)
+    }
+    
+    
+    // MARK: - Method `set(dateOfDeath:)` tests
+    
+    func testSetValidDateOfDeath() {
+        let calendar = Calendar.current
+        let dateOfDeath = calendar.date(byAdding: .year, value: -80, to: Date())!
+        XCTAssertNoThrow(try validPerson!.set(dateOfDeath: dateOfDeath))
+        XCTAssertEqual(validPerson!.dateOfDeath, dateOfDeath)
+    }
+    
+    func testSetInvalidDateOfDeath() {
+        let calendar = Calendar.current
+        
+        let dateOfDeath = calendar.date(byAdding: .year, value: 1, to: Date())!
+        XCTAssertThrowsError(try validPerson!.set(dateOfDeath: dateOfDeath)) { error in
+            guard case PersonError.givenDateShouldBeInThePast(_) = error else {
+                return XCTFail("\(error)")
+            }
+        }
+        XCTAssertEqual(validPerson!.dateOfBirth, nil)
+    }
+    
+    func testSetDateOfDeathWhichIsBeforeBirth() {
+        let calendar = Calendar.current
+        
+        // set valid dateOfDeath
+        let dateOfBirth = calendar.date(byAdding: .year, value: -23, to: Date())!
+        XCTAssertNoThrow(try validPerson!.set(dateOfBirth: dateOfBirth))
+        
+        // set dateOfBirth
+        let dateOfDeath = calendar.date(byAdding: .year, value: -10, to: Date())!
+        XCTAssertThrowsError(try validPerson!.set(dateOfDeath: dateOfDeath)) { error in
+            guard case PersonError.dateOfDeathShouldBeAfterDateOfBirth(let dateOfBirth2, let dateOfDeath2) = error else {
+                return XCTFail("\(error)")
+            }
+            XCTAssertEqual(dateOfBirth, dateOfBirth2)
+            XCTAssertEqual(dateOfDeath, dateOfDeath2)
+        }
+        XCTAssertEqual(validPerson!.dateOfDeath, nil)
     }
     
     
@@ -356,6 +428,44 @@ class PersonTests: XCTestCase {
             XCTAssertEqual(value, "1990-13-01")
         }
     }
+    
+    
+    // MARK: - Method `getDateOfDeath()` tests
+    
+    func testGetDateOfDeathValidValue() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let todayString = dateFormatter.string(from: Date())
+        let today = dateFormatter.date(from: todayString)!
+        var dateOfDeath: Date?
+        
+        XCTAssertNoThrow(dateOfDeath = try Person.getDateOfDeath(from: dateFormatter.string(from: today)))
+        XCTAssertEqual(dateOfDeath!, today)
+    }
+    
+    func testGetDateOfDeathInvalidValue() {
+        var dateOfDeathString: String
+        
+        // set dateOfBirthString: 01.01.1990
+        dateOfDeathString = "01.01.1990"
+        XCTAssertThrowsError(try Person.getDateOfDeath(from: dateOfDeathString)) { error in
+            guard case PersonError.givenValueDoesNotIncludeADate(let property, let value) = error else {
+                return XCTFail("\(error)")
+            }
+            XCTAssertEqual(property, "dateOfDeath")
+            XCTAssertEqual(value, "01.01.1990")
+        }
+        
+        // set dateOfBirthString: 1990-13-01
+        dateOfDeathString = "1990-13-01"
+        XCTAssertThrowsError(try Person.getDateOfDeath(from: dateOfDeathString)) { error in
+            guard case PersonError.givenValueDoesNotIncludeADate(let property, let value) = error else {
+                return XCTFail("\(error)")
+            }
+            XCTAssertEqual(property, "dateOfDeath")
+            XCTAssertEqual(value, "1990-13-01")
+        }
+    }
 }
 
 
@@ -389,7 +499,9 @@ extension PersonTests {
         ("testGetLastNameValidValue", testGetLastNameValidValue),
         ("testGetLastNameInvalidValue", testGetLastNameInvalidValue),
         ("testGetDateOfBirthValidValue", testGetDateOfBirthValidValue),
-        ("testGetDateOfBirthInvalidValue", testGetDateOfBirthInvalidValue)
+        ("testGetDateOfBirthInvalidValue", testGetDateOfBirthInvalidValue),
+        ("testGetDateOfDeathValidValue", testGetDateOfBirthValidValue),
+        ("testGetDateOfDeathInvalidValue", testGetDateOfBirthInvalidValue)
         
     ]
 }
