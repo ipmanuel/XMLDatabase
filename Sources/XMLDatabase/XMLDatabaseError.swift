@@ -7,8 +7,10 @@
 
 import Foundation
 
+
 // MARK: - Error Enumerations
 
+/// An enumeration for method `rename()` in URL extension
 public enum URLError: Error {
     case fileDoesNotExist(at: URL)
     case fileWithNewFilenameExistsAlready(oldName: String, at: URL)
@@ -35,7 +37,102 @@ public enum XMLObjectError: Error {
 }
 
 
-// MARK: - LocalizedError Descriptions for XMLObejctsError
+// MARK: - Equatable
+
+extension URLError: Equatable {
+    public static func ==(lhs: URLError, rhs: URLError) -> Bool {
+        switch lhs {
+        case .fileDoesNotExist(let at):
+            if case .fileDoesNotExist(let at2) = rhs, at == at2 {
+                return true
+            }
+        case .fileWithNewFilenameExistsAlready(let oldName, let at):
+            if case .fileWithNewFilenameExistsAlready(let oldName2, let at2) = rhs, oldName == oldName2, at == at2 {
+                return true
+            }
+        }
+        return false
+    }
+    
+}
+
+extension XMLObjectsError: Equatable {
+    public static func ==(lhs: XMLObjectsError, rhs: XMLObjectsError) -> Bool {
+        switch lhs {
+        case .invalidXMLFilename(let at):
+            if case .invalidXMLFilename(let at2) = rhs, at == at2 {
+                return true
+            }
+        case .xmlFileDoesNotExist(let at):
+            if case .xmlFileDoesNotExist(let at2) = rhs, at == at2 {
+                return true
+            }
+        case .xmlFileExistsAlready(let at):
+            if case .xmlFileExistsAlready(let at2) = rhs, at == at2 {
+                return true
+            }
+        case .xmlFileIsLocked(let at):
+            if case .xmlFileIsLocked(let at2) = rhs, at == at2 {
+                return true
+            }
+        case .xmlFileSizeReadingFailed(let at, let error):
+            if case .xmlFileSizeReadingFailed(let at2, let error2) = rhs, at == at2, error == error2 {
+                return true
+            }
+        case .requiredAttributeIsMissing(let element, let attribute, let at):
+            if case .requiredAttributeIsMissing(let element2, let attribute2, let at2) = rhs, element == element2, attribute == attribute2, at == at2  {
+                return true
+            }
+        case .requiredElementIsMissing(let element, let at):
+            if case .requiredElementIsMissing(let element2, let at2) = rhs, element == element2, at == at2  {
+                return true
+            }
+        case .requiredElementTextIsInvalid(let element, let text, let at):
+            if case .requiredElementTextIsInvalid(let element2, let text2, let at2) = rhs, element == element2, text == text2, at == at2  {
+                return true
+            }
+        case .rootXMLElementWasNotFound(let rootElement, let at):
+            if case .rootXMLElementWasNotFound(let rootElement2, let at2) = rhs, rootElement == rootElement2, at == at2  {
+                return true
+            }
+        case .idExistsAlready(let id, let at):
+            if case .idExistsAlready(let id2, let at2) = rhs, id == id2, at == at2  {
+                return true
+            }
+        }
+        return false
+    }
+}
+
+extension XMLObjectError: Equatable {
+    public static func ==(lhs: XMLObjectError, rhs: XMLObjectError) -> Bool {
+        switch lhs {
+        case .invalidId(let value):
+            if case .invalidId(let value2) = rhs, value == value2 {
+                return true
+            }
+        case .invalidIdString(let value):
+            if case .invalidIdString(let value2) = rhs, value == value2 {
+                return true
+            }
+        }
+        return false
+    }
+}
+
+
+// MARK: - LocalizedError
+
+extension URLError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .fileDoesNotExist(let at):
+            return String(format: NSLocalizedString("The given file \"%@\" located in \"%@\" does not exist.", comment: ""), arguments: [at.lastPathComponent, at.deletingLastPathComponent().path])
+        case .fileWithNewFilenameExistsAlready(let oldName, let at):
+            return String(format: NSLocalizedString("The file \"%@\" located in \"%@\" exists already.", comment: ""), arguments: [at.lastPathComponent, at.deletingLastPathComponent().path])
+        }
+    }
+}
 
 extension XMLObjectsError: LocalizedError {
     public var errorDescription: String? {
@@ -63,9 +160,6 @@ extension XMLObjectsError: LocalizedError {
         }
     }
 }
-
-
-// MARK: - LocalizedError Descriptions for XMLObjectError
 
 extension XMLObjectError: LocalizedError {
     public var errorDescription: String? {

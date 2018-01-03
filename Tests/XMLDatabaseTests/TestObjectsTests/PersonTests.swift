@@ -28,7 +28,6 @@ class PersonTests: XCTestCase {
     }
     
     
-    
     // MARK: - Init tests
     
     func testValidProperties() {
@@ -41,7 +40,7 @@ class PersonTests: XCTestCase {
         XCTAssertNoThrow(try Person(id: 1, gender: "female", firstName: "Clara"))
     }
     
-    func testProperties() {
+    func testPropertiesAreSet() {
         XCTAssertEqual(validPerson!.id, 1)
         XCTAssertEqual(validPerson!.gender, Person.Gender.male)
         XCTAssertEqual(validPerson!.firstName, "Manuel")
@@ -472,15 +471,18 @@ class PersonTests: XCTestCase {
 extension PersonTests {
     static var allTests = [
         ("testValidProperties", testValidProperties),
-        ("testProperties", testProperties),
+        ("testPropertiesAreSet", testPropertiesAreSet),
         ("testInvalidId", testInvalidId),
+        
         ("testChangeValidGender", testChangeValidGender),
         ("testChangeValidFirstName", testChangeValidFirstName),
         ("testChangeInvalidFirstName", testChangeInvalidFirstName),
+        
         ("testSetValidLastName", testSetValidLastName),
         ("testSetInvalidLastName", testSetInvalidLastName),
         ("testSetValidDateOfBirth", testSetValidDateOfBirth),
         ("testSetInvalidDateOfBirth", testSetInvalidDateOfBirth),
+        
         ("testValidFirstName", testValidFirstName),
         ("testFirstNameIsTooShort", testFirstNameIsTooShort),
         ("testFirstNameIsTooLong", testFirstNameIsTooLong),
@@ -488,10 +490,12 @@ extension PersonTests {
         ("testLastNameWithMaxCharacters", testLastNameWithMaxCharacters),
         ("testLastNameIsTooShort", testLastNameIsTooShort),
         ("testLastNameIsTooLong", testLastNameIsTooLong),
+        
         ("testIsValidDateOfBirthOnToday", testIsValidDateOfBirthOnToday),
         ("testIsValidDateOfBirthMaxDistanceBetween", testIsValidDateOfBirthMaxDistanceBetween),
         ("testIsValidDateOfBirthIsInFuture", testIsValidDateOfBirthIsInFuture),
         ("testIsValidDateOfBirthIsTooFarInPast", testIsValidDateOfBirthIsTooFarInPast),
+        
         ("testGetGenderValidValue", testGetGenderValidValue),
         ("testInvalidGenderValidValue", testInvalidGenderValidValue),
         ("testGetFirstNameValidValue", testGetFirstNameValidValue),
@@ -502,7 +506,6 @@ extension PersonTests {
         ("testGetDateOfBirthInvalidValue", testGetDateOfBirthInvalidValue),
         ("testGetDateOfDeathValidValue", testGetDateOfBirthValidValue),
         ("testGetDateOfDeathInvalidValue", testGetDateOfBirthInvalidValue)
-        
     ]
 }
 

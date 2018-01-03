@@ -8,10 +8,10 @@ class XMlObjectMapperTests: XCTestCase {
     
     // MARK: - Properties
     
-    private var basePath: URL?
+    private var baseURL: URL?
     private var xmlContent: String?
-    private var lockedXMLFilePath: URL?
-    private var unlockedXMLFilePath: URL?
+    private var lockedXMLFileURL: URL?
+    private var unlockedXMLFileURL: URL?
     
     
     // MARK: - Init
@@ -19,21 +19,21 @@ class XMlObjectMapperTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        basePath = Bundle.init(for: XMLDatabaseTests.self).resourceURL!
+        baseURL = Bundle.init(for: XMLDatabaseTests.self).resourceURL!
         xmlContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><persons><person id=\"1\"><gender>male</gender><firstName>Manuel</firstName></person></persons>"
-        lockedXMLFilePath = basePath!.appendingPathComponent("_Persons.xml")
-        unlockedXMLFilePath = basePath!.appendingPathComponent("Persons.xml")
+        lockedXMLFileURL = baseURL!.appendingPathComponent("_Persons.xml")
+        unlockedXMLFileURL = baseURL!.appendingPathComponent("Persons.xml")
     }
     
     override func tearDown() {
-        removeFileIfExists(file: lockedXMLFilePath!)
-        removeFileIfExists(file: unlockedXMLFilePath!)
+        removeFileIfExists(file: lockedXMLFileURL!)
+        removeFileIfExists(file: unlockedXMLFileURL!)
         
         super.tearDown()
     }
     
     
-    // MARK: - Method `getId()` tests
+    // MARK: - Method `getAttributeId()` tests
     
     func testValidId() {
         let xmlContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><persons><person id=\"1\"><gender>male</gender><firstName>Manuel</firstName></person></persons>"
@@ -42,7 +42,7 @@ class XMlObjectMapperTests: XCTestCase {
         
         var value: Int?
         for object in objects {
-            XCTAssertNoThrow(value = try PersonMapper.getAttributeId(of: object.element!, at: basePath!))
+            XCTAssertNoThrow(value = try PersonMapper.getAttributeId(of: object.element!, at: baseURL!))
             XCTAssertEqual(value, 1)
         }
     }
@@ -53,7 +53,7 @@ class XMlObjectMapperTests: XCTestCase {
         let objects = xmlParsed["persons"]["person"].all
         
         for object in objects {
-            XCTAssertThrowsError(try PersonMapper.getAttributeId(of: object.element!, at: basePath!))
+            XCTAssertThrowsError(try PersonMapper.getAttributeId(of: object.element!, at: baseURL!))
         }
     }
     
@@ -63,13 +63,14 @@ class XMlObjectMapperTests: XCTestCase {
         let objects = xmlParsed["persons"]["person"].all
         
         for object in objects {
-            XCTAssertThrowsError(try PersonMapper.getAttributeId(of: object.element!, at: basePath!)) { error in
+            XCTAssertThrowsError(try PersonMapper.getAttributeId(of: object.element!, at: baseURL!)) { error in
                 guard case XMLObjectsError.requiredAttributeIsMissing(_, _, _) = error else {
                     return XCTFail("\(error)")
                 }
             }
         }
     }
+    
     
     // MARK: - Method `getXMLElement()` tests
     
@@ -79,7 +80,7 @@ class XMlObjectMapperTests: XCTestCase {
         
         var xmlElement: SWXMLHash.XMLElement?
         for object in objects {
-            XCTAssertNoThrow(xmlElement = try PersonMapper.getXMLElement(of: object, name: "gender", at: unlockedXMLFilePath!))
+            XCTAssertNoThrow(xmlElement = try PersonMapper.getXMLElement(of: object, name: "gender", at: unlockedXMLFileURL!))
             XCTAssertEqual(xmlElement!.text, "male")
         }
     }
@@ -89,12 +90,8 @@ class XMlObjectMapperTests: XCTestCase {
         let objects = xmlParsed["persons"]["person"].all
         
         for object in objects {
-            XCTAssertThrowsError(try PersonMapper.getXMLElement(of: object, name: "lastName", at: unlockedXMLFilePath!)) { error in
-                guard case XMLObjectsError.requiredElementIsMissing(let element, let url) = error else {
-                    return XCTFail("\(error)")
-                }
-                XCTAssertEqual(element, "lastName")
-                XCTAssertEqual(url.path, unlockedXMLFilePath!.path)
+            XCTAssertThrowsError(try PersonMapper.getXMLElement(of: object, name: "lastName", at: unlockedXMLFileURL!)) { error in
+                XCTAssertEqual(error as! XMLObjectsError, XMLObjectsError.requiredElementIsMissing(element: "lastName", at: unlockedXMLFileURL!))
             }
         }
     }
@@ -105,30 +102,21 @@ class XMlObjectMapperTests: XCTestCase {
     func testElementAttributeIsValid() {
         let xmlParsed = SWXMLHash.parse(xmlContent!)
         let objects = xmlParsed["persons"]["person"].all
-    
-        var xmlElement: SWXMLHash.XMLElement
+        let xmlElement: SWXMLHash.XMLElement = objects.first!.element!
         var attributeValue: String?
-        for object in objects {
-            xmlElement = object.element!
-            XCTAssertNoThrow(attributeValue = try PersonMapper.getAttributeValue(of: xmlElement, name: "id", at: unlockedXMLFilePath!))
-            XCTAssertEqual(attributeValue!, "1")
-        }
+        
+        XCTAssertNoThrow(attributeValue = try PersonMapper.getAttributeValue(of: xmlElement, name: "id", at: unlockedXMLFileURL!))
+        XCTAssertEqual(attributeValue!, "1")
     }
     
     func testElementAttributeIsMissing() {
         let xmlContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><persons><person><gender>male</gender><firstName>Manuel</firstName></person></persons>"
         let xmlParsed = SWXMLHash.parse(xmlContent)
         let objects = xmlParsed["persons"]["person"].all
+        let xmlElement: SWXMLHash.XMLElement = objects.first!.element!
         
-        for object in objects {
-            XCTAssertThrowsError(try PersonMapper.getAttributeValue(of: object.element!, name: "id", at: unlockedXMLFilePath!)) { error in
-                guard case XMLObjectsError.requiredAttributeIsMissing(let element, let attribute, let url) = error else {
-                    return XCTFail("\(error)")
-                }
-                XCTAssertEqual(element, "person")
-                XCTAssertEqual(attribute, "id")
-                XCTAssertEqual(url.path, unlockedXMLFilePath!.path)
-            }
+        XCTAssertThrowsError(try PersonMapper.getAttributeValue(of: xmlElement, name: "id", at: unlockedXMLFileURL!)) { error in
+            XCTAssertEqual(error as! XMLObjectsError, XMLObjectsError.requiredAttributeIsMissing(element: "person", attribute: "id", at: unlockedXMLFileURL!))
         }
     }
 }
