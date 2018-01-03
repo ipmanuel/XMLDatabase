@@ -132,7 +132,7 @@ class XMLObjectsTests: XCTestCase {
         // init again
         xmlObjects = nil
         XCTAssertNoThrow(xmlObjects = try XMLObjects<PersonMapper>(xmlFileURL: unlockedXMLFileURL!))
-        XCTAssertEqual(xmlObjects!.count, 3)
+        XCTAssertEqual(xmlObjects?.count, 3)
         xmlObjects = nil
         
         // test file content
@@ -151,6 +151,28 @@ class XMLObjectsTests: XCTestCase {
             XCTAssertEqual(value, 1)
             XCTAssertEqual(url.path, unlockedXMLFileURL!.path)
         }
+    }
+    
+    func testChangeXMLObjectAndSave() {
+        // deinit
+        xmlObjects = nil
+        
+        // init persons
+        var persons: Persons?
+        var person: Person?
+        XCTAssertNoThrow(persons = try Persons(xmlFileURL: unlockedXMLFileURL!))
+        XCTAssertNoThrow(person = persons?.getBy(id: 1))
+        XCTAssertNoThrow(try person?.change(firstName: "Sarah"))
+        persons?.getBy(id: 1)?.change(gender: Person.Gender.female)
+        XCTAssertNoThrow(try persons?.save())
+        
+        // close instance and reinit
+        persons = nil
+        person = nil
+        XCTAssertNoThrow(persons = try Persons(xmlFileURL: unlockedXMLFileURL!))
+        XCTAssertNoThrow(person = persons?.getBy(id: 1))
+        XCTAssertEqual(person?.firstName, "Sarah")
+        XCTAssertEqual(person?.gender, Person.Gender.female)
     }
     
     // MARK: - Property `nextId` tests

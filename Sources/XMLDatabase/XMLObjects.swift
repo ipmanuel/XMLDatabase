@@ -155,24 +155,25 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
     
     /// Copy all unsaved objects to saved objects and insert the into XMLDocument ordered by id
     open func save() throws {
+        let alreadySavedObjects = savedObjects.count
+        
         if (unsavedObjects.count > 0) {
-            let alreadySavedObjects = savedObjects.count
             savedObjects += unsavedObjects
             savedObjectsIds += unsavedObjectsIds
             savedObjects.sort(by: {$0.id < $1.id})
             savedObjectsIds.sort()
-            
-            for i in 0..<alreadySavedObjects {
-                xmlDocument.rootElement()!.replaceChild(at: i, with: MapperType.toXMLElement(from: savedObjects[i]))
-            }
-            for i in alreadySavedObjects..<savedObjects.count {
-                xmlDocument.rootElement()!.addChild(MapperType.toXMLElement(from: savedObjects[i]))
-            }
-            unsavedObjectsIds.removeAll()
-            unsavedObjects.removeAll()
-            
-            try xmlDocument.xmlData(options: XMLNode.Options.nodePrettyPrint).write(to: xmlFileURL)
         }
+            
+        for i in 0..<alreadySavedObjects {
+            xmlDocument.rootElement()!.replaceChild(at: i, with: MapperType.toXMLElement(from: savedObjects[i]))
+        }
+        for i in alreadySavedObjects..<savedObjects.count {
+            xmlDocument.rootElement()!.addChild(MapperType.toXMLElement(from: savedObjects[i]))
+        }
+        unsavedObjectsIds.removeAll()
+        unsavedObjects.removeAll()
+        
+        try xmlDocument.xmlData(options: XMLNode.Options.nodePrettyPrint).write(to: xmlFileURL)
     }
     
     /// Delete a saved/unsaved object by removing from arrays and additionally remove from XMLDocument for a saved object
