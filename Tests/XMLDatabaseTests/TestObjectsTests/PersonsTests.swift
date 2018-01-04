@@ -33,18 +33,29 @@ class PersonsTests: XCTestCase {
     }
     
     
-    // MARK: - PersonsTests
+    // MARK: - Init tests
     
-    func testConstraintOnePersonExists() {
+    func testInitConstraintOnePersonExists() {
         personsXMLContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><persons></persons>"
+        createUnlockedXMLFile()
+        
+        XCTAssertThrowsError(try Persons(xmlFileURL: personsUnlockedXMLFilePath!)) { error in
+            guard case PersonsError.onePersonDoesNotExist() = error else {
+                return XCTFail("\(error)")
+            }
+        }
+    }
+    
+    
+    // MARK: - Method `delete()` tests
+    
+    func testSaveConstraintOnePersonExists() {
         createUnlockedXMLFile()
         
         var persons: Persons?
         XCTAssertNoThrow(persons = try Persons(xmlFileURL: personsUnlockedXMLFilePath!))
-        XCTAssertThrowsError(try persons?.save()) { error in
-            guard case PersonsError.onePersonDoesNotExist() = error else {
-                return XCTFail("\(error)")
-            }
+        XCTAssertThrowsError(try persons?.deleteObject(id: 1)) { error in
+            XCTAssertEqual(error as! PersonsError, PersonsError.atLeastOnePersonShouldExist())
         }
     }
     
@@ -59,6 +70,7 @@ class PersonsTests: XCTestCase {
 
 extension PersonsTests {
     static var allTests = [
-        ("testConstraintOnePersonExists", testConstraintOnePersonExists)
+        ("testInitConstraintOnePersonExists", testInitConstraintOnePersonExists),
+        ("testSaveConstraintOnePersonExists", testSaveConstraintOnePersonExists)
     ]
 }

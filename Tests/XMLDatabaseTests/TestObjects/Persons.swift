@@ -8,9 +8,23 @@
 import Foundation
 import XMLDatabase
 
-enum PersonsError: Error {
+enum PersonsError: Error, Equatable {
     case onePersonDoesNotExist()
     case atLeastOnePersonShouldExist()
+    
+    static func ==(lhs: PersonsError, rhs: PersonsError) -> Bool {
+        switch lhs {
+        case .onePersonDoesNotExist:
+            if case .onePersonDoesNotExist() = rhs {
+                return true
+            }
+        case .atLeastOnePersonShouldExist:
+            if case .atLeastOnePersonShouldExist() = rhs {
+                return true
+            }
+        }
+        return false
+    }
 }
 
 

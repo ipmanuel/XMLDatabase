@@ -134,6 +134,9 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
             xmlDocument = try Foundation.XMLDocument(contentsOf: self.xmlFileURL, options: XMLNode.Options.documentTidyXML)
             try importObjects()
         }
+        
+        // check constraints
+        try checkConstraintsForSave(objects: savedObjects + unsavedObjects)
     }
     
     /// Unlock the XML file
