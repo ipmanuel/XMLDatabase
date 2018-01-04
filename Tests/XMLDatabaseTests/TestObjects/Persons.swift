@@ -35,22 +35,28 @@ class Persons: XMLObjects<PersonMapper> {
     
     // MARK: - XMLObjects
     
-    override func addObject(object: Person) throws {
-        try super.addObject(object: object)
+    override func checkConstraintsForAddObject(object: Person) throws {
+        try super.checkConstraintsForAddObject(object: object)
+        
         // constraint: there should exists at least one person
         onePersonExists = true
     }
     
-    override func save() throws {
-        try checkConstraintOnePersonExists()
-        try super.save()
-    }
     
-    override func deleteObject(id: Int) throws {
-        guard self.count > 1 else {
+    override func checkConstraintsForDeleteObject(id: Int) throws {
+        try super.checkConstraintsForDeleteObject(id: id)
+        
+        guard self.countAll > 1 else {
             throw PersonsError.atLeastOnePersonShouldExist()
         }
-        try super.deleteObject(id: id)
+    }
+    
+    override func checkConstraintsForSave(objects: [Person]) throws {
+        try super.checkConstraintsForSave(objects: objects)
+        
+        guard onePersonExists == true else {
+            throw PersonsError.onePersonDoesNotExist()
+        }
     }
     
     override open class func createEmptyXMLFile(url: URL) throws {
@@ -64,11 +70,22 @@ class Persons: XMLObjects<PersonMapper> {
     }
     
     
-    // MARK: - Constraints
-    
-    private func checkConstraintOnePersonExists() throws {
-        guard onePersonExists == true else {
-            throw PersonsError.onePersonDoesNotExist()
-        }
-    }
+    /*
+     override func addObject(object: Person) throws {
+     try super.addObject(object: object)
+     // constraint: there should exists at least one person
+     onePersonExists = true
+     }
+     
+     override func save() throws {
+     try checkConstraintOnePersonExists()
+     try super.save()
+     }
+     
+     override func deleteObject(id: Int) throws {
+     guard self.count > 1 else {
+     throw PersonsError.atLeastOnePersonShouldExist()
+     }
+     try super.deleteObject(id: id)
+     }*/
 }

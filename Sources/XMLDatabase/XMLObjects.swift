@@ -52,6 +52,11 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
         return savedObjects.count
     }
     
+    /// Return the amount of saved and unsaved objects counted
+    public var countAll: Int {
+        return (savedObjects+unsavedObjects).count
+    }
+    
     /// The ids of all saved objects
     private var savedObjectsIds: [Int]
     
@@ -143,8 +148,33 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
     
     // MARK: - Open Methods
     
+    /// create an empty XML file with a root element same as lowercased XML filename
+    open class func createEmptyXMLFile(url: URL) throws {
+        guard !FileManager.default.fileExists(atPath: url.path) else {
+            throw XMLObjectsError.xmlFileExistsAlready(at: url)
+        }
+        
+        let rootElementName = url.deletingPathExtension().lastPathComponent.lowercased()
+        let xmlDocument = XMLDocument(rootElement: Foundation.XMLElement(name: rootElementName))
+        try xmlDocument.xmlData.write(to: url)
+    }
+    
+    open func checkConstraintsForAddObject(object: MapperType.ObjectType) throws {
+    }
+    
+    open func checkConstraintsForDeleteObject(id: Int) throws {
+    }
+    
+    open func checkConstraintsForSave(objects: [MapperType.ObjectType]) throws {
+    }
+    
+    
+    // MARK: - Public Methods
+    
     /// Insert object with right index in array unsavedObjects and save its id in unsavedObjectsIds
-    open func addObject(object: MapperType.ObjectType) throws {
+    public func addObject(object: MapperType.ObjectType) throws {
+        try checkConstraintsForAddObject(object: object)
+        
         guard !unsavedObjectsIds.contains(object.id), !savedObjectsIds.contains(object.id) else {
             throw XMLObjectsError.idExistsAlready(id: object.id, at: xmlUnlockedFileURL)
         }
@@ -154,7 +184,9 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
     }
     
     /// Copy all unsaved objects to saved objects and insert the into XMLDocument ordered by id
-    open func save() throws {
+    public func save() throws {
+        try checkConstraintsForSave(objects: savedObjects + unsavedObjects)
+        
         let alreadySavedObjects = savedObjects.count
         
         if (unsavedObjects.count > 0) {
@@ -163,7 +195,7 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
             savedObjects.sort(by: {$0.id < $1.id})
             savedObjectsIds.sort()
         }
-            
+        
         for i in 0..<alreadySavedObjects {
             xmlDocument.rootElement()!.replaceChild(at: i, with: MapperType.toXMLElement(from: savedObjects[i]))
         }
@@ -177,8 +209,10 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
     }
     
     /// Delete a saved/unsaved object by removing from arrays and additionally remove from XMLDocument for a saved object
-    open func deleteObject(id: Int) throws {
+    public func deleteObject(id: Int) throws {
         if (savedObjectsIds+unsavedObjectsIds).contains(id) {
+            try checkConstraintsForDeleteObject(id: id)
+            
             if let index = savedObjects.index(where: {$0.id == id}), let indexId = savedObjectsIds.index(where: {$0 == id}) {
                 savedObjects.remove(at: index)
                 savedObjectsIds.remove(at: indexId)
@@ -191,20 +225,6 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
             }
         }
     }
-    
-    /// create an empty XML file with a root element same as lowercased XML filename
-    open class func createEmptyXMLFile(url: URL) throws {
-        guard !FileManager.default.fileExists(atPath: url.path) else {
-            throw XMLObjectsError.xmlFileExistsAlready(at: url)
-        }
-        
-        let rootElementName = url.deletingPathExtension().lastPathComponent.lowercased()
-        let xmlDocument = XMLDocument(rootElement: Foundation.XMLElement(name: rootElementName))
-        try xmlDocument.xmlData.write(to: url)
-    }
-    
-    
-    // MARK: - Public Methods
     
     /// Return a saved object selected by id
     public func getBy(id: Int) -> MapperType.ObjectType? {
