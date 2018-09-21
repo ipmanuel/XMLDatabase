@@ -122,7 +122,7 @@ extension XMLObjectError: Equatable {
 
 
 // MARK: - LocalizedError
-
+#if os(Linux)
 extension URLError: LocalizedError {
     public var errorDescription: String? {
         switch self {
@@ -171,4 +171,4 @@ extension XMLObjectError: LocalizedError {
         }
     }
 }
-
+#endif
