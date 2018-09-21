@@ -307,9 +307,9 @@ class XMLObjectsTests: XCTestCase {
         
         // insert 400 objects with random ids
         for _ in 1...400 {
-            randomId = Int(arc4random_uniform(UInt32(500))) + 1
+            randomId = Int.random(in: 1 ..< 500)
             while(insertedIds.contains(randomId)) {
-                randomId = Int(arc4random_uniform(UInt32(500))) + 1
+                randomId = Int.random(in: 1 ..< 500)
             }
             XCTAssertNoThrow(xmlObject = try getXMLObject(id: randomId))
             XCTAssertNoThrow(try xmlObjects!.addObject(object: xmlObject!))
@@ -322,7 +322,7 @@ class XMLObjectsTests: XCTestCase {
         // delete randomly 300 objects
         var index: Int
         for _ in 0...300 {
-            index = Int(arc4random_uniform(UInt32(insertedIds.count)))
+            index = Int.random(in: 0 ..< insertedIds.count)
             XCTAssertNoThrow(try xmlObjects!.deleteObject(id: insertedIds[index]))
             insertedIds.remove(at: index)
         }
