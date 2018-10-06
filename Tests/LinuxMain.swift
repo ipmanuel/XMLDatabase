@@ -1,6 +1,6 @@
 import XCTest
-@testable import DiaryXMLDatabaseTests
+@testable import XMLDatabaseTests
 
 XCTMain([
-    testCase(DiaryXMLDatabaseTests.allTests),
+    testCase(XMLDatabaseTests.allTests),
 ])
