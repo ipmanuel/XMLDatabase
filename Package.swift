@@ -11,7 +11,7 @@ let package = Package(
             targets: ["XMLDatabase"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/drmohundro/SWXMLHash.git", from: "4.0.0")
+        .package(url: "https://github.com/drmohundro/SWXMLHash.git", from: "5.0.1")
     ],
     targets: [
         .target(

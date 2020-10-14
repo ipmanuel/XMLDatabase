@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FoundationXML
 import SWXMLHash
 
 // Convention: All XML should be sorted, even if not they will be after saving first time
@@ -98,7 +99,7 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
         self.xmlFileURL = xmlFileURL
         
         // check
-        let fileManager = FileManager.default
+        let fileManager = Foundation.FileManager.default
         let firstCharacter = objectNamePlural[objectNamePlural.startIndex]
         
         guard firstCharacter != "_" else {
@@ -128,10 +129,10 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
         
         // init XMLDocument
         if fileManager.fileExists(atPath: xmlUnlockedFileURL.path) {
-            let rootElement = Foundation.XMLElement(name: objectNamePlural.lowercased())
-            xmlDocument = Foundation.XMLDocument(rootElement: rootElement)
+            let rootElement = FoundationXML.XMLElement(name: objectNamePlural.lowercased())
+            xmlDocument = FoundationXML.XMLDocument(rootElement: rootElement)
         } else {
-            xmlDocument = try Foundation.XMLDocument(contentsOf: self.xmlFileURL, options: XMLNode.Options.documentTidyXML)
+            xmlDocument = try FoundationXML.XMLDocument(contentsOf: self.xmlFileURL, options: XMLNode.Options.documentTidyXML)
             try importObjects()
         }
         
@@ -158,7 +159,7 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
         }
         
         let rootElementName = url.deletingPathExtension().lastPathComponent.lowercased()
-        let xmlDocument = XMLDocument(rootElement: Foundation.XMLElement(name: rootElementName))
+        let xmlDocument = XMLDocument(rootElement: FoundationXML.XMLElement(name: rootElementName))
         try xmlDocument.xmlData.write(to: url)
     }
     

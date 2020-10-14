@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FoundationXML
 import SWXMLHash
 
 public protocol XMLObjectMapper: class {
@@ -15,7 +16,7 @@ public protocol XMLObjectMapper: class {
     static func toXMLObject(from: XMLIndexer, at: URL) throws -> ObjectType
     
     /// Returns an XMLElement based the data of an ObjectType
-    static func toXMLElement(from: ObjectType) -> Foundation.XMLElement
+    static func toXMLElement(from: ObjectType) -> FoundationXML.XMLElement
 }
 
 extension XMLObjectMapper {

@@ -5,6 +5,7 @@
 //  Created by Manuel Pauls on 30.11.17.
 //
 
+import FoundationXML
 import XCTest
 @testable import XMLDatabase
 
@@ -136,8 +137,8 @@ class XMLObjectsTests: XCTestCase {
         xmlObjects = nil
         
         // test file content
-        var xmlDocument: XMLDocument?
-        XCTAssertNoThrow(xmlDocument = try XMLDocument(contentsOf: unlockedXMLFileURL!, options: XMLNode.Options.documentTidyXML))
+        var xmlDocument: FoundationXML.XMLDocument?
+        XCTAssertNoThrow(xmlDocument = try FoundationXML.XMLDocument(contentsOf: unlockedXMLFileURL!, options: XMLNode.Options.documentTidyXML))
         XCTAssertEqual(xmlDocument!.xmlString, "<?xml version=\"1.0\" encoding=\"UTF-8\"?><persons><person id=\"1\"><gender>male</gender><firstName>Manuel</firstName></person><person id=\"5\"><gender>male</gender><firstName>Manuel</firstName></person><person id=\"32\"><gender>female</gender><firstName>Sophie</firstName></person></persons>")
     }
     
@@ -386,8 +387,8 @@ class XMLObjectsTests: XCTestCase {
         XCTAssertNoThrow(try XMLObjects<PersonMapper>.createEmptyXMLFile(url: unlockedXMLFileURL!))
         XCTAssertTrue(FileManager.default.fileExists(atPath: unlockedXMLFileURL!.path))
         
-        var xmlDocument: XMLDocument?
-        XCTAssertNoThrow(xmlDocument = try XMLDocument(contentsOf: unlockedXMLFileURL!, options: XMLNode.Options.documentTidyXML))
+        var xmlDocument: FoundationXML.XMLDocument?
+        XCTAssertNoThrow(xmlDocument = try FoundationXML.XMLDocument(contentsOf: unlockedXMLFileURL!, options: XMLNode.Options.documentTidyXML))
         let rootElement = xmlDocument!.rootElement()!
         XCTAssertEqual(rootElement.name, "persons")
         XCTAssertTrue(rootElement.children == nil)

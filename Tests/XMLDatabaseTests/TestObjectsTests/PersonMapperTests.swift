@@ -1,3 +1,4 @@
+import FoundationXML
 import SWXMLHash
 import XCTest
 @testable import XMLDatabase
@@ -39,26 +40,26 @@ class PersonMapperTests: XCTestCase {
     
     func testMapToXMLElement() {
         var person: Person?
-        var xmlElement: Foundation.XMLElement?
+        var xmlElement: FoundationXML.XMLElement?
         let xmlContent = "<person id=\"1\"><gender>male</gender><firstName>Manuel</firstName></person>"
         
         XCTAssertNoThrow(person = try Person(id: 1, gender: Person.Gender.male, firstName: "Manuel"))
         xmlElement = PersonMapper.toXMLElement(from: person!)
         
-        let xmlDocument = XMLDocument(rootElement: xmlElement)
+        let xmlDocument = FoundationXML.XMLDocument(rootElement: xmlElement)
         XCTAssertEqual(xmlDocument.xmlString, xmlContent)
     }
     
     func testMapToXMLElementWithOptionalPropertyLastName() {
         var person: Person?
-        var xmlElement: Foundation.XMLElement?
+        var xmlElement: FoundationXML.XMLElement?
         let xmlContent = "<person id=\"1\"><gender>male</gender><firstName>Manuel</firstName><lastName>Pauls</lastName></person>"
         
         XCTAssertNoThrow(person = try Person(id: 1, gender: Person.Gender.male, firstName: "Manuel"))
         XCTAssertNoThrow(try person!.set(lastName: "Pauls"))
         xmlElement = PersonMapper.toXMLElement(from: person!)
         
-        let xmlDocument = XMLDocument(rootElement: xmlElement)
+        let xmlDocument = FoundationXML.XMLDocument(rootElement: xmlElement)
         XCTAssertEqual(xmlDocument.xmlString, xmlContent)
     }
 }

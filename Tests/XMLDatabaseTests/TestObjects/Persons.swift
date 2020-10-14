@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FoundationXML
 import XMLDatabase
 
 enum PersonsError: Error, Equatable {
@@ -79,7 +80,7 @@ class Persons: XMLObjects<PersonMapper> {
         }
         
         let rootElementName = url.deletingPathExtension().lastPathComponent.capitalized
-        let xmlDocument = XMLDocument(rootElement: Foundation.XMLElement(name: rootElementName))
+        let xmlDocument = FoundationXML.XMLDocument(rootElement: FoundationXML.XMLElement(name: rootElementName))
         try xmlDocument.xmlData.write(to: url)
     }
     
