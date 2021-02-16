@@ -19,7 +19,7 @@ class XMlObjectMapperTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        baseURL = Bundle.init(for: XMLDatabaseTests.self).resourceURL!
+        baseURL = Bundle.init(for: XMlObjectMapperTests.self).resourceURL!
         xmlContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><persons><person id=\"1\"><gender>male</gender><firstName>Manuel</firstName></person></persons>"
         lockedXMLFileURL = baseURL!.appendingPathComponent("_Persons.xml")
         unlockedXMLFileURL = baseURL!.appendingPathComponent("Persons.xml")
@@ -88,7 +88,6 @@ class XMlObjectMapperTests: XCTestCase {
     func testElementIsMissing() {
         let xmlParsed = SWXMLHash.parse(xmlContent!)
         let objects = xmlParsed["persons"]["person"].all
-        
         for object in objects {
             XCTAssertThrowsError(try PersonMapper.getXMLElement(of: object, name: "lastName", at: unlockedXMLFileURL!)) { error in
                 XCTAssertEqual(error as! XMLObjectsError, XMLObjectsError.requiredElementIsMissing(element: "lastName", at: unlockedXMLFileURL!))
@@ -132,4 +131,3 @@ extension XMlObjectMapperTests {
         ("testElementAttributeIsMissing", testElementAttributeIsMissing),
     ]
 }
-
