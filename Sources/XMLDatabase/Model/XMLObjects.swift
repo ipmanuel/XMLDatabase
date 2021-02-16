@@ -5,6 +5,7 @@
 //  Created by Manuel Pauls on 23.11.17.
 //
 
+
 import Foundation
 import FoundationXML
 import SWXMLHash
@@ -21,19 +22,23 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
     
     /// The URL, where the corresponding XML file is located
     /// -note: The file url changes, because after initializing file is locked by adding `_` at the beginning of the filename
-    private var xmlFileURL: URL
+    //private var xmlFileURL: URL
     
     /// The URL, where the unlocked XML file should be located
-    private let xmlUnlockedFileURL: URL
+    //private let xmlUnlockedFileURL: URL
     
     /// The URL, where the locked XML file should be located
-    private let xmlLockedFileURL: URL
+    //private let xmlLockedFileURL: URL
+    private let manager: XMLDocumentManager
+    private var container: XMLDocumentContainer
     
     /// The size of the XML file
     public let fileSize: UInt64
     
     /// The XML document, which represents the XML file as an object
-    private var xmlDocument: XMLDocument
+    //private var xmlDocument: FoundationXML.XMLDocument {
+    //    return container
+    //}
     
     /// The name of the object which XMLObjects deal with
     private let objectName: String
@@ -85,68 +90,43 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
     // MARK: - Init
     
     /// Set all properties and check wether the XML file is locked or does not exist
-    public init(xmlFileURL: URL) throws {
+    public init(manager: XMLDocumentManager) throws {
         savedObjectsIds = []
         savedObjects = []
         unsavedObjects = []
         unsavedObjectsIds = []
         nextIds = []
         maxId = 0
-        objectName = String(describing: MapperType.ObjectType.self)
-        objectNamePlural = xmlFileURL.deletingPathExtension().lastPathComponent.capitalized
-        xmlUnlockedFileURL = xmlFileURL.deletingLastPathComponent().appendingPathComponent("\(objectNamePlural).xml")
-        xmlLockedFileURL = xmlFileURL.deletingLastPathComponent().appendingPathComponent("_\(objectNamePlural).xml")
-        self.xmlFileURL = xmlFileURL
-        
-        // check
-        let fileManager = Foundation.FileManager.default
-        let firstCharacter = objectNamePlural[objectNamePlural.startIndex]
-        
-        guard firstCharacter != "_" else {
-            throw XMLObjectsError.invalidXMLFilename(at: xmlFileURL)
-        }
-        guard !fileManager.fileExists(atPath: xmlLockedFileURL.path) else {
-            throw XMLObjectsError.xmlFileIsLocked(at: xmlLockedFileURL)
-        }
-        guard fileManager.fileExists(atPath: xmlUnlockedFileURL.path) else {
-            throw XMLObjectsError.xmlFileDoesNotExist(at: xmlUnlockedFileURL)
-        }
         
         // get filesize
         var attr: [FileAttributeKey:Any] = [:]
         do {
-            attr = try FileManager.default.attributesOfItem(atPath: xmlFileURL.path)
+            attr = try FileManager.default.attributesOfItem(atPath: manager.url.path)
         } catch {
-            throw XMLObjectsError.xmlFileSizeReadingFailed(at: xmlFileURL, error: error.localizedDescription)
+            throw XMLObjectsError.xmlFileSizeReadingFailed(at: manager.url, error: error.localizedDescription)
         }
         fileSize = attr[FileAttributeKey.size] as! UInt64
         
-        
-        // lock file
-        let lockedFileName = "_\(objectNamePlural).xml"
-        try self.xmlFileURL.rename(newName: lockedFileName)
-        
-        
-        // init XMLDocument
-        if fileManager.fileExists(atPath: xmlUnlockedFileURL.path) {
-            let rootElement = FoundationXML.XMLElement(name: objectNamePlural.lowercased())
-            xmlDocument = FoundationXML.XMLDocument(rootElement: rootElement)
-        } else {
-            xmlDocument = try FoundationXML.XMLDocument(contentsOf: self.xmlFileURL, options: XMLNode.Options.documentTidyXML)
-            try importObjects()
-        }
+        // lock file and init XMLDocument
+        self.manager = manager
+        container = try self.manager.loadAndLock()
+
+        objectName = container.infoObject.objectName
+        objectNamePlural = container.infoObject.objectNamePlural
+        try importObjects()
         
         // check constraints
         try checkConstraintsForSave(objects: savedObjects + unsavedObjects)
     }
+
+    public convenience init(xmlFileURL: URL) throws {
+        let manager = try XMLDocumentManager(at: xmlFileURL)
+        try self.init(manager: manager)
+    }
     
     /// Unlock the XML file
     deinit {
-        do {
-            try self.xmlFileURL.rename(newName: xmlUnlockedFileURL.lastPathComponent)
-        } catch {
-            print("\(error)")
-        }
+        try? manager.unlock()
     }
     
     
@@ -159,8 +139,8 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
         }
         
         let rootElementName = url.deletingPathExtension().lastPathComponent.lowercased()
-        let xmlDocument = XMLDocument(rootElement: FoundationXML.XMLElement(name: rootElementName))
-        try xmlDocument.xmlData.write(to: url)
+        let xmlDocument = FoundationXML.XMLDocument(rootElement: FoundationXML.XMLElement(name: rootElementName))
+        //try xmlDocument.xmlData.write(to: url)
     }
     
     open func checkConstraintsForAddObject(object: MapperType.ObjectType) throws {
@@ -180,7 +160,7 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
         try checkConstraintsForAddObject(object: object)
         
         guard !unsavedObjectsIds.contains(object.id), !savedObjectsIds.contains(object.id) else {
-            throw XMLObjectsError.idExistsAlready(id: object.id, at: xmlUnlockedFileURL)
+            throw XMLObjectsError.idExistsAlready(id: object.id, at: URL(fileURLWithPath: "/"))//xmlUnlockedFileURL)
         }
         unsavedObjects.append(object)
         unsavedObjectsIds.append(object.id)
@@ -200,16 +180,21 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
             savedObjectsIds.sort()
         }
         
+        var xmlElement: FoundationXML.XMLElement
         for i in 0..<alreadySavedObjects {
-            xmlDocument.rootElement()!.replaceChild(at: i, with: MapperType.toXMLElement(from: savedObjects[i]))
+            xmlElement = MapperType.toXMLElement(from: savedObjects[i])
+            //try container.replace(at: i, xmlElement: xmlElement)
+            //xmlDocument.rootElement()!.replaceChild(at: i, with: MapperType.toXMLElement(from: savedObjects[i]))
         }
         for i in alreadySavedObjects..<savedObjects.count {
-            xmlDocument.rootElement()!.addChild(MapperType.toXMLElement(from: savedObjects[i]))
+            xmlElement = MapperType.toXMLElement(from: savedObjects[i])
+            //try container.add(xmlElement: xmlElement, withId: savedObjects[i].id)
+            //xmlDocument.rootElement()!.addChild(MapperType.toXMLElement(from: savedObjects[i]))
         }
         unsavedObjectsIds.removeAll()
         unsavedObjects.removeAll()
         
-        try xmlDocument.xmlData(options: XMLNode.Options.nodePrettyPrint).write(to: xmlFileURL)
+        try manager.saveAndUnlock(container: container)
     }
     
     /// Delete a saved/unsaved object by removing from arrays and additionally remove from XMLDocument for a saved object
@@ -220,7 +205,8 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
             if let index = savedObjects.index(where: {$0.id == id}), let indexId = savedObjectsIds.index(where: {$0 == id}) {
                 savedObjects.remove(at: index)
                 savedObjectsIds.remove(at: indexId)
-                xmlDocument.rootElement()!.removeChild(at: index)
+                //try container.remove(withId: id)
+                //xmlDocument.rootElement()!.removeChild(at: index)
                 deleteId(value: id)
             } else if let index = unsavedObjects.index(where: {$0.id == id}), let indexId = unsavedObjectsIds.index(where: {$0 == id}) {
                 unsavedObjects.remove(at: index)
@@ -243,15 +229,15 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
     // MARK: - Private Methods
     
     private func importObjects() throws {
-        let xmlParsed = SWXMLHash.parse(xmlDocument.xmlString)
+        let xmlParsed = container.xmlIndexer//SWXMLHash.parse(xmlDocument.xmlString)
         let rootXMLElement = objectNamePlural.lowercased()
         guard xmlParsed[rootXMLElement].element != nil else {
-            throw XMLObjectsError.rootXMLElementWasNotFound(rootElement: rootXMLElement, at: xmlUnlockedFileURL)
+            throw XMLObjectsError.rootXMLElementWasNotFound(rootElement: rootXMLElement, at: URL(fileURLWithPath: "/"))//xmlUnlockedFileURL)
         }
         let objects = xmlParsed[rootXMLElement][objectName.lowercased()].all
         
         for object in objects {
-            try addObject(object: try MapperType.toXMLObject(from: object, at: xmlUnlockedFileURL))
+            try addObject(object: try MapperType.toXMLObject(from: object, at: URL(fileURLWithPath: "/")))//xmlUnlockedFileURL))
         }
         
         // imported objects should not be saved a second time
