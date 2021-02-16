@@ -22,7 +22,15 @@ open class XMLObject {
     // MARK: - Init
     
     public init(id: Int) throws {
-        guard XMLObject.isValid(id: id) else {
+        idMutable = -1
+        try set(id: id)
+    }
+
+    
+    // MARK: - Set properties
+    
+    func set(id: Int) throws {
+        guard XMLInfoObject.isValid(id: id) else {
             throw XMLObjectError.invalidId(value: id)
         }
         idMutable = id
@@ -32,7 +40,7 @@ open class XMLObject {
     // MARK: - Validate
     
     public class func isValid(id: Int) -> Bool {
-        return id > 0
+        return id >= 0
     }
     
     
