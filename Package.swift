@@ -1,4 +1,4 @@
-// swift-tools-version:4.0
+// swift-tools-version:5.3
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -11,7 +11,7 @@ let package = Package(
             targets: ["XMLDatabase"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/drmohundro/SWXMLHash.git", from: "5.0.1")
+        .package(url: "https://github.com/drmohundro/SWXMLHash.git", from: "5.0.2")    
     ],
     targets: [
         .target(
@@ -19,6 +19,6 @@ let package = Package(
             dependencies: ["SWXMLHash"]),
         .testTarget(
             name: "XMLDatabaseTests",
-            dependencies: ["XMLDatabase"]),
+            dependencies: ["XMLDatabase"])
     ]
 )
