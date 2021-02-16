@@ -5,6 +5,7 @@
 //  Created by Manuel Pauls on 14.12.17.
 //
 
+/*
 import Foundation
 import FoundationXML
 import XMLDatabase
@@ -83,7 +84,7 @@ class Persons: XMLObjects<PersonMapper> {
         let xmlDocument = FoundationXML.XMLDocument(rootElement: FoundationXML.XMLElement(name: rootElementName))
         try xmlDocument.xmlData.write(to: url)
     }
-    
+    */
     
     /*
      override func addObject(object: Person) throws {
@@ -103,4 +104,4 @@ class Persons: XMLObjects<PersonMapper> {
      }
      try super.deleteObject(id: id)
      }*/
-}
+//}
