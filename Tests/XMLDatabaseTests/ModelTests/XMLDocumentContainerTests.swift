@@ -118,7 +118,7 @@ class XMLDocumentContainerTests: XCTestCase {
 
         // export and init new container
         var xmlStringData: Data? 
-        XCTAssertNoThrow(xmlStringData = container.export())
+        xmlStringData = container.export()
         let xmlString = String(decoding: try XCTUnwrap(xmlStringData), as: UTF8.self)
         var newContainerOptional: XMLDocumentContainer?
         XCTAssertNoThrow(newContainerOptional = try XMLDocumentContainer(xmlString: xmlString))
