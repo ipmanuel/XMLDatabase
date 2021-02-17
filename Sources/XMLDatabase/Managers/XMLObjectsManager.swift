@@ -37,7 +37,7 @@ open class XMLObjectsManager<MapperType: XMLObjectMapper> {
         }
     }
 
-    public func addObjects(objects: [MapperType.ObjectType]) throws {
+    public func addObjects(objects: inout [MapperType.ObjectType]) throws {
         try workWithContainer() { (container: XMLDocumentContainer) throws -> () in
             var id: Int!
             var xmlElement: FoundationXML.XMLElement!
@@ -77,11 +77,14 @@ open class XMLObjectsManager<MapperType: XMLObjectMapper> {
 
     // MARK: - Remove
 
-    public func removeObject(object: MapperType.ObjectType) throws {
-        let id = object.id
+    public func removeObject(id: Int) throws {
         try workWithContainer() { (container: XMLDocumentContainer) throws -> () in
             try container.remove(id: id)
         }
+    }
+
+    public func removeObject(object: MapperType.ObjectType) throws {
+        try removeObject(id: object.id)
     }
 
     public func removeObjects(objects: [MapperType.ObjectType]) throws {
