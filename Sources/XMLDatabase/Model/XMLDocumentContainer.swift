@@ -32,10 +32,13 @@ public class XMLDocumentContainer {
     
     // MARK: - Init
     
+    /// init container from xml string    
     public init(xmlString: String) throws {
         self.xmlString = xmlString
     }
 
+
+    /// init empty container
     public convenience init(objectName: String, objectNamePlural: String) throws {
         let rootElement = FoundationXML.XMLElement(name: "\(objectNamePlural)")
         var xmlDocument = FoundationXML.XMLDocument(rootElement: rootElement)
@@ -120,7 +123,7 @@ public class XMLDocumentContainer {
         return xmlIndexer[rootXMLElement]["Entries"][objectName].all
     }
 
-    public func export() throws -> Data {
+    public func export() -> Data {
         let infoObjectXMLElement = XMLInfoObjectMapper.toXMLElement(from: infoObject)
         xmlDocument.rootElement()!.replaceChild(at: 0, with: infoObjectXMLElement)
 
@@ -132,7 +135,7 @@ public class XMLDocumentContainer {
         var nextId: Int!
         let amountOfGapIds = infoObject.gapIds.count
         if amountOfGapIds > 0 {
-            nextId = infoObject.gapIds[Int.random(in: 0...amountOfGapIds)]
+            nextId = infoObject.gapIds[Int.random(in: 0..<amountOfGapIds)]
         } else {
             nextId = infoObject.maxId + 1
         }
