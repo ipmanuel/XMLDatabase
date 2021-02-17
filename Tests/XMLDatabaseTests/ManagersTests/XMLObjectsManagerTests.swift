@@ -68,6 +68,39 @@ class XMLObjectsManagerTests: XCTestCase {
         XCTAssertEqual(objects[1].id, 1)
     }
 
+    // MARK: - Method `removeObject(id:)` tests
+
+    func testRemove() throws {
+        let container = try XMLDocumentContainer(objectName: "Person", objectNamePlural: "Persons")
+        let xmlDocumentManager = try XMLDocumentManager(at: url, with: container)
+
+        let manager = XMLObjectsManager<PersonMapper>(xmlDocumentManager: xmlDocumentManager)
+
+        var newPerson = try Person(id: 0, gender: .male, firstName: "Manuel")
+        XCTAssertNoThrow(try manager.addObject(object: &newPerson))
+        XCTAssertEqual(newPerson.id, 0)
+
+        var newPerson2 = try Person(id: 0, gender: .male, firstName: "Manuel")
+        XCTAssertNoThrow(try manager.addObject(object: &newPerson2))
+        XCTAssertEqual(newPerson2.id, 1)
+
+        var objects = try manager.fetchObjects()
+        XCTAssertEqual(objects.count, 2)
+        guard objects.count >= 2 else {
+            XCTFail("There are less than two objects.")
+            return
+        }
+        XCTAssertEqual(objects[0].id, 0)
+        XCTAssertEqual(objects[1].id, 1)
+
+        XCTAssertNoThrow(try manager.removeObject(id: 0))
+        objects = try manager.fetchObjects()
+        XCTAssertEqual(objects.count, 1)
+        XCTAssertNoThrow(try manager.addObject(object: &newPerson))
+        objects = try manager.fetchObjects()
+        XCTAssertEqual(objects.count, 2)
+    }
+
 
     // MARK: - Method `fetchObject(id:)` tests
 
@@ -115,6 +148,7 @@ extension XMLObjectsManagerTests {
     static var allTests = [
         ("testInit", testInit),
         ("testAdd", testAdd),
+        ("testRemove", testRemove),
         ("testFetch", testFetch),
         ("testWorkWithContainer", testWorkWithContainer)
     ]
