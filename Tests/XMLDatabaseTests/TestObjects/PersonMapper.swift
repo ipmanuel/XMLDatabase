@@ -5,6 +5,7 @@
 //  Created by Manuel Pauls on 14.12.17.
 //
 
+
 import Foundation
 import FoundationXML
 import SWXMLHash
@@ -17,14 +18,14 @@ class PersonMapper: XMLObjectMapper {
         // XML elements should exists
         let personXMLElement = try getRootXMLElement(of: xmlIndexer, at: url)
         let id = try PersonMapper.getAttributeId(of: personXMLElement, at: url)
-        let genderString = try PersonMapper.getXMLElement(of: xmlIndexer, name: "gender", at: url).text
-        let firstName = try PersonMapper.getXMLElement(of: xmlIndexer, name: "firstName", at: url).text
+        let genderString = try PersonMapper.getXMLElement(of: xmlIndexer, name: "Gender", at: url).text
+        let firstName = try PersonMapper.getXMLElement(of: xmlIndexer, name: "FirstName", at: url).text
         
         // init person
         let newPerson = try Person(id: id, gender: genderString, firstName: firstName)
         
         // optional XML elements
-        let lastNameXMLElement = xmlIndexer["lastName"].element
+        let lastNameXMLElement = xmlIndexer["LastName"].element
         if lastNameXMLElement != nil {
             try newPerson.set(lastName: lastNameXMLElement!.text)
         }
@@ -34,17 +35,17 @@ class PersonMapper: XMLObjectMapper {
     
     static func toXMLElement(from person: Person) -> FoundationXML.XMLElement {
         // person XML element
-        let personXMLElement = FoundationXML.XMLElement(name: "person")
+        let personXMLElement = FoundationXML.XMLElement(name: "Person")
         let personIdAttribute = FoundationXML.XMLNode(kind: XMLNode.Kind.attribute)
         personIdAttribute.name = "id"
         personIdAttribute.stringValue = "\(person.id)"
         personXMLElement.addAttribute(personIdAttribute)
         
         // gender XML element
-        let genderXMLElement = FoundationXML.XMLElement(name: "gender", stringValue: person.gender.rawValue)
+        let genderXMLElement = FoundationXML.XMLElement(name: "Gender", stringValue: person.gender.rawValue)
         
         // fistName XML element
-        let firstNameXMLElement = FoundationXML.XMLElement(name: "firstName", stringValue: person.firstName)
+        let firstNameXMLElement = FoundationXML.XMLElement(name: "FirstName", stringValue: person.firstName)
         
         // add XML elements to person XML element
         personXMLElement.addChild(genderXMLElement)
@@ -52,7 +53,7 @@ class PersonMapper: XMLObjectMapper {
         
         // optional lastName XML element
         if person.lastName != nil {
-            let lastNameXMLElement = FoundationXML.XMLElement(name: "lastName", stringValue: person.lastName!)
+            let lastNameXMLElement = FoundationXML.XMLElement(name: "LastName", stringValue: person.lastName!)
             personXMLElement.addChild(lastNameXMLElement)
         }
         

@@ -1,3 +1,4 @@
+/*
 import XCTest
 @testable import XMLDatabase
 
@@ -74,3 +75,4 @@ extension PersonsTests {
         ("testSaveConstraintOnePersonExists", testSaveConstraintOnePersonExists)
     ]
 }
+*/

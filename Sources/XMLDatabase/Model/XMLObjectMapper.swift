@@ -5,6 +5,7 @@
 //  Created by Manuel Pauls on 23.11.17.
 //
 
+
 import Foundation
 import FoundationXML
 import SWXMLHash
@@ -55,4 +56,3 @@ extension XMLObjectMapper {
         return xmlElement
     }
 }
-

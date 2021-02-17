@@ -31,11 +31,11 @@ class PersonTests: XCTestCase {
     // MARK: - Init tests
     
     func testValidProperties() {
-        // man
+        // male
         XCTAssertNoThrow(try Person(id: 1, gender: Person.Gender.male, firstName: "Manuel"))
         XCTAssertNoThrow(try Person(id: 1, gender: "male", firstName: "Manuel"))
         
-        // woman
+        // female
         XCTAssertNoThrow(try Person(id: 1, gender: Person.Gender.female, firstName: "Clara"))
         XCTAssertNoThrow(try Person(id: 1, gender: "female", firstName: "Clara"))
     }
@@ -47,11 +47,11 @@ class PersonTests: XCTestCase {
     }
     
     func testInvalidId() {
-        XCTAssertThrowsError(try Person(id: 0, gender: Person.Gender.male, firstName: "Manuel")) { error in
+        XCTAssertThrowsError(try Person(id: -1, gender: Person.Gender.male, firstName: "Manuel")) { error in
             guard case XMLObjectError.invalidId(let value) = error else {
                 return XCTFail()
             }
-            XCTAssertEqual(value, 0)
+            XCTAssertEqual(value, -1)
         }
     }
     
@@ -508,5 +508,3 @@ extension PersonTests {
         ("testGetDateOfDeathInvalidValue", testGetDateOfBirthInvalidValue)
     ]
 }
-
-
