@@ -1,8 +1,8 @@
 # XMLDatabase
 
-XMLDatabase is a simple library to save, fetch and remove objects in XMLDocuments.
+XMLDatabase is a simple library to save, fetch and remove objects of XML documents.
 Beside that, it is possible to integrate validations.
-This database is a great way to ex- and import documents or to have a very good human readable and editable database.
+This database is a great way to ex- and import XML documents or to have a very good human readable and editable database.
 
 ## Installation
 
@@ -22,7 +22,7 @@ Notice: XMLDatabase is only compatible with swift 5.2 or newer.
 ## Manually
 
 Clone the repository and copy the directory *Sources/XMLDatabase* with all the files to your project.
-You don't neeed to write `import XMLDatabase` as it is shown in the example further below.
+You don't need to write `import XMLDatabase` as it is shown in the example further below.
 
 ## Example
 
@@ -30,7 +30,7 @@ You don't neeed to write `import XMLDatabase` as it is shown in the example furt
 ### New entity
 To add a new entity. 
 You need to create two files.
-One file defines the properties with validation and setter methods.
+One file defines the properties with validations, getter and setter methods.
 The other file is neccessary to convert the object to xml.
 Look for an example [here](https://github.com/ipmanuel/XMLDatabase/tree/master/Tests/XMLDatabaseTests/TestObjects).
 
@@ -62,7 +62,10 @@ var newPerson3 = try Person(id: 0, gender: .male, firstName: "Willi")
 var newPerson4 = try Person(id: 0, gender: .male, firstName: "Kate")
 ```
 Add all the objects to the container.
-Keep in mind, after each operation, inlcudes load, change and save the xml document. 
+Keep in mind, each operation includes the following process: 
+1. load the xml document
+2. change the xml document 
+3. save the xml document. 
 So that this is inefficient:
 ```swift
 try manager.addObject(object: &newPerson1)
