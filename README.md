@@ -13,7 +13,7 @@ XMLDatabase can be installed using Swift Package Manager or manually.
 Add the following line to *Package.swift*.
 ```swift
 dependencies: [
-    .package(url: "https://github.com/ipmanuel/XMLDatabase.git", from: "1.2.0")
+    .package(url: "https://github.com/ipmanuel/XMLDatabase.git", from: "1.3.0")
 ]
 ```
 
