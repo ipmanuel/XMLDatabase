@@ -81,6 +81,10 @@ try manager.addObjects(objects: &objects)
 try manager.removeObject(object: newPerson2)
 ```
 
+## Test Enviroment
+
+For now, the XMLDatabase is only tested in Ubuntu 20.04.
+
 ## License
 
 The XMLDatabase is available under [MIT licence](https://github.com/ipmanuel/XMLDatabase/blob/master/LICENSE).
