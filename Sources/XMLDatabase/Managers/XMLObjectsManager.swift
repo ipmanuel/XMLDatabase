@@ -10,7 +10,7 @@ import Foundation
 import FoundationXML
 import SWXMLHash
 
-/// XMLObjects manage all objects with a specific type of a XML file
+/// A manager to fetch, add, update and delete xml objects
 open class XMLObjectsManager<MapperType: XMLObjectMapper> {
     
     
@@ -103,7 +103,7 @@ open class XMLObjectsManager<MapperType: XMLObjectMapper> {
         var object: MapperType.ObjectType!
         try workWithContainer() { (container: XMLDocumentContainer) throws -> () in
             let xmlElement = try container.fetch(id: id)
-            print(xmlElement)
+            //print(xmlElement)
             let url = URL(fileURLWithPath: "/")
 
             object = try MapperType.toXMLObject(from: xmlElement, at: url)
