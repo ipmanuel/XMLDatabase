@@ -8,7 +8,7 @@ This database is a great way to ex- and import XML documents or to have a very g
 
 XMLDatabase can be installed using Swift Package Manager or manually.
 
-## Swift Package Manager
+### Swift Package Manager
 
 Add the following line to *Package.swift*.
 ```swift
@@ -19,7 +19,7 @@ dependencies: [
 
 Notice: XMLDatabase is only compatible with swift 5.2 or newer.
 
-## Manually
+### Manually
 
 Clone the repository and copy the directory *Sources/XMLDatabase* with all the files to your project.
 You don't need to write `import XMLDatabase` as it is shown in the example further below.
