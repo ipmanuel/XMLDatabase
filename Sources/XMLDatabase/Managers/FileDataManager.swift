@@ -15,7 +15,7 @@ public class FileDataManager {
 
     // MARK: - Public Properties
 
-	public var url: URL {
+    public var url: URL {
         return isLocked ? lockedFileURL : unlockedFileURL
     }
 
@@ -28,7 +28,7 @@ public class FileDataManager {
 
     // MARK: - Private Properties
 
-	private var isLockedMutable: Bool
+    private var isLockedMutable: Bool
 
     public var filename: String {
         return unlockedFilename
@@ -68,9 +68,9 @@ public class FileDataManager {
         }
     }
 
-	public convenience init(at url: URL, forceUnlock: Bool = false) throws {
+    public convenience init(at url: URL, forceUnlock: Bool = false) throws {
         try self.init(at: url, hasToCheckFiles: true, forceUnlock: forceUnlock)
-	}
+    }
 
     public convenience init(at url: URL, withData data: Data) throws {
         try self.init(at: url, hasToCheckFiles: false)
@@ -109,7 +109,7 @@ public class FileDataManager {
         try unlock()
     }
 
-	public func loadAndLock() throws -> Data {
+    public func loadAndLock() throws -> Data {
         guard isLocked == false else {
             throw FileDataManagerError.fileIsAlreadyLocked(at: url)
         }
@@ -125,7 +125,7 @@ public class FileDataManager {
         }
 
         return data
-	}
+    }
 
     public func load() throws -> Data {
         return try Data(contentsOf: url)
