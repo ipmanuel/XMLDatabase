@@ -10,7 +10,7 @@ import Foundation
 import FoundationXML
 import SWXMLHash
 
-/// Handle mutual exclusion for reading and write a file
+/// load and save a xml document with mutual exclusion
 open class XMLDocumentManager {
 
 
@@ -32,9 +32,9 @@ open class XMLDocumentManager {
 
 
     /// init existing xml document from some url
-	public init(at url: URL) throws {
-		fileDataManager = try FileDataManager(at: url)
-	}
+    public init(at url: URL) throws {
+        fileDataManager = try FileDataManager(at: url)
+    }
 
     /// init xml document at some url
     public convenience init(at url: URL, with container: XMLDocumentContainer) throws {
@@ -50,12 +50,12 @@ open class XMLDocumentManager {
 
     // MARK: - Public Methods
 
-	open func loadAndLock() throws -> XMLDocumentContainer {
+    open func loadAndLock() throws -> XMLDocumentContainer {
         let loadedData = try self.fileDataManager.loadAndLock()
         let xmlString = String(decoding: loadedData, as: UTF8.self)
 
         return try XMLDocumentContainer(xmlString: xmlString)
-	}
+    }
 
     open func load() throws -> XMLDocumentContainer {
         let loadedData = try self.fileDataManager.load()
