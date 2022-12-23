@@ -83,7 +83,7 @@ try manager.removeObject(object: newPerson2)
 
 ## Test Enviroment
 
-For now, the XMLDatabase is tested in Ubuntu 20.04 and in MacOs 12.
+For now, the XMLDatabase is tested in Ubuntu 20.04 (x86) and in MacOs 12 (M1).
 
 ## License
 

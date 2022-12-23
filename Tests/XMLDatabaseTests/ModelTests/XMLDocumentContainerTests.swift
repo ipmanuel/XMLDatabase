@@ -406,6 +406,7 @@ extension XMLDocumentContainerTests {
         ("testPerformanceWithFiveObjects", testPerformanceWithFiveObjects),
         ("testPerformanceWithThousandObjects", testPerformanceWithThousandObjects),
         ("testPerformanceWithTenThousandObjects", testPerformanceWithTenThousandObjects),
+        ("testPerformanceWithHundredThousandObjects", testPerformanceWithHundredThousandObjects)
         //("testPerformanceWithOneMillionObjects", testPerformanceWithOneMillionObjects)
     ]
 }

@@ -135,6 +135,8 @@ class XMLObjectManagerTests: XCTestCase {
 extension XMLObjectManagerTests {
     static var allTests = [
         ("testInit", testInit),
-        ("testAddAndFetch", testAddAndFetch)
+        ("testInitAndReinit", testInitAndReinit),
+        ("testAddAndFetch", testAddAndFetch),
+        ("testAddAndFetchWithPersistanceTest", testAddAndFetchWithPersistanceTest)
     ]
 }
