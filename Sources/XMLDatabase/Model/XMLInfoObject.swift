@@ -95,7 +95,7 @@ open class XMLInfoObject: XMLObject {
         guard XMLInfoObject.isValid(maxId: maxId, gapIds: gapIds) else {
             throw XMLInfoObjectError.invalidGapIds(value: gapIds)
         }
-        gapIdsMutable = gapIds
+        gapIdsMutable = gapIds.sorted()
     }
 
     func add(id: Int) throws {
@@ -158,7 +158,7 @@ open class XMLInfoObject: XMLObject {
             throw XMLInfoObjectError.invalidGapIds(value: gapIds)
         }
 
-        gapIdsMutable = gapIds
+        gapIdsMutable = gapIds.sorted()
     }
 
     func removeGapId(id: Int) throws {

@@ -15,7 +15,7 @@ class XMLObjectsManagerTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        let baseURL = Bundle.init(for: XMLObjectsManagerTests.self).resourceURL!
+        let baseURL = FileManager.default.temporaryDirectory
 
         let filename = "Persons.xml"
         url = baseURL.appendingPathComponent(filename)
@@ -44,7 +44,7 @@ class XMLObjectsManagerTests: XCTestCase {
 
     // MARK: - Method `addObject(object:)` tests
 
-    func testAdd() throws {
+    func testAddObject() throws {
         let container = try XMLDocumentContainer(objectName: "Person", objectNamePlural: "Persons")
         let xmlDocumentManager = try XMLDocumentManager(at: url, with: container)
 
@@ -68,9 +68,80 @@ class XMLObjectsManagerTests: XCTestCase {
         XCTAssertEqual(objects[1].id, 1)
     }
 
+    
+    // MARK: - Method `addObjects(objects:)` tests
+    
+    func testAddObjects() throws {
+        let container = try XMLDocumentContainer(objectName: "Person", objectNamePlural: "Persons")
+        var xmlDocumentManager: XMLDocumentManager? = try XMLDocumentManager(at: url, with: container)
+
+        var manager: XMLObjectsManager? = XMLObjectsManager<PersonMapper>(xmlDocumentManager: xmlDocumentManager!)
+
+        let newPerson = try Person(id: 0, gender: .male, firstName: "Manuel")
+        let newPerson2 = try Person(id: 0, gender: .male, firstName: "Manuel")
+        var persons = [newPerson, newPerson2]
+        XCTAssertNoThrow(try manager!.addObjects(objects: &persons))
+        
+        // deinit and init
+        manager = nil
+        xmlDocumentManager = nil
+        xmlDocumentManager = try XMLDocumentManager(at: url)
+        manager = XMLObjectsManager<PersonMapper>(xmlDocumentManager: xmlDocumentManager!)
+        
+        let fetchedPersons = try manager!.fetchObjects()
+        XCTAssertEqual(persons[0].id, fetchedPersons[0].id)
+        XCTAssertEqual(persons[1].id, fetchedPersons[1].id)
+    }
+    
+    
+    // MARK: - Method `replaceObject(object:)` tests
+    
+    func testReplaceObject() throws {
+        // prepare
+        let container = try XMLDocumentContainer(objectName: "Person", objectNamePlural: "Persons")
+        let xmlDocumentManager = try XMLDocumentManager(at: url, with: container)
+        let manager = XMLObjectsManager<PersonMapper>(xmlDocumentManager: xmlDocumentManager)
+        var newPerson = try Person(id: 0, gender: .male, firstName: "Manuel")
+        try manager.addObject(object: &newPerson)
+        
+        let updatedPerson = try Person(id: 0, gender: .male, firstName: "Peter")
+        XCTAssertNoThrow(try manager.replaceObject(object: updatedPerson))
+        let fetchedPerson = try manager.fetchObject(id: 0)
+        XCTAssertEqual(newPerson.id, fetchedPerson.id)
+        XCTAssertEqual(newPerson.gender, fetchedPerson.gender)
+        XCTAssertEqual(fetchedPerson.firstName, "Peter")
+    }
+    
+    
+    // MARK: - Method `replaceObjects(objects:)` tests
+    
+    func testReplaceObjects() throws {
+        // prepare
+        let container = try XMLDocumentContainer(objectName: "Person", objectNamePlural: "Persons")
+        let xmlDocumentManager = try XMLDocumentManager(at: url, with: container)
+        let manager = XMLObjectsManager<PersonMapper>(xmlDocumentManager: xmlDocumentManager)
+        var newPerson1 = try Person(id: 0, gender: .male, firstName: "Manuel")
+        var newPerson2 = try Person(id: 0, gender: .male, firstName: "Manuel")
+        try manager.addObject(object: &newPerson1)
+        try manager.addObject(object: &newPerson2)
+        
+        let updatedPerson1 = try Person(id: 0, gender: .male, firstName: "Peter")
+        let updatedPerson2 = try Person(id: 1, gender: .male, firstName: "Max")
+        XCTAssertNoThrow(try manager.replaceObjects(objects: [updatedPerson1, updatedPerson2]))
+        let fetchedPerson1 = try manager.fetchObject(id: 0)
+        let fetchedPerson2 = try manager.fetchObject(id: 1)
+        XCTAssertEqual(newPerson1.id, fetchedPerson1.id)
+        XCTAssertEqual(newPerson1.gender, fetchedPerson1.gender)
+        XCTAssertEqual(fetchedPerson1.firstName, "Peter")
+        XCTAssertEqual(newPerson2.id, fetchedPerson2.id)
+        XCTAssertEqual(newPerson2.gender, fetchedPerson2.gender)
+        XCTAssertEqual(fetchedPerson2.firstName, "Max")
+    }
+    
+    
     // MARK: - Method `removeObject(id:)` tests
 
-    func testRemove() throws {
+    func testRemoveObject() throws {
         let container = try XMLDocumentContainer(objectName: "Person", objectNamePlural: "Persons")
         let xmlDocumentManager = try XMLDocumentManager(at: url, with: container)
 
@@ -100,11 +171,16 @@ class XMLObjectsManagerTests: XCTestCase {
         objects = try manager.fetchObjects()
         XCTAssertEqual(objects.count, 2)
     }
-
+    
+    
+    // MARK: - Method `removeObjects(ids:)` tests
+    
+    // TODO
+    
 
     // MARK: - Method `fetchObject(id:)` tests
 
-    func testFetch() throws {
+    func testFetchObject() throws {
         let container = try XMLDocumentContainer(objectName: "Person", objectNamePlural: "Persons")
         let xmlDocumentManager = try XMLDocumentManager(at: url, with: container)
 
@@ -131,25 +207,54 @@ class XMLObjectsManagerTests: XCTestCase {
     }
 
 
-    // MARK: - Method `workWithContainer(body:)` tests
+    // MARK: - Performance tests of a container with 1.000 objects 
 
-    func testWorkWithContainer() throws {
-        let container = try XMLDocumentContainer(objectName: "Person", objectNamePlural: "Persons")
-        let xmlDocumentManager = try XMLDocumentManager(at: url, with: container)
-
-        let manager = XMLObjectsManager<PersonMapper>(xmlDocumentManager: xmlDocumentManager)
-
-        let body = {(container: XMLDocumentContainer) throws -> () in}
-        XCTAssertNoThrow(try manager.workWithContainer(body: body))
+    func testReadPerformanceWithThousandObjects() throws {
+        var containerOptional: XMLDocumentContainer?
+        XCTAssertNoThrow(containerOptional = try initContainerWithObjects(amount: 1000))
+        let container = try XCTUnwrap(containerOptional)
+        measure {
+            let _ = try! container.fetch(id: 500)
+        }
     }
+
+
+    // MARK: - Performance tests of a container with 10.000 objects 
+
+    func testReadPerformanceWithTenThousandObjects() throws {
+        var containerOptional: XMLDocumentContainer?
+        XCTAssertNoThrow(containerOptional = try initContainerWithObjects(amount: 10000))
+        let container = try XCTUnwrap(containerOptional)
+        measure {
+            let _ = try! container.fetch(id: 5000)
+        }
+    }
+
+
+    // MARK: - Performance tests of a container with 1.000000 objects
+    
+    /*
+    func testReadPerformanceWithOneMillionObjects() throws {
+        var containerOptional: XMLDocumentContainer?
+        XCTAssertNoThrow(containerOptional = try initContainerWithObjects(amount: 1000000))
+        let container = try XCTUnwrap(containerOptional)
+        measure {
+            let _ = try! container.fetch(id: 500000)
+        }
+    }*/
 }
 
 extension XMLObjectsManagerTests {
     static var allTests = [
         ("testInit", testInit),
-        ("testAdd", testAdd),
-        ("testRemove", testRemove),
-        ("testFetch", testFetch),
-        ("testWorkWithContainer", testWorkWithContainer)
+        ("testAddObject", testAddObject),
+        ("testAddObjects", testAddObjects),
+        ("testReplaceObject", testReplaceObject),
+        ("testReplaceObjects", testReplaceObjects),
+        ("testRemoveObject", testRemoveObject),
+        ("testFetchObject", testFetchObject),
+        ("testReadPerformanceWithThousandObjects", testReadPerformanceWithThousandObjects),
+        ("testReadPerformanceWithTenThousandObjects", testReadPerformanceWithTenThousandObjects),
+        //("testReadPerformanceWithOneMillionObjects", testReadPerformanceWithOneMillionObjects)
     ]
 }

@@ -5,9 +5,11 @@
 //  Created by Manuel Pauls on 23.11.17.
 //
 
-
+/*
 import Foundation
-import FoundationXML
+#if canImport(FoundationXML)
+	import FoundationXML
+#endif
 import SWXMLHash
 
 // Convention: All XML should be sorted, even if not they will be after saving first time
@@ -36,7 +38,7 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
     public let fileSize: UInt64
     
     /// The XML document, which represents the XML file as an object
-    //private var xmlDocument: FoundationXML.XMLDocument {
+    //private var xmlDocument: Foundation.XMLDocument {
     //    return container
     //}
     
@@ -139,7 +141,7 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
         }
         
         let rootElementName = url.deletingPathExtension().lastPathComponent.lowercased()
-        let xmlDocument = FoundationXML.XMLDocument(rootElement: FoundationXML.XMLElement(name: rootElementName))
+        _ = Foundation.XMLDocument(rootElement: Foundation.XMLElement(name: rootElementName))
         //try xmlDocument.xmlData.write(to: url)
     }
     
@@ -171,7 +173,7 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
     public func save() throws {
         try checkConstraintsForSave(objects: savedObjects + unsavedObjects)
         
-        let alreadySavedObjects = savedObjects.count
+        //let alreadySavedObjects = savedObjects.count
         
         if (unsavedObjects.count > 0) {
             savedObjects += unsavedObjects
@@ -179,8 +181,8 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
             savedObjects.sort(by: {$0.id < $1.id})
             savedObjectsIds.sort()
         }
-        
-        var xmlElement: FoundationXML.XMLElement
+        /*
+        var xmlElement: Foundation.XMLElement
         for i in 0..<alreadySavedObjects {
             xmlElement = MapperType.toXMLElement(from: savedObjects[i])
             //try container.replace(at: i, xmlElement: xmlElement)
@@ -190,7 +192,7 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
             xmlElement = MapperType.toXMLElement(from: savedObjects[i])
             //try container.add(xmlElement: xmlElement, withId: savedObjects[i].id)
             //xmlDocument.rootElement()!.addChild(MapperType.toXMLElement(from: savedObjects[i]))
-        }
+        }*/
         unsavedObjectsIds.removeAll()
         unsavedObjects.removeAll()
         
@@ -202,13 +204,13 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
         if (savedObjectsIds+unsavedObjectsIds).contains(id) {
             try checkConstraintsForDeleteObject(id: id)
             
-            if let index = savedObjects.index(where: {$0.id == id}), let indexId = savedObjectsIds.index(where: {$0 == id}) {
+            if let index = savedObjects.firstIndex(where: {$0.id == id}), let indexId = savedObjectsIds.firstIndex(where: {$0 == id}) {
                 savedObjects.remove(at: index)
                 savedObjectsIds.remove(at: indexId)
                 //try container.remove(withId: id)
                 //xmlDocument.rootElement()!.removeChild(at: index)
                 deleteId(value: id)
-            } else if let index = unsavedObjects.index(where: {$0.id == id}), let indexId = unsavedObjectsIds.index(where: {$0 == id}) {
+            } else if let index = unsavedObjects.firstIndex(where: {$0.id == id}), let indexId = unsavedObjectsIds.firstIndex(where: {$0 == id}) {
                 unsavedObjects.remove(at: index)
                 unsavedObjectsIds.remove(at: indexId)
                 deleteId(value: id)
@@ -251,7 +253,7 @@ open class XMLObjects<MapperType: XMLObjectMapper> {
     private func addId(value id: Int) {
         // id is in nextIds
         if (nextIds.contains(id)) {
-            nextIds.remove(at: nextIds.index(of: id)!)
+            nextIds.remove(at: nextIds.firstIndex(of: id)!)
         }
         
         // there are empty ids between
@@ -302,3 +304,4 @@ extension XMLObjects: Sequence {
         return savedObjects.makeIterator()
     }
 }
+*/

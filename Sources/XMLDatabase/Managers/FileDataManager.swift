@@ -7,7 +7,9 @@
 
 
 import Foundation
-import FoundationXML
+#if canImport(FoundationXML)
+	import FoundationXML
+#endif
 
 /// Handle mutual exclusion for reading and write a file
 public class FileDataManager {
@@ -17,6 +19,10 @@ public class FileDataManager {
 
     public var url: URL {
         return isLocked ? lockedFileURL : unlockedFileURL
+    }
+    
+    public var filename: String {
+        return unlockedFileURL.lastPathComponent
     }
 
     public var isLocked: Bool {
@@ -29,67 +35,27 @@ public class FileDataManager {
     // MARK: - Private Properties
 
     private var isLockedMutable: Bool
-
-    public var filename: String {
-        return unlockedFilename
-    }
     
     let unlockedFileURL: URL
     
     let lockedFileURL: URL
 
-    let unlockedFilename: String
-    
-    let lockedFilename: String
-
 
     // MARK: - Init
     
-    // force Unlock is untested!
-    private init(at url: URL, hasToCheckFiles: Bool, forceUnlock: Bool = false) throws {
+    /// init existing file
+    public init(at url: URL) throws {
         unlockedFileURL = URL(fileURLWithPath: url.path)
+        lockedFileURL = FileDataManager.generateLockedFileURL(of: unlockedFileURL)
+        
         isLockedMutable = false
-
-        unlockedFilename = url.lastPathComponent
-        lockedFilename = "_\(unlockedFilename)"
-        lockedFileURL = URL(fileURLWithPath: url.deletingLastPathComponent().path).appendingPathComponent(lockedFilename)
-
-        if forceUnlock {
-            try? self.unlock()
-        }
-
+        updateIsLockedMutable()
+        
+        // check the existence of the unlocked and the locked file
+        try checkFiles()
+        
         guard !isLocked else {
             throw FileDataManagerError.fileIsAlreadyLocked(at: lockedFileURL)
-        }
-
-        // check the existence of the unlocked and the locked xml file
-        if hasToCheckFiles {
-            try checkFiles()
-        }
-    }
-
-    public convenience init(at url: URL, forceUnlock: Bool = false) throws {
-        try self.init(at: url, hasToCheckFiles: true, forceUnlock: forceUnlock)
-    }
-
-    public convenience init(at url: URL, withData data: Data) throws {
-        try self.init(at: url, hasToCheckFiles: false)
-        
-        // write a small sized file to set short critical scope
-        let emptyData = "".data(using: .utf8)!
-        try FileDataManager.mutex.withCriticalScope {
-            guard !checkLockedFileExists() && !checkUnlockedFileExists() else {
-                throw FileDataManagerError.fileExistsAlready(at: url)
-            }
-            try emptyData.write(to: url)
-        }
-
-        // write acutal data
-        do {
-            try data.write(to: url)
-        } catch {
-            try? Foundation.FileManager.default.removeItem(atPath: url.path)
-            throw FileDataManagerError.writeFileDataFailed(at: url, error: error)
         }
     }
 
@@ -99,6 +65,13 @@ public class FileDataManager {
 
 
     // MARK: - Public Methods
+    
+    public func save(data: Data) throws {
+        guard isLocked else {
+            throw FileDataManagerError.fileIsNotLocked(at: url)
+        }
+        try data.write(to: url)
+    }
 
     public func saveAndUnlock(data: Data) throws {
         guard isLocked else {
@@ -110,7 +83,7 @@ public class FileDataManager {
     }
 
     public func loadAndLock() throws -> Data {
-        guard isLocked == false else {
+        guard !isLocked else {
             throw FileDataManagerError.fileIsAlreadyLocked(at: url)
         }
         try lock()
@@ -177,19 +150,51 @@ public class FileDataManager {
         }
     }
 
-    func save(data: Data) throws {
-        try data.write(to: url)
-    }
-
     func updateIsLockedMutable() {
         isLockedMutable = checkLockedFileExists()
     }
 
     func checkLockedFileExists() -> Bool {
-        return Foundation.FileManager.default.fileExists(atPath: lockedFileURL.path)
+        return FileDataManager.checkFileExists(at: lockedFileURL)
     }
 
     func checkUnlockedFileExists() -> Bool {
-        return Foundation.FileManager.default.fileExists(atPath: unlockedFileURL.path)
+        return FileDataManager.checkFileExists(at: unlockedFileURL)
+    }
+    
+    
+    // MARK: - Static Methods
+    
+    public static func createFile(at url: URL, withData data: Data) throws {
+        let unlockedFileURL = URL(fileURLWithPath: url.path)
+        let lockedFileURL = generateLockedFileURL(of: url)
+        
+        var fileExists = checkFileExists(at: unlockedFileURL)
+        fileExists = fileExists || checkFileExists(at: lockedFileURL);
+        
+        guard !fileExists else {
+            throw FileDataManagerError.fileExistsAlready(at: url)
+        }
+        
+        // create file
+        do {
+            try data.write(to: url)
+        } catch {
+            try? Foundation.FileManager.default.removeItem(atPath: url.path)
+            throw FileDataManagerError.writeFileDataFailed(at: url, error: error)
+        }
+    }
+    
+    public static func checkFileExists(at url: URL) -> Bool {
+        return Foundation.FileManager.default.fileExists(atPath: url.path)
+    }
+    
+    public static func generateLockedFileURL(of url: URL) -> URL {
+        let unlockedFilename = url.lastPathComponent
+        let lockedFilename = "_\(unlockedFilename)"
+        let lockedFilePath = url.deletingLastPathComponent().path
+        let lockedFileURL = URL(fileURLWithPath: lockedFilePath).appendingPathComponent(lockedFilename)
+        
+        return lockedFileURL
     }
 }

@@ -7,17 +7,21 @@
 
 
 import Foundation
-import FoundationXML
+#if canImport(FoundationXML)
+	import FoundationXML
+#endif
 import SWXMLHash
 
-public protocol XMLObjectMapper: class {
+
+
+public protocol XMLObjectMapper {
     associatedtype ObjectType: XMLObject
     
     /// Returns an XMLObject which is specified in ObjectType from a XMLIndexer object
     static func toXMLObject(from: XMLIndexer, at: URL) throws -> ObjectType
     
     /// Returns an XMLElement based the data of an ObjectType
-    static func toXMLElement(from: ObjectType) -> FoundationXML.XMLElement
+    static func toXMLElement(from: ObjectType) -> FXMLElement
 }
 
 extension XMLObjectMapper {
@@ -50,7 +54,7 @@ extension XMLObjectMapper {
     /// Returns the root XML element of a XMLIndexer object
     public static func getRootXMLElement(of xmlIndexer: XMLIndexer, at url: URL) throws -> SWXMLHash.XMLElement {
         guard let xmlElement = xmlIndexer.element else {
-            throw XMLObjectsError.requiredElementIsMissing(element: String(describing: ObjectType.self).lowercased(), at: url)
+            throw XMLObjectsError.requiredElementIsMissing(element: String(describing: ObjectType.self), at: url)
         }
         
         return xmlElement

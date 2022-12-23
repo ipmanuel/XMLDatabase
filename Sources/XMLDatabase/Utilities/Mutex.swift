@@ -20,7 +20,7 @@ final public class Mutex {
     
     // MARK: - Init & Deinit
     
-    init() {
+    public init() {
         let result = pthread_mutex_init(&mutex, nil)
         assert(result == 0, "Failed to init mutex in \(self)")
     }

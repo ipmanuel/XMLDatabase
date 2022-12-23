@@ -7,7 +7,16 @@
 
 
 import Foundation
-import FoundationXML
+#if canImport(FoundationXML)
+    import FoundationXML
+    public typealias FXMLElement = FoundationXML.XMLElement
+    public typealias FXMLDocument = FoundationXML.XMLDocument
+    public typealias FXMLNode = FoundationXML.XMLNode
+#else
+    public typealias FXMLElement = Foundation.XMLElement
+    public typealias FXMLDocument = Foundation.XMLDocument
+    public typealias FXMLNode = Foundation.XMLNode
+#endif
 import SWXMLHash
 
 /// XML Object with an id (not thread safe)
@@ -16,15 +25,17 @@ public class XMLDocumentContainer {
     
     // MARK: - Properties
 
-    public lazy var xmlDocument: FoundationXML.XMLDocument = {
+    public lazy var xmlDocument: FXMLDocument = {
         return try! initXMLDocument()// Attention of try!
     }()
-    public lazy var xmlIndexer: XMLIndexer = {
-        return initXMLIndexer()
-    }()
+    public var xmlIndexer: XMLIndexer {
+        return getXMLIndexer()
+    }
     public lazy var infoObject: XMLInfoObject = {
         return try! initInfoObject()// Attention of try!
     }()
+    private var xmlIndexerMutable: XMLIndexer!
+    private var containerUpdated = false
     private var xmlString: String
     private var xmlDocumentIsInitialized = false
     private var xmlIndexerIsInitialized = false
@@ -40,13 +51,13 @@ public class XMLDocumentContainer {
 
     /// init empty container
     public convenience init(objectName: String, objectNamePlural: String) throws {
-        let rootElement = FoundationXML.XMLElement(name: "\(objectNamePlural)")
-        var xmlDocument = FoundationXML.XMLDocument(rootElement: rootElement)
+        let rootElement = FXMLElement(name: "\(objectNamePlural)")
+        let xmlDocument = FXMLDocument(rootElement: rootElement)
         
         let xmlInfoObject = try XMLInfoObject(objectName: objectName, objectNamePlural: objectNamePlural)
         let infoXMLElement = XMLInfoObjectMapper.toXMLElement(from: xmlInfoObject)
 
-        var objectsElement = FoundationXML.XMLElement(name: "Entries")
+        let objectsElement = FXMLElement(name: "Entries")
 
         rootElement.addChild(infoXMLElement)
         rootElement.addChild(objectsElement)
@@ -56,7 +67,7 @@ public class XMLDocumentContainer {
 
     public func verify() -> [Error]? {
         var errors: [Error] = []
-        var xmlDocument: FoundationXML.XMLDocument?
+        var xmlDocument: FXMLDocument?
         do {
             xmlDocument = try initXMLDocument()
             
@@ -85,12 +96,17 @@ public class XMLDocumentContainer {
     }
 
     
-    public func replace(xmlElement: FoundationXML.XMLElement, withId id: Int) throws {
+    public func replace(xmlElement: FXMLElement, withId id: Int) throws {
+        guard checkIdExists(id: id) else {
+            throw XMLDocumentContainerError.idDoesNotExist
+        }
         let index = calculateIndex(of: id)
         xmlDocument.rootElement()!.elements(forName: "Entries")[0].replaceChild(at: index, with: xmlElement)
+
+        containerUpdated = true
     }
 
-    public func add(xmlElement: FoundationXML.XMLElement, withId id: Int) throws {
+    public func add(xmlElement: FXMLElement, withId id: Int) throws {
         try infoObject.add(id: id)
         
         if id == infoObject.maxId {
@@ -100,18 +116,29 @@ public class XMLDocumentContainer {
             xmlDocument.rootElement()!.elements(forName: "Entries")[0].insertChild(xmlElement, at: index)
         }
         
+        containerUpdated = true
     }
 
     public func remove(id: Int) throws {
+        guard checkIdExists(id: id) else {
+            throw XMLDocumentContainerError.idDoesNotExist
+        }
         let index = calculateIndex(of: id)
         try infoObject.remove(id: id)
         xmlDocument.rootElement()!.elements(forName: "Entries")[0].removeChild(at: index)
+
+        containerUpdated = true
     }
 
     public func fetch(id: Int) throws -> XMLIndexer {
+        guard checkIdExists(id: id) else {
+            throw XMLDocumentContainerError.idDoesNotExist
+        }
         let index = calculateIndex(of: id)
+        let rootXMLElement = infoObject.objectNamePlural
         let objectName = infoObject.objectName
-        let xmlElement = xmlIndexer[infoObject.objectNamePlural]["Entries"][objectName][index]
+        let xmlElement = xmlIndexer[rootXMLElement]["Entries"][objectName][index]
+        //print("XMLIndexer (name: \(objectName): \(xmlIndexer[rootXMLElement]["Entries"][objectName].all)")
 
         return xmlElement
     }
@@ -131,6 +158,20 @@ public class XMLDocumentContainer {
         return xmlDocument.xmlData(options: options)
     }
 
+    public func checkIdExists(id: Int) -> Bool {
+        guard id >= 0 else {
+            return false
+        }
+        guard id <= infoObject.maxId else {
+            return false
+        }
+        guard !infoObject.gapIds.contains(id) else {
+            return false
+        }
+
+        return true
+    }
+
     public func calculateNextId() -> Int {
         var nextId: Int!
         let amountOfGapIds = infoObject.gapIds.count
@@ -143,47 +184,55 @@ public class XMLDocumentContainer {
         return nextId
     }
 
-    private func calculateId(of index: Int) -> Int {
-        var id: Int!
-        var amountOfGapIds = 0
+    func calculateId(of index: Int) -> Int {
+        var id = index
         for gapId in infoObject.gapIds {
-            if index > gapId {
-                break
+            if id == gapId {
+                id += 1
+            } else if id > gapId {
+                id += 1   
             }
-            amountOfGapIds += 1
         }
-        id = index + amountOfGapIds
+
+        guard checkIdExists(id: id) else {
+            return -1
+        }
 
         return id
     }
 
-    private func calculateIndex(of id: Int) -> Int {
+    /// note: this works because gapIds are sorted
+    func calculateIndex(of id: Int) -> Int {
+        guard checkIdExists(id: id) else {
+            return -1
+        }
         var index: Int!
         var amountOfGapIds = 0
         for gapId in infoObject.gapIds {
             if id > gapId {
-                break
+                amountOfGapIds += 1
             }
-            amountOfGapIds += 1
         }
         index = id - amountOfGapIds
-        
 
         return index
     }
 
-    private func initXMLDocument() throws -> FoundationXML.XMLDocument {
+    private func initXMLDocument() throws -> FXMLDocument {
         // attention this function can crash if someone manipulate the xml file manually
         xmlDocumentIsInitialized = true
-        let options = FoundationXML.XMLNode.Options.documentTidyXML
+        let options = FXMLNode.Options.documentTidyXML
         
-        return try FoundationXML.XMLDocument(xmlString: xmlString, options: options)
+        return try FXMLDocument(xmlString: xmlString, options: options)
     }
 
-    private func initXMLIndexer() -> XMLIndexer {
-        var xmlIndexerIsInitialized = true
+    private func getXMLIndexer() -> XMLIndexer {
+        if xmlIndexerMutable == nil || containerUpdated == true {
+            containerUpdated = false
+            xmlIndexerMutable = SWXMLHash.parse(xmlDocument.xmlString)
+        }
 
-        return SWXMLHash.parse(xmlString)
+        return xmlIndexerMutable
     }
 
     func initInfoObject() throws -> XMLInfoObject {

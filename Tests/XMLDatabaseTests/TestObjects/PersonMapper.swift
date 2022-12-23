@@ -7,7 +7,9 @@
 
 
 import Foundation
-import FoundationXML
+#if canImport(FoundationXML)
+	import FoundationXML
+#endif
 import SWXMLHash
 import XMLDatabase
 
@@ -33,19 +35,19 @@ class PersonMapper: XMLObjectMapper {
         return newPerson
     }
     
-    static func toXMLElement(from person: Person) -> FoundationXML.XMLElement {
+    static func toXMLElement(from person: Person) -> FXMLElement {
         // person XML element
-        let personXMLElement = FoundationXML.XMLElement(name: "Person")
-        let personIdAttribute = FoundationXML.XMLNode(kind: XMLNode.Kind.attribute)
+        let personXMLElement = FXMLElement(name: "Person")
+        let personIdAttribute = FXMLNode(kind: XMLNode.Kind.attribute)
         personIdAttribute.name = "id"
         personIdAttribute.stringValue = "\(person.id)"
         personXMLElement.addAttribute(personIdAttribute)
         
         // gender XML element
-        let genderXMLElement = FoundationXML.XMLElement(name: "Gender", stringValue: person.gender.rawValue)
+        let genderXMLElement = FXMLElement(name: "Gender", stringValue: person.gender.rawValue)
         
         // fistName XML element
-        let firstNameXMLElement = FoundationXML.XMLElement(name: "FirstName", stringValue: person.firstName)
+        let firstNameXMLElement = FXMLElement(name: "FirstName", stringValue: person.firstName)
         
         // add XML elements to person XML element
         personXMLElement.addChild(genderXMLElement)
@@ -53,7 +55,7 @@ class PersonMapper: XMLObjectMapper {
         
         // optional lastName XML element
         if person.lastName != nil {
-            let lastNameXMLElement = FoundationXML.XMLElement(name: "LastName", stringValue: person.lastName!)
+            let lastNameXMLElement = FXMLElement(name: "LastName", stringValue: person.lastName!)
             personXMLElement.addChild(lastNameXMLElement)
         }
         

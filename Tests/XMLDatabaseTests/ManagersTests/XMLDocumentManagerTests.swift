@@ -15,7 +15,7 @@ class XMLDocumentManagerTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        let baseURL = Bundle.init(for: XMLObjectsManagerTests.self).resourceURL!
+        let baseURL = FileManager.default.temporaryDirectory
 
         let filename = "Persons.xml"
         url = baseURL.appendingPathComponent(filename)
@@ -42,13 +42,12 @@ class XMLDocumentManagerTests: XCTestCase {
         guard manager != nil else {
             XCTFail("Manager is nil")
             return
-        }   
+        }
+        
+        XCTAssertEqual(container.xmlDocument.xmlString, manager.container.xmlDocument.xmlString)
     }
-
-
-    // MARK: - Method `loadAndLock()` and `saveAndUnlock(container:)` tests
-
-    func testLoadAndLock() throws {
+    
+    func testInitAndReinit() throws {
         let container = try XMLDocumentContainer(objectName: "Person", objectNamePlural: "Persons")
         var manager: XMLDocumentManager!
         XCTAssertNoThrow(manager = try XMLDocumentManager(at: url, with: container))
@@ -57,18 +56,91 @@ class XMLDocumentManagerTests: XCTestCase {
             XCTFail("Manager is nil")
             return
         }
+        XCTAssertNoThrow(try manager!.unlock())
+        
+        XCTAssertNoThrow(manager = try XMLDocumentManager(at: url))
+    }
+    
+    func testInitAndReinitWithError() throws {
+        let container = try XMLDocumentContainer(objectName: "Person", objectNamePlural: "Persons")
+        var manager: XMLDocumentManager!
+        XCTAssertNoThrow(manager = try XMLDocumentManager(at: url, with: container))
+        XCTAssertThrowsError(manager = try XMLDocumentManager(at: url)) { error in
+            guard case FileDataManagerError.fileIsAlreadyLocked(at: let exceptionURL) = error else {
+                return XCTFail("\(error)")
+            }
+            XCTAssertNotEqual(exceptionURL, url)
+        }
+        if manager != nil {
+            try? manager.unlock()
+        }
+    }
+    
+    
+    // MARK: - Deinit tests
+    
+    func testDeinit() throws {
+        let container = try XMLDocumentContainer(objectName: "Person", objectNamePlural: "Persons")
+        var xmlDocumentManager: XMLDocumentManager?
+        XCTAssertNoThrow(xmlDocumentManager = try XMLDocumentManager(at: url, with: container))
+        xmlDocumentManager = nil
+        XCTAssertNoThrow(xmlDocumentManager = try XMLDocumentManager(at: url))
+        try? xmlDocumentManager?.unlock()
+    }
+    
+    
+    // MARK: - Method `save()` tests
+    
+    func testSave() throws {
+        // prepare
+        var manager: XMLDocumentManager!
+        let container = try initContainerWithObjects(amount: 1)
+        XCTAssertNoThrow(manager = try XMLDocumentManager(at: url, with: container))
+        XCTAssertEqual(manager.container.infoObject.count, 1)
+        XCTAssertNoThrow(try manager.save())
+        XCTAssertNoThrow(try manager.unlock())
 
-        var loadedContainer: XMLDocumentContainer!
-        XCTAssertNoThrow(loadedContainer = try manager.loadAndLock())
-        XCTAssertTrue(manager.isLocked)
-        XCTAssertNoThrow(try manager.saveAndUnlock(container: loadedContainer))
+        
+        // reinit
+        manager = try XMLDocumentManager(at: url)
+        XCTAssertEqual(manager.container.infoObject.count, 1)
+    }
+    
+    
+    // MARK: - Method `unlock()` tests
+    
+    func testUnlock() throws {
+        // prepare
+        let container = try initContainerWithObjects(amount: 1)
+        let manager = try XMLDocumentManager(at: url, with: container)
+        
+        // test
+        XCTAssertNoThrow(try manager.unlock())
+        XCTAssertFalse(manager.isLocked)
+    }
+    
+    
+    // MARK: - Method `workWithContainer(body:)` tests
+
+    func testWorkWithContainer() throws {
+        let outerContainer = try XMLDocumentContainer(objectName: "Person", objectNamePlural: "Persons")
+        let xmlDocumentManager = try XMLDocumentManager(at: url, with: outerContainer)
+
+        let body = {(container: XMLDocumentContainer) throws -> () in
+            XCTAssertEqual(container.xmlDocument.xmlString, outerContainer.xmlDocument.xmlString)
+        }
+        XCTAssertNoThrow(try xmlDocumentManager.workWithContainer(body: body))
     }
 }
 
 extension XMLDocumentManagerTests {
     static var allTests = [
         ("testInit", testInit),
-        ("testLoadAndLock", testLoadAndLock)
-        
+        ("testInitAndReinit", testInit),
+        ("testInitAndReinitWithError", testInitAndReinitWithError),
+        ("testDeinit", testDeinit),
+        ("testSave", testSave),
+        ("testUnlock", testUnlock),
+        ("testWorkWithContainer", testWorkWithContainer)
     ]
 }

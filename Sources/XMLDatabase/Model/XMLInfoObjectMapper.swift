@@ -7,7 +7,9 @@
 
 
 import Foundation
-import FoundationXML
+#if canImport(FoundationXML)
+    import FoundationXML
+#endif
 import SWXMLHash
 
 class XMLInfoObjectMapper: XMLObjectMapper {
@@ -33,22 +35,22 @@ class XMLInfoObjectMapper: XMLObjectMapper {
         return newXMLInfoObject
     }
     
-    static func toXMLElement(from infoObject: XMLInfoObject) -> FoundationXML.XMLElement {
-        let infoXMLElement = FoundationXML.XMLElement(name: "Info")
+    static func toXMLElement(from infoObject: XMLInfoObject) -> FXMLElement {
+        let infoXMLElement = FXMLElement(name: "Info")
 
-        let maxIdXMLElement = FoundationXML.XMLElement(name: "MaxId", 
+        let maxIdXMLElement = FXMLElement(name: "MaxId",
             stringValue: "\(infoObject.maxId)")
 
-        let gapIdsXMLElement = FoundationXML.XMLElement(name: "GapIds", 
+        let gapIdsXMLElement = FXMLElement(name: "GapIds",
             stringValue: infoObject.gapIds.map{String($0)}.joined(separator:","))
 
-        let countXMLElement = FoundationXML.XMLElement(name: "Count", 
+        let countXMLElement = FXMLElement(name: "Count",
             stringValue: "\(infoObject.count)")
 
-        let objectNameXMLElement = FoundationXML.XMLElement(name: "ObjectName", 
+        let objectNameXMLElement = FXMLElement(name: "ObjectName",
             stringValue: "\(infoObject.objectName)")
 
-        let objectNamePluralXMLElement = FoundationXML.XMLElement(name: "ObjectNamePlural", 
+        let objectNamePluralXMLElement = FXMLElement(name: "ObjectNamePlural",
             stringValue: "\(infoObject.objectNamePlural)")
         
         // add XML elements to info XML element

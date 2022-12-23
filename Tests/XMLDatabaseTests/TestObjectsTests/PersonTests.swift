@@ -120,7 +120,7 @@ class PersonTests: XCTestCase {
         let calendar = Calendar.current
         let dateOfBirth = calendar.date(byAdding: .year, value: 1, to: Date())!
         XCTAssertThrowsError(try validPerson!.set(dateOfBirth: dateOfBirth)) { error in
-            guard case PersonError.givenDateShouldBeInThePast(_) = error else {
+            guard case PersonError.givenDateShouldBeInThePast(_, _) = error else {
                 return XCTFail("\(error)")
             }
         }
@@ -132,7 +132,7 @@ class PersonTests: XCTestCase {
         
         let dateOfBirth = calendar.date(byAdding: .year, value: 1, to: Date())!
         XCTAssertThrowsError(try validPerson!.set(dateOfBirth: dateOfBirth)) { error in
-            guard case PersonError.givenDateShouldBeInThePast(_) = error else {
+            guard case PersonError.givenDateShouldBeInThePast(_, _) = error else {
                 return XCTFail("\(error)")
             }
         }
@@ -173,7 +173,7 @@ class PersonTests: XCTestCase {
         
         let dateOfDeath = calendar.date(byAdding: .year, value: 1, to: Date())!
         XCTAssertThrowsError(try validPerson!.set(dateOfDeath: dateOfDeath)) { error in
-            guard case PersonError.givenDateShouldBeInThePast(_) = error else {
+            guard case PersonError.givenDateShouldBeInThePast(_, _) = error else {
                 return XCTFail("\(error)")
             }
         }
@@ -481,11 +481,17 @@ extension PersonTests {
         ("testSetValidLastName", testSetValidLastName),
         ("testSetInvalidLastName", testSetInvalidLastName),
         ("testSetValidDateOfBirth", testSetValidDateOfBirth),
+        ("testSetDateOfBirthWhichIsInPast", testSetDateOfBirthWhichIsInPast),
         ("testSetInvalidDateOfBirth", testSetInvalidDateOfBirth),
+        ("testSetDateOfBirthWhichIsBeforeDeath", testSetDateOfBirthWhichIsBeforeDeath),
+        ("testSetValidDateOfDeath", testSetValidDateOfDeath),
+        ("testSetInvalidDateOfDeath", testSetInvalidDateOfDeath),
+        ("testSetDateOfDeathWhichIsBeforeBirth", testSetDateOfDeathWhichIsBeforeBirth),
         
         ("testValidFirstName", testValidFirstName),
         ("testFirstNameIsTooShort", testFirstNameIsTooShort),
         ("testFirstNameIsTooLong", testFirstNameIsTooLong),
+        
         ("testLastNameWithMinCharacters", testLastNameWithMinCharacters),
         ("testLastNameWithMaxCharacters", testLastNameWithMaxCharacters),
         ("testLastNameIsTooShort", testLastNameIsTooShort),
@@ -498,12 +504,16 @@ extension PersonTests {
         
         ("testGetGenderValidValue", testGetGenderValidValue),
         ("testInvalidGenderValidValue", testInvalidGenderValidValue),
+        
         ("testGetFirstNameValidValue", testGetFirstNameValidValue),
         ("testGetFirstNameInvalidValue", testGetFirstNameInvalidValue),
+        
         ("testGetLastNameValidValue", testGetLastNameValidValue),
         ("testGetLastNameInvalidValue", testGetLastNameInvalidValue),
+        
         ("testGetDateOfBirthValidValue", testGetDateOfBirthValidValue),
         ("testGetDateOfBirthInvalidValue", testGetDateOfBirthInvalidValue),
+        
         ("testGetDateOfDeathValidValue", testGetDateOfBirthValidValue),
         ("testGetDateOfDeathInvalidValue", testGetDateOfBirthInvalidValue)
     ]

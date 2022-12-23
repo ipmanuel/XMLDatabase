@@ -60,6 +60,13 @@ public enum XMLDocumentContainerError: Error {
     case rootElementDoesNotExist
     case entriesTagDoesNotExist
     case invalidId
+    case idDoesNotExist
+}
+
+/// An enumeration for the various errors of `XMLObjectManager`.
+public enum XMLObjectManagerError: Error {
+    case idIsNotNull
+    case containerIsEmpty
 }
 
 

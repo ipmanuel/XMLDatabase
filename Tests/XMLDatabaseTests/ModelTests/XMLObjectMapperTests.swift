@@ -19,7 +19,7 @@ class XMlObjectMapperTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        baseURL = Bundle.init(for: XMlObjectMapperTests.self).resourceURL!
+        baseURL = FileManager.default.temporaryDirectory
         xmlContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><persons><person id=\"1\"><gender>male</gender><firstName>Manuel</firstName></person></persons>"
         lockedXMLFileURL = baseURL!.appendingPathComponent("_Persons.xml")
         unlockedXMLFileURL = baseURL!.appendingPathComponent("Persons.xml")
